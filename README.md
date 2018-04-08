@@ -6,19 +6,22 @@ geometrischen Objekten vorgehalten werden müssen.
 
 Es gab über die Zeit mehrere Versuche, eine einheitliche Darstellungsform für
 derartige Konstruktionsbeschreibungen zu vereinbaren, darunter das im Rahmen
-eines gemeinsamen EU-Projekts entwickelte Intergeo-Format.
+eines [gemeinsamen EU-Projekts](http://i2geo.net/?language=de) in den Jahren
+2007-2010 entwickelte [Intergeo-Format](http://svn.activemath.org/intergeo/).
 
-Parallel dazu liegen mit den GeoProofSchemes des Symbolicdata-Projekts
-"generische" Konstruktionsbeschreibungen vor, die als Eingaben für das
-mechanisierte Geometriebeweisen dienen und teilweise in ein Format überführt
-wurden, das auch für den Import inDGS prinzipiell geeignet ist, wenn die freien
-Parameter angemessen belegt werden.  Dies lässt sich für verschiedene Typen der
+Parallel dazu liegen mit den
+[GeoProofSchemes](https://symbolicdata.github.io/Geo) des
+[Symbolicdata-Projekts](https://symbolicdata.github.io/) "generische"
+Konstruktionsbeschreibungen vor, die als Eingaben für das mechanisierte
+Geometriebeweisen dienen und teilweise in ein Format überführt wurden, das auch
+für den Import in DGS prinzipiell geeignet ist, wenn die freien Parameter
+angemessen belegt werden.  Dies lässt sich für verschiedene Typen der
 GeoProofSchemes mit den aktuell verfügbaren DGS-Konzepten verschieden genau
 realisieren.
 
 Mit der Javascript basierten DGS [JSXGraph](https://jsxgraph.org) liegt
 zugleich eine Abspielumgebung vor, die
-* quelloffen bei github gehostet wird
+* quelloffen bei [github](https://github.com/jsxgraph/jsxgraph) gehostet wird
 * und behauptet, Konstruktionsbeschreibungen in verschiedenen Formaten einlesen
 zu können.
 
