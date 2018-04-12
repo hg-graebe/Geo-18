@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CaR>
+<Construction>
+<Window x="0.0" y="0.0" w="8.0"/>
+<Objects>
+<Point name="P1" x="-3.614088820826953" y="-1.016845329249617" shape="circle">Punkt in -3.614088820826953, -1.016845329249617</Point>
+<Point name="P2" x="-0.036753445635528514" y="2.3644716692189904" shape="circle">Punkt in -0.036753445635528514, 2.3644716692189904</Point>
+<Point name="P3" x="1.9724349157733538" y="-1.3108728943338441" shape="circle">Punkt in 1.9724349157733538, -1.3108728943338441</Point>
+<Segment name="s1" from="P1" to="P2">Strecke von P1 nach P2</Segment>
+<Segment name="s2" from="P2" to="P3">Strecke von P2 nach P3</Segment>
+<Segment name="s3" from="P3" to="P1">Strecke von P3 nach P1</Segment>
+<PointOn name="P4" on="s1" x="-1.4880737982961918" y="0.9926757194438429" shape="circle">Punkt auf s1</PointOn>
+<PointOn name="P5" on="s2" x="0.8894698973742414" y="0.6701606759084353" shape="circle">Punkt auf s2</PointOn>
+<PointOn name="P6" on="s3" x="-0.08650258475544259" y="-1.2025077627270653" shape="circle">Punkt auf s3</PointOn>
+<Segment name="s4" hidden="true" from="P1" to="P4">Strecke von P1 nach P4</Segment>
+<Segment name="s5" hidden="true" from="P4" to="P6">Strecke von P4 nach P6</Segment>
+<Midpoint name="M1" hidden="true" first="P4" second="P1" shape="diamond">Mitte zwischen P4 und P1</Midpoint>
+<Midpoint name="M2" hidden="true" first="P4" second="P6" shape="diamond">Mitte zwischen P4 und P6</Midpoint>
+<Plumb name="l1" hidden="true" point="M1" line="s4" valid="true">Lot durch M1 zu s4</Plumb>
+<Plumb name="l2" hidden="true" point="M2" line="s5" valid="true">Lot durch M2 zu s5</Plumb>
+<Intersection name="S1" hidden="true" first="l2" second="l1" shape="diamond">Schnitt zwischen l2 und l1</Intersection>
+<Circle name="k1" through="P6" midpoint="S1" acute="true">Kreis um S1 durch P6</Circle>
+<Segment name="s6" hidden="true" from="P3" to="P5">Strecke von P3 nach P5</Segment>
+<Segment name="s7" hidden="true" from="P5" to="P6">Strecke von P5 nach P6</Segment>
+<Midpoint name="M3" hidden="true" first="P5" second="P3" shape="diamond">Mitte zwischen P5 und P3</Midpoint>
+<Midpoint name="M4" hidden="true" first="P5" second="P6" shape="diamond">Mitte zwischen P5 und P6</Midpoint>
+<Plumb name="l3" hidden="true" point="M3" line="s6" valid="true">Lot durch M3 zu s6</Plumb>
+<Plumb name="l4" hidden="true" point="M4" line="s7" valid="true">Lot durch M4 zu s7</Plumb>
+<Intersection name="S2" hidden="true" first="l4" second="l3" shape="diamond">Schnitt zwischen l4 und l3</Intersection>
+<Circle name="k2" through="P6" midpoint="S2" acute="true">Kreis um S2 durch P6</Circle>
+<Segment name="s8" hidden="true" from="P2" to="P5">Strecke von P2 nach P5</Segment>
+<Segment name="s9" hidden="true" from="P5" to="P4">Strecke von P5 nach P4</Segment>
+<Midpoint name="M5" hidden="true" first="P5" second="P2" shape="diamond">Mitte zwischen P5 und P2</Midpoint>
+<Midpoint name="M6" hidden="true" first="P5" second="P4" shape="diamond">Mitte zwischen P5 und P4</Midpoint>
+<Plumb name="l5" hidden="true" point="M5" line="s8" valid="true">Lot durch M5 zu s8</Plumb>
+<Plumb name="l6" hidden="true" point="M6" line="s9" valid="true">Lot durch M6 zu s9</Plumb>
+<Intersection name="S3" hidden="true" first="l6" second="l5" shape="diamond">Schnitt zwischen l6 und l5</Intersection>
+<Circle name="k3" through="P4" midpoint="S3" acute="true">Kreis um S3 durch P4</Circle>
+</Objects>
+</Construction>
+</CaR>

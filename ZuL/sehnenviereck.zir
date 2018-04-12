@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CaR>
+<Construction>
+<Window x="0.0" y="0.0" w="8.0"/>
+<Objects>
+<Point name="P1" type="thin" x="-0.7272700000000001" y="-0.27119000000000004" shape="circle">Punkt in -0.7272700000000001, -0.27119000000000004</Point>
+<Point name="A" showname="true" xoffset="-21" yoffset="-31" x="-2.18182" y="2.3667200000000004" shape="circle">Punkt in -2.18182, 2.3667200000000004</Point>
+<Circle name="k1" through="A" midpoint="P1" acute="true">Kreis um P1 durch A</Circle>
+<PointOn name="B" showname="true" xoffset="7" yoffset="-18" on="k1" x="1.6885126132087225" y="1.528331946606498" shape="circle">Punkt auf k1</PointOn>
+<PointOn name="C" showname="true" on="k1" x="0.7859415238793406" y="-2.8758926230644386" shape="circle">Punkt auf k1</PointOn>
+<PointOn name="D" showname="true" xoffset="-26" yoffset="-4" on="k1" x="-3.508634463092376" y="-1.4280376969968278" shape="circle">Punkt auf k1</PointOn>
+<Segment name="s1" from="A" to="B">Strecke von A nach B</Segment>
+<Segment name="s2" from="B" to="C">Strecke von B nach C</Segment>
+<Segment name="s3" from="C" to="D">Strecke von C nach D</Segment>
+<Segment name="s4" from="D" to="A">Strecke von D nach A</Segment>
+<Segment name="s5" from="A" to="C">Strecke von A nach C</Segment>
+<Segment name="s6" from="B" to="D">Strecke von B nach D</Segment>
+</Objects>
+</Construction>
+</CaR>

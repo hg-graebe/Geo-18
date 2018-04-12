@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CaR>
+<Construction>
+<Window x="0.0" y="0.0" w="11.313708498984761"/>
+<Objects>
+<Point name="P1" x="-4.8" y="1.3124999999999996" shape="circle">Punkt in -4.8, 1.3124999999999996</Point>
+<Point name="P2" x="-2.375" y="2.5624999999999996" shape="circle">Punkt in -2.375, 2.5624999999999996</Point>
+<Point name="P3" x="-0.34999999999999964" y="1.4625" shape="circle">Punkt in -0.34999999999999964, 1.4625</Point>
+<Point name="P4" x="4.808326112068526" y="0.7247844507162116" shape="circle">Punkt in 4.808326112068526, 0.7247844507162116</Point>
+<Point name="P5" x="-3.125" y="-2.0375" shape="circle">Punkt in -3.125, -2.0375</Point>
+<Quadric name="Q1" point1="P1" point2="P2" point3="P3" point4="P4" point5="P5">Kegelschnitt durch P1, P2, P3, P4, P5</Quadric>
+<Point name="P6" x="-7.848885271170678" y="2.4571960646232522" shape="circle">Punkt in -7.848885271170678, 2.4571960646232522</Point>
+<Line name="g1" from="P1" to="P6">Gerade durch P1 und P6</Line>
+<Point name="P7" x="-0.17677669529663653" y="-2.4571960646232527" shape="circle">Punkt in -0.17677669529663653, -2.4571960646232527</Point>
+<Line name="g2" from="P2" to="P7">Gerade durch P2 und P7</Line>
+<Point name="P8" x="7.778174593052023" y="-0.2298097038856275" shape="circle">Punkt in 7.778174593052023, -0.2298097038856275</Point>
+<Line name="g3" from="P3" to="P8">Gerade durch P3 und P8</Line>
+<Point name="P9" x="-1.555634918610405" y="-4.224963017589621" shape="circle">Punkt in -1.555634918610405, -4.224963017589621</Point>
+<Point name="P10" x="10.323759005323593" y="-0.017677669529663653" shape="circle">Punkt in 10.323759005323593, -0.017677669529663653</Point>
+<Line name="g4" from="P4" to="P10">Gerade durch P4 und P10</Line>
+<Point name="P11" x="-3.570889244992066" y="0.3358757210636103" shape="circle">Punkt in -3.570889244992066, 0.3358757210636103</Point>
+<Line name="g5" from="P9" to="P11">Gerade durch P9 und P11</Line>
+<Point name="P12" x="-2.8991378028648445" y="-4.4017397128862585" shape="circle">Punkt in -2.8991378028648445, -4.4017397128862585</Point>
+<Line name="g6" from="P5" to="P12">Gerade durch P5 und P12</Line>
+<Intersection name="S1" color="5" first="g6" second="g1" shape="circle">Schnitt zwischen g6 und g1</Intersection>
+<Intersection name="S2" color="5" first="g1" second="g2" shape="circle">Schnitt zwischen g1 und g2</Intersection>
+<Intersection name="S3" color="5" first="g2" second="g3" shape="circle">Schnitt zwischen g2 und g3</Intersection>
+<Intersection name="S4" color="5" first="g3" second="g4" shape="circle">Schnitt zwischen g3 und g4</Intersection>
+<Intersection name="S5" color="5" first="g4" second="g5" shape="circle">Schnitt zwischen g4 und g5</Intersection>
+<Intersection name="S6" color="5" first="g5" second="g6" shape="circle">Schnitt zwischen g5 und g6</Intersection>
+<Line name="g7" color="5" type="thin" from="S1" to="S4">Gerade durch S1 und S4</Line>
+<Line name="g9" color="5" type="thin" from="S2" to="S5">Gerade durch S2 und S5</Line>
+<Line name="g10" color="5" type="thin" from="S3" to="S6">Gerade durch S3 und S6</Line>
+</Objects>
+</Construction>
+</CaR>

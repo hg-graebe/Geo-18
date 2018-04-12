@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CaR>
+<Construction>
+<Window x="-1.5999999999999996" y="0.0" w="3.999999999999999"/>
+<Objects>
+<Point name="A" showname="true" xoffset="-31" yoffset="-36" x="-4.765696784100001" y="-1.9479326187000006" shape="circle">Punkt in -4.765696784100001, -1.9479326187000006</Point>
+<Point name="B" showname="true" xoffset="2" yoffset="-34" x="1.6294027565000004" y="-2.0214395100000004" shape="circle">Punkt in 1.6294027565000004, -2.0214395100000004</Point>
+<Point name="C" showname="true" xoffset="1" yoffset="-43" x="-2.928024502300001" y="2.3399693721000006" shape="circle">Punkt in -2.928024502300001, 2.3399693721000006</Point>
+<Segment name="Strecke 1" from="A" to="C">Strecke von A nach C</Segment>
+<Segment name="Strecke 2" from="C" to="B">Strecke von C nach B</Segment>
+<Segment name="Strecke 3" from="B" to="A">Strecke von B nach A</Segment>
+<Plumb name="Lot 1" point="C" line="Strecke 3" valid="true">Lot durch C zu Strecke 3</Plumb>
+<Plumb name="Lot 2" point="A" line="Strecke 2" valid="true">Lot durch A zu Strecke 2</Plumb>
+<Plumb name="Lot 3" point="B" line="Strecke 1" valid="true">Lot durch B zu Strecke 1</Plumb>
+<Intersection name="E" showname="true" xoffset="-38" yoffset="-18" first="Strecke 1" second="Lot 3" shape="circle">Schnitt zwischen Strecke 1 und Lot 3</Intersection>
+<Intersection name="F" showname="true" xoffset="-2" yoffset="-10" first="Strecke 3" second="Lot 1" awayfrom="B" shape="circle">Schnitt zwischen Strecke 3 und Lot 1</Intersection>
+<Intersection name="D" showname="true" xoffset="-4" yoffset="-3" first="Lot 2" second="Strecke 2" shape="circle">Schnitt zwischen Lot 2 und Strecke 2</Intersection>
+<Segment name="Strecke 4" hidden="true" from="A" to="B">Strecke von A nach B</Segment>
+<Segment name="Strecke 5" hidden="true" from="B" to="D">Strecke von B nach D</Segment>
+<Midpoint name="Mitte 1" hidden="true" first="B" second="A" shape="diamond">Mitte zwischen B und A</Midpoint>
+<Midpoint name="Mitte 2" hidden="true" first="B" second="D" shape="diamond">Mitte zwischen B und D</Midpoint>
+<Plumb name="Lot 4" hidden="true" point="Mitte 1" line="Strecke 4" valid="true">Lot durch Mitte 1 zu Strecke 4</Plumb>
+<Plumb name="Lot 5" hidden="true" point="Mitte 2" line="Strecke 5" valid="true">Lot durch Mitte 2 zu Strecke 5</Plumb>
+<Intersection name="Schnitt 5" hidden="true" first="Lot 5" second="Lot 4" shape="diamond">Schnitt zwischen Lot 5 und Lot 4</Intersection>
+<Circle name="Kreis 1" color="5" through="D" midpoint="Schnitt 5" acute="true">Kreis um Schnitt 5 durch D</Circle>
+<Segment name="Strecke 6" hidden="true" from="C" to="D">Strecke von C nach D</Segment>
+<Segment name="Strecke 7" hidden="true" from="D" to="E">Strecke von D nach E</Segment>
+<Midpoint name="Mitte 3" hidden="true" first="D" second="C" shape="diamond">Mitte zwischen D und C</Midpoint>
+<Midpoint name="Mitte 4" hidden="true" first="D" second="E" shape="diamond">Mitte zwischen D und E</Midpoint>
+<Plumb name="Lot 6" hidden="true" point="Mitte 3" line="Strecke 6" valid="true">Lot durch Mitte 3 zu Strecke 6</Plumb>
+<Plumb name="Lot 7" hidden="true" point="Mitte 4" line="Strecke 7" valid="true">Lot durch Mitte 4 zu Strecke 7</Plumb>
+<Intersection name="Schnitt 6" hidden="true" first="Lot 7" second="Lot 6" shape="diamond">Schnitt zwischen Lot 7 und Lot 6</Intersection>
+<Circle name="Kreis 2" color="5" through="E" midpoint="Schnitt 6" acute="true">Kreis um Schnitt 6 durch E</Circle>
+<Segment name="Strecke 8" from="E" to="D">Strecke von E nach D</Segment>
+</Objects>
+</Construction>
+</CaR>

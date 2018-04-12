@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CaR>
+<Construction>
+<Window x="0.0" y="0.0" w="8.0"/>
+<Objects>
+<Point name="P1" x="-5.707241910631741" y="-1.7010785824345147" shape="circle">Punkt in -5.707241910631741, -1.7010785824345147</Point>
+<Point name="P2" x="-3.41448" y="-1.67643" shape="circle">Punkt in -3.41448, -1.67643</Point>
+<Line name="g1" from="P1" to="P2">Gerade durch P1 und P2</Line>
+<Point name="P3" x="-2.6995377503852076" y="2.1448382126348227" shape="circle">Punkt in -2.6995377503852076, 2.1448382126348227</Point>
+<Parallel name="p1" point="P3" line="g1">Parallele durch P3 zu g1</Parallel>
+<Line name="g2" from="P1" to="P3">Gerade durch P1 und P3</Line>
+<Parallel name="p2" point="P2" line="g2">Parallele durch P2 zu g2</Parallel>
+<Intersection name="S1" first="p1" second="p2" shape="circle">Schnitt zwischen p1 und p2</Intersection>
+<PointOn name="P4" on="g1" x="3.168515101327105" y="-1.605658806240785" shape="circle">Punkt auf g1</PointOn>
+<Line name="g3" from="P3" to="P4">Gerade durch P3 und P4</Line>
+<Parallel name="p3" point="S1" line="g3">Parallele durch S1 zu g3</Parallel>
+<Intersection name="S2" first="g1" second="p3" shape="circle">Schnitt zwischen g1 und p3</Intersection>
+</Objects>
+</Construction>
+</CaR>

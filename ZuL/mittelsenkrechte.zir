@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CaR>
+<Construction>
+<Window x="0.0" y="-1.6" w="8.0"/>
+<Objects>
+<Point name="P1" x="-4.937212863705972" y="-2.1684532924961717" shape="circle">Punkt in -4.937212863705972, -2.1684532924961717</Point>
+<Point name="P2" x="-0.820826952526799" y="1.9479326186830006" shape="circle">Punkt in -0.820826952526799, 1.9479326186830006</Point>
+<Point name="P3" x="1.7764165390505369" y="-2.5849923430321597" shape="circle">Punkt in 1.7764165390505369, -2.5849923430321597</Point>
+<Segment name="s1" from="P1" to="P2">Strecke von P1 nach P2</Segment>
+<Segment name="s2" from="P2" to="P3">Strecke von P2 nach P3</Segment>
+<Segment name="s3" from="P3" to="P1">Strecke von P3 nach P1</Segment>
+<Midpoint name="M1" first="P1" second="P2" shape="circle">Mitte zwischen P1 und P2</Midpoint>
+<Midpoint name="M2" first="P2" second="P3" shape="circle">Mitte zwischen P2 und P3</Midpoint>
+<Midpoint name="M3" first="P3" second="P1" shape="circle">Mitte zwischen P3 und P1</Midpoint>
+<Plumb name="l1" type="thin" point="M1" line="s1" valid="true">Lot durch M1 zu s1</Plumb>
+<Plumb name="l2" type="thin" point="M2" line="s2" valid="true">Lot durch M2 zu s2</Plumb>
+<Plumb name="l3" type="thin" point="M3" line="s3" valid="true">Lot durch M3 zu s3</Plumb>
+<Intersection name="S1" first="l3" second="l2" shape="circle">Schnitt zwischen l3 und l2</Intersection>
+<Circle name="k1" through="P2" midpoint="S1" acute="true">Kreis um S1 durch P2</Circle>
+</Objects>
+</Construction>
+</CaR>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CaR>
+<Construction>
+<Window x="-1.5999999999999996" y="0.0" w="3.999999999999999"/>
+<Objects>
+<Point name="P1" x="-4.643185298621746" y="-1.335375191424196" shape="circle">Punkt in -4.643185298621746, -1.335375191424196</Point>
+<Point name="P2" x="-0.8698315467075037" y="2.0704441041347623" shape="circle">Punkt in -0.8698315467075037, 2.0704441041347623</Point>
+<Point name="P3" x="0.7963246554364467" y="-1.090352220520674" shape="circle">Punkt in 0.7963246554364467, -1.090352220520674</Point>
+<Line name="g1" from="P1" to="P2">Gerade durch P1 und P2</Line>
+<Line name="g2" from="P2" to="P3">Gerade durch P2 und P3</Line>
+<Line name="g3" from="P3" to="P1">Gerade durch P3 und P1</Line>
+<Midpoint name="M1" type="thin" first="P1" second="P3" shape="circle">Mitte zwischen P1 und P3</Midpoint>
+<Midpoint name="M2" type="thin" first="P2" second="P3" shape="circle">Mitte zwischen P2 und P3</Midpoint>
+<Line name="g4" type="thin" from="P2" to="M1">Gerade durch P2 und M1</Line>
+<Line name="g5" type="thin" from="M2" to="P1">Gerade durch M2 und P1</Line>
+<Plumb name="l1" type="thin" point="M1" line="g3" valid="true">Lot durch M1 zu g3</Plumb>
+<Plumb name="l2" type="thin" point="M2" line="g2" valid="true">Lot durch M2 zu g2</Plumb>
+<Intersection name="S1" type="thin" first="l1" second="l2" shape="circle">Schnitt zwischen l1 und l2</Intersection>
+<Intersection name="S2" type="thin" first="g4" second="g5" shape="circle">Schnitt zwischen g4 und g5</Intersection>
+<Plumb name="l3" type="thin" point="P2" line="g3" valid="true">Lot durch P2 zu g3</Plumb>
+<Plumb name="l4" type="thin" point="P1" line="g2" valid="true">Lot durch P1 zu g2</Plumb>
+<Intersection name="S3" type="thin" first="l3" second="l4" shape="circle">Schnitt zwischen l3 und l4</Intersection>
+<Line name="g6" color="5" from="S1" to="S3">Gerade durch S1 und S3</Line>
+<Midpoint name="M3" type="thin" first="P2" second="P1" shape="circle">Mitte zwischen P2 und P1</Midpoint>
+<Segment name="s1" color="2" from="M3" to="M2">Strecke von M3 nach M2</Segment>
+<Segment name="s2" color="2" from="M2" to="M1">Strecke von M2 nach M1</Segment>
+<Segment name="s3" color="2" from="M1" to="M3">Strecke von M1 nach M3</Segment>
+<Plumb name="l5" type="thin" point="P3" line="g1" valid="true">Lot durch P3 zu g1</Plumb>
+<Midpoint name="M4" type="thin" first="S3" second="P2" shape="circle">Mitte zwischen S3 und P2</Midpoint>
+<Midpoint name="M5" type="thin" first="S3" second="P3" shape="circle">Mitte zwischen S3 und P3</Midpoint>
+<Midpoint name="M6" type="thin" first="S3" second="P1" shape="circle">Mitte zwischen S3 und P1</Midpoint>
+<Segment name="s4" color="3" from="M6" to="M4">Strecke von M6 nach M4</Segment>
+<Segment name="s5" color="3" from="M5" to="M4">Strecke von M5 nach M4</Segment>
+<Segment name="s6" color="3" from="M6" to="M5">Strecke von M6 nach M5</Segment>
+<Segment name="s7" color="3" hidden="true" from="M1" to="M2">Strecke von M1 nach M2</Segment>
+<Segment name="s8" color="3" hidden="true" from="M2" to="M3">Strecke von M2 nach M3</Segment>
+<Midpoint name="M7" color="3" hidden="true" first="M2" second="M1" shape="diamond">Mitte zwischen M2 und M1</Midpoint>
+<Midpoint name="M8" color="3" hidden="true" first="M2" second="M3" shape="diamond">Mitte zwischen M2 und M3</Midpoint>
+<Plumb name="l6" color="3" hidden="true" point="M7" line="s7" valid="true">Lot durch M7 zu s7</Plumb>
+<Plumb name="l7" color="3" hidden="true" point="M8" line="s8" valid="true">Lot durch M8 zu s8</Plumb>
+<Intersection name="S4" color="3" hidden="true" first="l7" second="l6" shape="diamond">Schnitt zwischen l7 und l6</Intersection>
+<Circle name="k1" color="5" type="thick" through="M3" midpoint="S4" acute="true">Kreis um S4 durch M3</Circle>
+</Objects>
+</Construction>
+</CaR>

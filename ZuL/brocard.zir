@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CaR>
+<Construction>
+<Window x="0.0" y="1.131370849898476" w="5.65685424949238"/>
+<Objects>
+<Point name="A" showname="true" xoffset="-18" yoffset="7" x="-4.024845000000001" y="0.33540400000000004" shape="circle">Punkt in -4.024845000000001, 0.33540400000000004</Point>
+<Point name="C" showname="true" xoffset="-11" yoffset="-44" x="1.8940360000000003" y="2.8360030000000003" shape="circle">Punkt in 1.8940360000000003, 2.8360030000000003</Point>
+<Point name="B" showname="true" xoffset="-16" yoffset="6" x="4.091118000000001" y="-0.9520690000000002" shape="circle">Punkt in 4.091118000000001, -0.9520690000000002</Point>
+<Line name="g1" from="A" to="C" partial="true">Gerade durch A und C</Line>
+<Line name="g2" from="B" to="C" partial="true">Gerade durch B und C</Line>
+<Line name="g3" from="A" to="B" partial="true">Gerade durch A und B</Line>
+<Line name="g4" hidden="true" from="B" to="A" partial="true">Gerade durch B und A</Line>
+<Plumb name="l1" hidden="true" point="A" line="g1" valid="true">Lot durch A zu g1</Plumb>
+<Midpoint name="M1" hidden="true" first="A" second="B" shape="circle">Mitte zwischen A und B</Midpoint>
+<Plumb name="l2" hidden="true" point="M1" line="g4" valid="true">Lot durch M1 zu g4</Plumb>
+<Intersection name="S1" hidden="true" first="l2" second="l1" shape="circle">Schnitt zwischen l2 und l1</Intersection>
+<Circle name="k1" through="A" midpoint="S1" acute="true">Kreis um S1 durch A</Circle>
+<Line name="g5" hidden="true" from="A" to="C" partial="true">Gerade durch A und C</Line>
+<Plumb name="l3" hidden="true" point="C" line="g2" valid="true">Lot durch C zu g2</Plumb>
+<Midpoint name="M2" hidden="true" first="C" second="A" shape="circle">Mitte zwischen C und A</Midpoint>
+<Plumb name="l4" hidden="true" point="M2" line="g5" valid="true">Lot durch M2 zu g5</Plumb>
+<Intersection name="S2" hidden="true" first="l4" second="l3" shape="circle">Schnitt zwischen l4 und l3</Intersection>
+<Circle name="k2" through="C" midpoint="S2" acute="true">Kreis um S2 durch C</Circle>
+<Line name="g6" hidden="true" from="C" to="B" partial="true">Gerade durch C und B</Line>
+<Plumb name="l5" hidden="true" point="B" line="g3" valid="true">Lot durch B zu g3</Plumb>
+<Midpoint name="M3" hidden="true" first="B" second="C" shape="circle">Mitte zwischen B und C</Midpoint>
+<Plumb name="l6" hidden="true" point="M3" line="g6" valid="true">Lot durch M3 zu g6</Plumb>
+<Intersection name="S3" hidden="true" first="l6" second="l5" shape="circle">Schnitt zwischen l6 und l5</Intersection>
+<Circle name="k3" through="B" midpoint="S3" acute="true">Kreis um S3 durch B</Circle>
+</Objects>
+</Construction>
+</CaR>

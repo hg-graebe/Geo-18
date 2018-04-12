@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CaR>
+<Construction>
+<Window x="0.0" y="0.0" w="8.0"/>
+<Objects>
+<Point name="A" showname="true" xoffset="-8" yoffset="-47" x="-3.2220500000000003" y="1.0658500000000002" shape="diamond">Punkt in -3.2220500000000003, 1.0658500000000002</Point>
+<Point name="C" showname="true" xoffset="-24" yoffset="-38" x="1.7519142420000005" y="2.928024502300001" shape="diamond">Punkt in 1.7519142420000005, 2.928024502300001</Point>
+<Point name="D" showname="true" xoffset="-6" yoffset="-3" x="-2.854517611000001" y="-1.4578866769000005" shape="diamond">Punkt in -2.854517611000001, -1.4578866769000005</Point>
+<Point name="F" showname="true" xoffset="-13" yoffset="-4" x="1.6049004594000005" y="-2.928024502300001" shape="diamond">Punkt in 1.6049004594000005, -2.928024502300001</Point>
+<Line name="g1" from="A" to="C">Gerade durch A und C</Line>
+<Line name="g2" from="D" to="F">Gerade durch D und F</Line>
+<PointOn name="E" showname="true" xoffset="-11" yoffset="-49" on="g1" x="-1.2103400702879914" y="1.8190027680679755" shape="diamond">Punkt auf g1</PointOn>
+<PointOn name="B" showname="true" xoffset="-5" on="g2" x="-0.4144435287084036" y="-2.262306704025491" shape="diamond">Punkt auf g2</PointOn>
+<Line name="g3" color="1" from="A" to="B">Gerade durch A und B</Line>
+<Line name="g4" color="1" from="B" to="C">Gerade durch B und C</Line>
+<Line name="g5" color="1" from="C" to="D">Gerade durch C und D</Line>
+<Line name="g6" color="1" from="D" to="E">Gerade durch D und E</Line>
+<Line name="g7" color="1" from="E" to="F">Gerade durch E und F</Line>
+<Line name="g8" color="1" from="F" to="A">Gerade durch F und A</Line>
+<Intersection name="S1" color="1" first="g3" second="g6" shape="diamond">Schnitt zwischen g3 und g6</Intersection>
+<Intersection name="S2" color="1" first="g8" second="g5" shape="diamond">Schnitt zwischen g8 und g5</Intersection>
+<Intersection name="S3" color="1" first="g7" second="g4" shape="diamond">Schnitt zwischen g7 und g4</Intersection>
+<Line name="g9" color="5" from="S1" to="S3">Gerade durch S1 und S3</Line>
+</Objects>
+</Construction>
+</CaR>

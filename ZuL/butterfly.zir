@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CaR>
+<Construction>
+<Window x="0.0" y="0.0" w="8.0"/>
+<Objects>
+<Point name="O" showname="true" xoffset="-2" yoffset="-28" x="-1.1400000000000001" y="-0.01" shape="circle">Punkt in -1.1400000000000001, -0.01</Point>
+<Point name="A" showname="true" xoffset="-32" yoffset="-15" x="-3.11" y="1.78" shape="circle">Punkt in -3.11, 1.78</Point>
+<Circle name="k2" through="A" midpoint="O" acute="true">Kreis um O durch A</Circle>
+<PointOn name="B" showname="true" xoffset="6" yoffset="-16" on="k2" x="1.1344504809314548" y="1.372705684442887" shape="circle">Punkt auf k2</PointOn>
+<PointOn name="D" showname="true" xoffset="10" yoffset="-17" on="k2" x="-2.4395155478905703" y="-2.332985006578964" shape="circle">Punkt auf k2</PointOn>
+<PointOn name="C" showname="true" xoffset="-30" yoffset="-21" on="k2" x="-0.19262118837614706" y="-2.4974632434040456" shape="circle">Punkt auf k2</PointOn>
+<Line name="g1" from="A" to="D" partial="true">Gerade durch A und D</Line>
+<Line name="g2" from="B" to="C" partial="true">Gerade durch B und C</Line>
+<Line name="g3" from="A" to="C" partial="true">Gerade durch A und C</Line>
+<Line name="g4" from="B" to="D" partial="true">Gerade durch B und D</Line>
+<Intersection name="P" showname="true" xoffset="-30" yoffset="-25" first="g3" second="g4" shape="circle">Schnitt zwischen g3 und g4</Intersection>
+<Line name="g5" from="O" to="P" partial="true">Gerade durch O und P</Line>
+<Plumb name="l1" type="thin" point="P" line="g5" valid="true">Lot durch P zu g5</Plumb>
+<Intersection name="F" showname="true" first="g1" second="l1" shape="circle">Schnitt zwischen g1 und l1</Intersection>
+<Intersection name="G" showname="true" first="l1" second="g2" shape="circle">Schnitt zwischen l1 und g2</Intersection>
+</Objects>
+</Construction>
+</CaR>

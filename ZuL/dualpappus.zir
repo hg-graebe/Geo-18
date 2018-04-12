@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CaR>
+<Construction>
+<Window x="0.0" y="0.0" w="8.0"/>
+<Objects>
+<Point name="P" showname="true" x="-4.45" y="-1.44" shape="circle">Punkt in -4.45, -1.44</Point>
+<Point name="Q" showname="true" x="1.25" y="-1.59" shape="circle">Punkt in 1.25, -1.59</Point>
+<Point name="A" showname="true" xoffset="5" yoffset="-13" x="-0.09999999999999964" y="1.7625000000000006" shape="circle">Punkt in -0.09999999999999964, 1.7625000000000006</Point>
+<Line name="g1" showname="true" xoffset="97" yoffset="154" from="Q" to="A">Gerade durch Q und A</Line>
+<PointOn name="B" showname="true" xoffset="8" yoffset="-7" on="g1" x="0.5209061664276577" y="0.22058302003798413" shape="circle">Punkt auf g1</PointOn>
+<Line name="h1" showname="true" xoffset="-243" yoffset="112" from="P" to="B">Gerade durch P und B</Line>
+<PointOn name="C" showname="true" xoffset="-6" yoffset="-3" on="h1" x="-1.307401011868453" y="-0.39018205056360844" shape="circle">Punkt auf h1</PointOn>
+<Line name="g2" showname="true" xoffset="143" yoffset="60" from="Q" to="C">Gerade durch Q und C</Line>
+<PointOn name="D" showname="true" xoffset="-17" yoffset="-32" on="g2" x="-3.506776234613059" y="0.6416662428984641" shape="circle">Punkt auf g2</PointOn>
+<Line name="h2" showname="true" xoffset="-83" yoffset="202" from="P" to="D">Gerade durch P und D</Line>
+<PointOn name="E" showname="true" xoffset="-15" yoffset="-35" on="h2" x="-2.7737134776793146" y="2.259513514175652" shape="circle">Punkt auf h2</PointOn>
+<Line name="h3" showname="true" xoffset="-8" yoffset="-26" from="A" to="P">Gerade durch A und P</Line>
+<Line name="g3" showname="true" xoffset="-84" yoffset="-68" from="E" to="Q">Gerade durch E und Q</Line>
+<Intersection name="F" showname="true" xoffset="-10" yoffset="-29" first="g3" second="h3" shape="circle">Schnitt zwischen g3 und h3</Intersection>
+<Line name="g7" color="5" type="thin" from="A" to="D">Gerade durch A und D</Line>
+<Line name="g8" color="5" type="thin" from="B" to="E">Gerade durch B und E</Line>
+<Line name="g9" color="5" type="thin" from="F" to="C">Gerade durch F und C</Line>
+</Objects>
+</Construction>
+</CaR>

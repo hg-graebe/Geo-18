@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CaR>
+<Construction>
+<Window x="-2.262741699796952" y="0.0" w="16.000000000000004"/>
+<Objects>
+<Point name="R" showname="true" xoffset="-29" yoffset="-38" x="-3.95712" y="-0.28178000000000003" shape="circle">Punkt in -3.95712, -0.28178000000000003</Point>
+<Point name="S" showname="true" xoffset="-8" yoffset="-35" x="-1.016845329249617" y="-0.28177641653905106" shape="circle">Punkt in -1.016845329249617, -0.28177641653905106</Point>
+<Point name="A" showname="true" xoffset="-1" yoffset="-40" x="-6.346094946401227" y="1.2986217457886688" shape="circle">Punkt in -6.346094946401227, 1.2986217457886688</Point>
+<Line name="g4" from="R" to="S">Gerade durch R und S</Line>
+<PointOn name="T" showname="true" xoffset="-11" yoffset="-37" on="g4" x="-2.3882427352804365" y="-0.28177808793019654" shape="circle">Punkt auf g4</PointOn>
+<Line name="g5" from="A" to="R">Gerade durch A und R</Line>
+<PointOn name="B" showname="true" xoffset="-9" yoffset="-10" on="g5" x="-2.240494545112723" y="-1.4173958715083823" shape="circle">Punkt auf g5</PointOn>
+<Line name="g6" from="B" to="S">Gerade durch B und S</Line>
+<PointOn name="C" showname="true" xoffset="-15" yoffset="-43" on="g6" x="0.6712276429072861" y="1.2848559841012839" shape="circle">Punkt auf g6</PointOn>
+<Line name="g7" from="C" to="T">Gerade durch C und T</Line>
+<PointOn name="D" showname="true" xoffset="-25" yoffset="-34" on="g7" x="-5.878706977072641" y="-2.0691071130401997" shape="circle">Punkt auf g7</PointOn>
+<Line name="g8" from="D" to="R">Gerade durch D und R</Line>
+<PointOn name="E" showname="true" xoffset="-9" yoffset="-48" on="g8" x="-1.7619428267556305" y="1.760021764104216" shape="circle">Punkt auf g8</PointOn>
+<Line name="g9" from="E" to="S">Gerade durch E und S</Line>
+<Line name="g10" from="A" to="T">Gerade durch A und T</Line>
+<Intersection name="F" showname="true" xoffset="3" yoffset="-8" first="g9" second="g10" shape="circle">Schnitt zwischen g9 und g10</Intersection>
+<Line name="g11" type="thin" from="A" to="D">Gerade durch A und D</Line>
+<Line name="g12" type="thin" from="C" to="F">Gerade durch C und F</Line>
+<Line name="g13" type="thin" from="B" to="D">Gerade durch B und D</Line>
+<Line name="g14" type="thin" from="C" to="E">Gerade durch C und E</Line>
+<Line name="g15" type="thin" from="B" to="F">Gerade durch B und F</Line>
+<Line name="g16" type="thin" from="A" to="E">Gerade durch A und E</Line>
+<Intersection name="S2" color="5" type="thick" first="g16" second="g15" shape="circle">Schnitt zwischen g16 und g15</Intersection>
+<Intersection name="S3" color="5" type="thick" first="g11" second="g12" shape="circle">Schnitt zwischen g11 und g12</Intersection>
+<Intersection name="S4" color="5" type="thick" first="g13" second="g14" shape="circle">Schnitt zwischen g13 und g14</Intersection>
+<Line name="g17" color="5" type="thick" from="S2" to="S3">Gerade durch S2 und S3</Line>
+</Objects>
+</Construction>
+</CaR>

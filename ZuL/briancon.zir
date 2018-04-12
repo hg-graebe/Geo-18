@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CaR>
+<Construction>
+<Window x="0.0" y="-1.131370849898476" w="3.999999999999999"/>
+<Objects>
+<Point name="P1" hidden="true" x="-0.6983154670750382" y="-1.1393568147013786" shape="diamond">Punkt in -0.6983154670750382, -1.1393568147013786</Point>
+<Point name="P2" x="-2.119448698315467" y="0.2572741194486987" shape="circle">Punkt in -2.119448698315467, 0.2572741194486987</Point>
+<Circle name="k1" through="P2" midpoint="P1" acute="true">Kreis um P1 durch P2</Circle>
+<PointOn name="P3" on="k1" x="-0.724530769908999" y="0.8530062006796297" shape="circle">Punkt auf k1</PointOn>
+<PointOn name="P4" on="k1" x="1.2884773142114785" y="-1.2905258306688305" shape="circle">Punkt auf k1</PointOn>
+<PointOn name="P5" on="k1" x="-0.23789545095427456" y="-3.077967408894069" shape="circle">Punkt auf k1</PointOn>
+<PointOn name="P6" on="k1" x="-1.7694175354868324" y="-2.819516922013999" shape="circle">Punkt auf k1</PointOn>
+<PointOn name="P7" on="k1" x="-2.6770576610359353" y="-1.3734015903311618" shape="circle">Punkt auf k1</PointOn>
+<Segment name="s2" hidden="true" from="P1" to="P2">Strecke von P1 nach P2</Segment>
+<Plumb name="l2" point="P2" line="s2" valid="true">Lot durch P2 zu s2</Plumb>
+<Segment name="s3" hidden="true" from="P1" to="P3">Strecke von P1 nach P3</Segment>
+<Plumb name="l3" point="P3" line="s3" valid="true">Lot durch P3 zu s3</Plumb>
+<Segment name="s4" hidden="true" from="P1" to="P4">Strecke von P1 nach P4</Segment>
+<Plumb name="l4" point="P4" line="s4" valid="true">Lot durch P4 zu s4</Plumb>
+<Segment name="s5" hidden="true" from="P1" to="P5">Strecke von P1 nach P5</Segment>
+<Plumb name="l5" point="P5" line="s5" valid="true">Lot durch P5 zu s5</Plumb>
+<Segment name="s6" hidden="true" from="P1" to="P6">Strecke von P1 nach P6</Segment>
+<Plumb name="l6" point="P6" line="s6" valid="true">Lot durch P6 zu s6</Plumb>
+<Segment name="s7" hidden="true" from="P1" to="P7">Strecke von P1 nach P7</Segment>
+<Plumb name="l7" point="P7" line="s7" valid="true">Lot durch P7 zu s7</Plumb>
+<Intersection name="S1" first="l2" second="k1" shape="circle" which="first">Schnitt zwischen l2 und k1</Intersection>
+<Intersection name="S3" first="l2" second="l3" shape="circle">Schnitt zwischen l2 und l3</Intersection>
+<Intersection name="S4" first="l4" second="l3" shape="circle">Schnitt zwischen l4 und l3</Intersection>
+<Intersection name="S5" first="l5" second="l4" shape="circle">Schnitt zwischen l5 und l4</Intersection>
+<Intersection name="S6" first="l6" second="l5" shape="circle">Schnitt zwischen l6 und l5</Intersection>
+<Intersection name="S7" first="l7" second="l6" shape="circle">Schnitt zwischen l7 und l6</Intersection>
+<Intersection name="S8" first="l2" second="l7" shape="circle">Schnitt zwischen l2 und l7</Intersection>
+<Line name="g1" type="thin" from="S8" to="S5">Gerade durch S8 und S5</Line>
+<Line name="g2" type="thin" from="S3" to="S6">Gerade durch S3 und S6</Line>
+<Line name="g3" type="thin" from="S4" to="S7">Gerade durch S4 und S7</Line>
+</Objects>
+</Construction>
+</CaR>

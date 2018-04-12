@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CaR>
+<Construction>
+<Window x="0.0" y="0.0" w="8.0"/>
+<Objects>
+<Point name="A" showname="true" xoffset="-9" yoffset="3" x="-3.810107197500001" y="-2.0949464012000005" shape="circle">Punkt in -3.810107197500001, -2.0949464012000005</Point>
+<Point name="C" showname="true" xoffset="-10" yoffset="-53" x="-0.40000000000000036" y="-0.18750000000000044" shape="circle">Punkt in -0.40000000000000036, -0.18750000000000044</Point>
+<Point name="B" showname="true" xoffset="-8" yoffset="-3" x="0.15926493110000006" y="-1.653905053600001" shape="circle">Punkt in 0.15926493110000006, -1.653905053600001</Point>
+<Line name="g1" from="A" to="C">Gerade durch A und C</Line>
+<Line name="g2" from="C" to="B">Gerade durch C und B</Line>
+<Line name="g3" from="B" to="A">Gerade durch B und A</Line>
+<Line name="g4" hidden="true" from="A" to="B">Gerade durch A und B</Line>
+<Circle name="k1" hidden="true" through="C" midpoint="A" acute="true">Kreis um A durch C</Circle>
+<Intersection name="S1" hidden="true" first="g4" second="k1" shape="circle" which="first">Schnitt zwischen g4 und k1</Intersection>
+<Intersection name="S2" hidden="true" first="g4" second="k1" shape="circle" which="second">Schnitt zwischen g4 und k1</Intersection>
+<Midpoint name="M1" hidden="true" first="C" second="S1" shape="circle">Mitte zwischen C und S1</Midpoint>
+<Midpoint name="M2" hidden="true" first="C" second="S2" shape="circle">Mitte zwischen C und S2</Midpoint>
+<Line name="g5" type="thin" from="A" to="M2">Gerade durch A und M2</Line>
+<Line name="g6" type="thin" from="A" to="M1">Gerade durch A und M1</Line>
+<Line name="g7" hidden="true" from="B" to="A">Gerade durch B und A</Line>
+<Circle name="k2" hidden="true" through="C" midpoint="B" acute="true">Kreis um B durch C</Circle>
+<Intersection name="S3" hidden="true" first="g7" second="k2" shape="circle" which="first">Schnitt zwischen g7 und k2</Intersection>
+<Intersection name="S4" hidden="true" first="g7" second="k2" shape="circle" which="second">Schnitt zwischen g7 und k2</Intersection>
+<Midpoint name="M3" hidden="true" first="C" second="S3" shape="circle">Mitte zwischen C und S3</Midpoint>
+<Midpoint name="M4" hidden="true" first="C" second="S4" shape="circle">Mitte zwischen C und S4</Midpoint>
+<Line name="g8" type="thin" from="B" to="M4">Gerade durch B und M4</Line>
+<Line name="g9" type="thin" from="B" to="M3">Gerade durch B und M3</Line>
+<Line name="g10" hidden="true" from="C" to="B">Gerade durch C und B</Line>
+<Circle name="k3" hidden="true" through="A" midpoint="C" acute="true">Kreis um C durch A</Circle>
+<Intersection name="S5" hidden="true" first="g10" second="k3" shape="circle" which="first">Schnitt zwischen g10 und k3</Intersection>
+<Intersection name="S6" hidden="true" first="g10" second="k3" shape="circle" which="second">Schnitt zwischen g10 und k3</Intersection>
+<Midpoint name="M5" hidden="true" first="A" second="S5" shape="circle">Mitte zwischen A und S5</Midpoint>
+<Midpoint name="M6" hidden="true" first="A" second="S6" shape="circle">Mitte zwischen A und S6</Midpoint>
+<Line name="g11" type="thin" from="C" to="M6">Gerade durch C und M6</Line>
+<Line name="g12" type="thin" from="C" to="M5">Gerade durch C und M5</Line>
+<Intersection name="S7" first="g5" second="g11" shape="circle">Schnitt zwischen g5 und g11</Intersection>
+<Intersection name="S8" first="g9" second="g6" shape="circle">Schnitt zwischen g9 und g6</Intersection>
+<Intersection name="S9" first="g11" second="g6" shape="circle">Schnitt zwischen g11 und g6</Intersection>
+<Intersection name="S10" first="g8" second="g12" shape="circle">Schnitt zwischen g8 und g12</Intersection>
+<Plumb name="l1" color="2" hidden="true" point="S7" line="g1" valid="true">Lot durch S7 zu g1</Plumb>
+<Plumb name="l2" type="thin" hidden="true" point="S8" line="g1" valid="true">Lot durch S8 zu g1</Plumb>
+<Plumb name="l3" color="2" hidden="true" point="S9" line="g2" valid="true">Lot durch S9 zu g2</Plumb>
+<Plumb name="l4" color="2" hidden="true" point="S10" line="g3" valid="true">Lot durch S10 zu g3</Plumb>
+<Intersection name="S11" hidden="true" first="g1" second="l1" shape="circle">Schnitt zwischen g1 und l1</Intersection>
+<Intersection name="S12" hidden="true" first="l2" second="g1" shape="circle">Schnitt zwischen l2 und g1</Intersection>
+<Intersection name="S13" hidden="true" first="l4" second="g3" shape="circle">Schnitt zwischen l4 und g3</Intersection>
+<Intersection name="S14" first="g6" second="l3" shape="circle">Schnitt zwischen g6 und l3</Intersection>
+<Intersection name="S15" hidden="true" first="g6" second="g2" shape="circle">Schnitt zwischen g6 und g2</Intersection>
+<Circle name="k4" through="S12" midpoint="S8" acute="true">Kreis um S8 durch S12</Circle>
+<Circle name="k5" through="S11" midpoint="S7" acute="true">Kreis um S7 durch S11</Circle>
+<Circle name="k7" through="S13" midpoint="S10" acute="true">Kreis um S10 durch S13</Circle>
+<Intersection name="S22" hidden="true" first="l3" second="g2" shape="circle">Schnitt zwischen l3 und g2</Intersection>
+<Circle name="k8" through="S22" midpoint="S9" acute="true">Kreis um S9 durch S22</Circle>
+<Midpoint name="M7" first="A" second="C">Mitte zwischen A und C</Midpoint>
+<Midpoint name="M8" first="C" second="B">Mitte zwischen C und B</Midpoint>
+<Midpoint name="M9" first="B" second="A">Mitte zwischen B und A</Midpoint>
+<Segment name="s1" color="5" hidden="true" from="M9" to="M7">Strecke von M9 nach M7</Segment>
+<Segment name="s2" color="5" hidden="true" from="M7" to="M8">Strecke von M7 nach M8</Segment>
+<Midpoint name="M10" color="5" hidden="true" first="M7" second="M9" shape="diamond">Mitte zwischen M7 und M9</Midpoint>
+<Midpoint name="M11" color="5" hidden="true" first="M7" second="M8" shape="diamond">Mitte zwischen M7 und M8</Midpoint>
+<Plumb name="l5" color="5" hidden="true" point="M10" line="s1" valid="true">Lot durch M10 zu s1</Plumb>
+<Plumb name="l6" color="5" hidden="true" point="M11" line="s2" valid="true">Lot durch M11 zu s2</Plumb>
+<Intersection name="S23" color="5" hidden="true" first="l6" second="l5" shape="diamond">Schnitt zwischen l6 und l5</Intersection>
+<Circle name="k9" color="5" through="M8" midpoint="S23" acute="true">Kreis um S23 durch M8</Circle>
+</Objects>
+</Construction>
+</CaR>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CaR>
+<Construction>
+<Window x="0.0" y="0.0" w="11.313708498984758"/>
+<Objects>
+<Point name="P1" x="-4.937212863705972" y="1.3598774885145488" shape="circle">Punkt in -4.937212863705972, 1.3598774885145488</Point>
+<Point name="P2" x="-1.5073394171694865" y="2.4429294002402013" shape="circle">Punkt in -1.5073394171694865, 2.4429294002402013</Point>
+<Point name="P3" x="-6.462501179358828" y="-1.334082012897131" shape="circle">Punkt in -6.462501179358828, -1.334082012897131</Point>
+<Point name="P4" x="1.7845512640052537" y="-2.06176311084102" shape="circle">Punkt in 1.7845512640052537, -2.06176311084102</Point>
+<Line name="g1" color="4" from="P1" to="P2">Gerade durch P1 und P2</Line>
+<Line name="g2" color="4" from="P3" to="P4">Gerade durch P3 und P4</Line>
+<PointOn name="P5" on="g1" x="-2.8922672453991547" y="2.005610427588059" shape="circle">Punkt auf g1</PointOn>
+<PointOn name="P6" on="g2" x="-2.168572954401883" y="-1.7129580327462728" shape="circle">Punkt auf g2</PointOn>
+<Line name="g3" type="thin" hidden="true" from="P1" to="P6">Gerade durch P1 und P6</Line>
+<Line name="g4" type="thin" hidden="true" from="P6" to="P2">Gerade durch P6 und P2</Line>
+<Line name="g5" type="thin" hidden="true" from="P3" to="P5">Gerade durch P3 und P5</Line>
+<Line name="g6" type="thin" hidden="true" from="P5" to="P4">Gerade durch P5 und P4</Line>
+<Intersection name="S1" type="thin" hidden="true" first="g5" second="g3" shape="circle">Schnitt zwischen g5 und g3</Intersection>
+<Intersection name="S2" type="thin" hidden="true" first="g4" second="g6" shape="circle">Schnitt zwischen g4 und g6</Intersection>
+<Line name="g7" from="S1" to="S2">Gerade durch S1 und S2</Line>
+<Line name="g8" type="thin" hidden="true" from="P1" to="P4">Gerade durch P1 und P4</Line>
+<Line name="g9" type="thin" hidden="true" from="P4" to="P2">Gerade durch P4 und P2</Line>
+<Line name="g10" type="thin" hidden="true" from="P3" to="P5">Gerade durch P3 und P5</Line>
+<Line name="g11" type="thin" hidden="true" from="P5" to="P6">Gerade durch P5 und P6</Line>
+<Intersection name="S3" type="thin" hidden="true" first="g10" second="g8" shape="circle">Schnitt zwischen g10 und g8</Intersection>
+<Intersection name="S4" type="thin" hidden="true" first="g9" second="g11" shape="circle">Schnitt zwischen g9 und g11</Intersection>
+<Line name="g12" from="S3" to="S4">Gerade durch S3 und S4</Line>
+<Line name="g13" type="thin" hidden="true" from="P1" to="P3">Gerade durch P1 und P3</Line>
+<Line name="g14" type="thin" hidden="true" from="P3" to="P2">Gerade durch P3 und P2</Line>
+<Line name="g15" type="thin" hidden="true" from="P6" to="P5">Gerade durch P6 und P5</Line>
+<Line name="g16" type="thin" hidden="true" from="P5" to="P4">Gerade durch P5 und P4</Line>
+<Intersection name="S5" type="thin" hidden="true" first="g15" second="g13" shape="circle">Schnitt zwischen g15 und g13</Intersection>
+<Intersection name="S6" type="thin" hidden="true" first="g14" second="g16" shape="circle">Schnitt zwischen g14 und g16</Intersection>
+<Line name="g17" from="S5" to="S6">Gerade durch S5 und S6</Line>
+<Line name="g18" type="thin" hidden="true" from="P1" to="P4">Gerade durch P1 und P4</Line>
+<Line name="g19" type="thin" hidden="true" from="P4" to="P2">Gerade durch P4 und P2</Line>
+<Line name="g20" type="thin" hidden="true" from="P6" to="P5">Gerade durch P6 und P5</Line>
+<Line name="g21" type="thin" hidden="true" from="P5" to="P3">Gerade durch P5 und P3</Line>
+<Intersection name="S7" type="thin" hidden="true" first="g20" second="g18" shape="circle">Schnitt zwischen g20 und g18</Intersection>
+<Intersection name="S8" type="thin" hidden="true" first="g19" second="g21" shape="circle">Schnitt zwischen g19 und g21</Intersection>
+<Line name="g22" from="S7" to="S8">Gerade durch S7 und S8</Line>
+<Line name="g23" type="thin" hidden="true" from="P1" to="P3">Gerade durch P1 und P3</Line>
+<Line name="g24" type="thin" hidden="true" from="P3" to="P2">Gerade durch P3 und P2</Line>
+<Line name="g25" type="thin" hidden="true" from="P4" to="P5">Gerade durch P4 und P5</Line>
+<Line name="g26" type="thin" hidden="true" from="P5" to="P6">Gerade durch P5 und P6</Line>
+<Intersection name="S9" type="thin" hidden="true" first="g25" second="g23" shape="circle">Schnitt zwischen g25 und g23</Intersection>
+<Intersection name="S10" type="thin" hidden="true" first="g24" second="g26" shape="circle">Schnitt zwischen g24 und g26</Intersection>
+<Line name="g27" from="S9" to="S10">Gerade durch S9 und S10</Line>
+<Line name="g28" type="thin" hidden="true" from="P1" to="P6">Gerade durch P1 und P6</Line>
+<Line name="g29" type="thin" hidden="true" from="P6" to="P2">Gerade durch P6 und P2</Line>
+<Line name="g30" type="thin" hidden="true" from="P4" to="P5">Gerade durch P4 und P5</Line>
+<Line name="g31" type="thin" hidden="true" from="P5" to="P3">Gerade durch P5 und P3</Line>
+<Intersection name="S11" type="thin" hidden="true" first="g30" second="g28" shape="circle">Schnitt zwischen g30 und g28</Intersection>
+<Intersection name="S12" type="thin" hidden="true" first="g29" second="g31" shape="circle">Schnitt zwischen g29 und g31</Intersection>
+<Line name="g32" from="S11" to="S12">Gerade durch S11 und S12</Line>
+</Objects>
+</Construction>
+</CaR>

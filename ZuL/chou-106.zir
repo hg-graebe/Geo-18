@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CaR>
+<Construction>
+<Window x="0.0" y="1.131370849898476" w="5.65685424949238"/>
+<Objects>
+<Point name="P2" hidden="true" x="-0.6048110000000001" y="-0.17869400000000002" shape="circle">Punkt in -0.6048110000000001, -0.17869400000000002</Point>
+<Point name="B" showname="true" xoffset="-21" yoffset="-26" x="-1.2441191476546827" y="1.4968308495220386" shape="circle">Punkt in -1.2441191476546827, 1.4968308495220386</Point>
+<Circle name="k1" through="B" midpoint="P2" acute="true">Kreis um P2 durch B</Circle>
+<PointOn name="C" showname="true" xoffset="1" yoffset="-25" on="k1" x="0.13170601625560285" y="1.4564332469717627" shape="circle">Punkt auf k1</PointOn>
+<PointOn name="D" showname="true" xoffset="-3" yoffset="3" on="k1" x="-0.5148638061591488" y="-1.9697852682897175" shape="circle">Punkt auf k1</PointOn>
+<PointOn name="A" showname="true" xoffset="-31" yoffset="2" on="k1" x="-2.3971414367026798" y="-0.1182784830139332" shape="circle">Punkt auf k1</PointOn>
+<Line name="g1" from="A" to="B">Gerade durch A und B</Line>
+<Line name="g2" from="D" to="C">Gerade durch D und C</Line>
+<Intersection name="E" showname="true" xoffset="-31" yoffset="-5" first="g1" second="g2" shape="circle">Schnitt zwischen g1 und g2</Intersection>
+<Line name="g3" from="B" to="C">Gerade durch B und C</Line>
+<Line name="g4" from="A" to="D">Gerade durch A und D</Line>
+<Parallel name="p1" point="E" line="g4">Parallele durch E zu g4</Parallel>
+<Intersection name="F" showname="true" first="g3" second="p1" shape="circle">Schnitt zwischen g3 und p1</Intersection>
+<PointOn name="G" showname="true" on="k1" x="0.6577206818477727" y="-1.4523156790531426" shape="circle">Punkt auf k1</PointOn>
+<Line name="g5" from="G" to="F" partial="true">Gerade durch G und F</Line>
+</Objects>
+</Construction>
+</CaR>

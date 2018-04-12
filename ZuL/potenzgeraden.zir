@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CaR>
+<Construction>
+<Window x="0.0" y="0.0" w="11.313708498984761"/>
+<Objects>
+<Point name="P1" x="2.070444104134763" y="-1.3843797856049007" shape="circle">Punkt in 2.070444104134763, -1.3843797856049007</Point>
+<Point name="P2" x="4.667687595712097" y="-2.2419601837672283" shape="circle">Punkt in 4.667687595712097, -2.2419601837672283</Point>
+<Point name="P3" x="-0.06125574272588086" y="1.1393568147013786" shape="circle">Punkt in -0.06125574272588086, 1.1393568147013786</Point>
+<Point name="P4" x="1.090352220520673" y="3.712098009188362" shape="circle">Punkt in 1.090352220520673, 3.712098009188362</Point>
+<Circle name="k1" through="P2" midpoint="P1" acute="true">Kreis um P1 durch P2</Circle>
+<Circle name="k2" through="P4" midpoint="P3" acute="true">Kreis um P3 durch P4</Circle>
+<Intersection name="S1" first="k1" second="k2" shape="circle" which="first">Schnitt zwischen k1 und k2</Intersection>
+<Intersection name="S2" first="k1" second="k2" shape="circle" which="second">Schnitt zwischen k1 und k2</Intersection>
+<Line name="g1" type="thin" from="S2" to="S1">Gerade durch S2 und S1</Line>
+<PointOn name="P5" hidden="true" on="g1" x="-2.4779518540419385" y="-3.156022581066871" shape="circle">Punkt auf g1</PointOn>
+<Point name="P6" x="-3.14854517611026" y="-1.2863705972434918" shape="circle">Punkt in -3.14854517611026, -1.2863705972434918</Point>
+<Point name="P7" x="-5.549770290964778" y="1.1883614088820833" shape="circle">Punkt in -5.549770290964778, 1.1883614088820833</Point>
+<Circle name="k3" through="P7" midpoint="P6" acute="true">Kreis um P6 durch P7</Circle>
+<Intersection name="S3" first="k3" second="k2" shape="circle" which="first">Schnitt zwischen k3 und k2</Intersection>
+<Intersection name="S4" first="k3" second="k2" shape="circle" which="second">Schnitt zwischen k3 und k2</Intersection>
+<Intersection name="S5" first="k3" second="k1" shape="circle" which="first">Schnitt zwischen k3 und k1</Intersection>
+<Intersection name="S6" first="k3" second="k1" shape="circle" which="second">Schnitt zwischen k3 und k1</Intersection>
+<Line name="g2" type="thin" from="S4" to="S3">Gerade durch S4 und S3</Line>
+<Line name="g3" type="thin" from="S6" to="S5">Gerade durch S6 und S5</Line>
+</Objects>
+</Construction>
+</CaR>
