@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CaR version="12.0">
+<Construction>
+<Window x="0.0" y="0.0" w="8.0"/>
+<Objects>
+<Point name="P17" n="18" x="-0.5" actx="-0.5" y="4.5" acty="4.5" shape="circle" fixed="true">Punkt in &quot;-0.5&quot;, &quot;4.5&quot;</Point>
+<Point name="P18" n="19" x="-4.5" actx="-4.5" y="4.5" acty="4.5" shape="circle" fixed="true">Punkt in &quot;-4.5&quot;, &quot;4.5&quot;</Point>
+<Point name="P19" n="20" x="-4.5" actx="-4.5" y="0.5" acty="0.5" shape="circle" fixed="true">Punkt in &quot;-4.5&quot;, &quot;0.5&quot;</Point>
+<Point name="P20" n="21" x="-0.5" actx="-0.5" y="0.5" acty="0.5" shape="circle" fixed="true">Punkt in &quot;-0.5&quot;, &quot;0.5&quot;</Point>
+<Polygon name="A3" n="22" type="thin" background="true" decorative="true" point1="P17" point2="P18" point3="P19" point4="P20">Vieleck P17, P18, P19, P20</Polygon>
+<Angle name="w2" n="27" unit="°" first="P17" root="P20" fixedangle="true" fixed="45" acute="true" inverse="true">Fester Winkel P17 - P20 mit Größe 45</Angle>
+<Angle name="w3" n="29" unit="°" first="P18" root="P19" fixedangle="true" fixed="45" acute="true" inverse="true">Fester Winkel P18 - P19 mit Größe 45</Angle>
+<Angle name="w4" n="31" unit="°" first="P19" root="P18" fixedangle="true" fixed="135" acute="true">Fester Winkel P19 - P18 mit Größe 135</Angle>
+<Angle name="w6" n="35" unit="°" first="P20" root="P17" fixedangle="true" fixed="135" acute="true">Fester Winkel P20 - P17 mit Größe 135</Angle>
+<PointOn name="P22" n="36" color="1" on="w4" alpha="1.838477631085024" x="-3.1999999999999997" y="5.8" shape="circle">Punkt auf w4</PointOn>
+<PointOn name="P23" n="37" color="1" on="w6" alpha="1.838477631085024" x="0.8000000000000003" y="5.8" shape="circle">Punkt auf w6</PointOn>
+<PointOn name="P24" n="38" color="1" on="w2" alpha="1.8384776310850235" x="0.8000000000000003" y="1.7999999999999996" shape="circle">Punkt auf w2</PointOn>
+<PointOn name="P26" n="41" color="1" on="w3" alpha="1.8384776310850235" x="-3.1999999999999997" y="1.7999999999999996" shape="circle">Punkt auf w3</PointOn>
+<Polygon name="A5" n="42" color="1" type="thin" background="true" decorative="true" point1="P22" point2="P23" point3="P24" point4="P26">Vieleck P22, P23, P24, P26</Polygon>
+<Polygon name="A6" n="43" color="2" type="thin" background="true" decorative="true" point1="P18" point2="P22" point3="P23" point4="P17">Vieleck P18, P22, P23, P17</Polygon>
+<Polygon name="A7" n="44" color="3" type="thin" background="true" decorative="true" point1="P17" point2="P23" point3="P24" point4="P20">Vieleck P17, P23, P24, P20</Polygon>
+<Polygon name="A9" n="46" color="4" type="thin" background="true" decorative="true" point1="P19" point2="P20" point3="P24" point4="P26">Vieleck P19, P20, P24, P26</Polygon>
+<Polygon name="A10" n="47" color="5" type="thin" background="true" decorative="true" point1="P18" point2="P22" point3="P26" point4="P19">Vieleck P18, P22, P26, P19</Polygon>
+<Segment name="s3" n="57" color="1" from="P22" to="P23">Strecke von P22 nach P23</Segment>
+<Segment name="s4" n="60" color="1" from="P23" to="P24">Strecke von P23 nach P24</Segment>
+<Segment name="s5" n="63" color="1" from="P24" to="P26">Strecke von P24 nach P26</Segment>
+<Segment name="s6" n="66" color="1" from="P26" to="P22">Strecke von P26 nach P22</Segment>
+<Segment name="s7" n="69" color="5" from="P18" to="P17">Strecke von P18 nach P17</Segment>
+<Segment name="s8" n="72" color="5" from="P17" to="P20">Strecke von P17 nach P20</Segment>
+<Segment name="s9" n="75" color="5" from="P20" to="P19">Strecke von P20 nach P19</Segment>
+<Segment name="s10" n="78" color="5" from="P19" to="P18">Strecke von P19 nach P18</Segment>
+</Objects>
+</Construction>
+</CaR>
