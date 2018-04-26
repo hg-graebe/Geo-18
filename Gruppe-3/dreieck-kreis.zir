@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CaR version="12.0">
+<Construction>
+<Window x="0.0" y="0.0" w="8.0"/>
+<Objects>
+<Point name="P1" n="0" x="-1.4380453752181497" y="1.8848167539267018" shape="circle">Punkt in -1.43805, 1.88482</Point>
+<Point name="P2" n="1" x="-4.369982547993019" y="-0.8935427574171029" shape="circle">Punkt in -4.36998, -0.89354</Point>
+<Point name="P3" n="7" x="-0.1256544502617798" y="-2.191972076788831" shape="circle">Punkt in -0.12565, -2.19197</Point>
+<Segment name="s1" n="8" from="P1" to="P2">Strecke von P1 nach P2</Segment>
+<Segment name="s2" n="9" from="P2" to="P3">Strecke von P2 nach P3</Segment>
+<Segment name="s3" n="10" from="P3" to="P1">Strecke von P3 nach P1</Segment>
+<Polygon name="A1" n="11" type="thin" background="true" decorative="true" point1="P1" point2="P2" point3="P3">Vieleck P1, P2, P3</Polygon>
+<Ray name="r1" n="21" hidden="true" from="P1" to="P2">Strahl von P1 in Richtung P2</Ray>
+<Circle name="k1" n="22" hidden="true" through="P3" midpoint="P1" acute="true">Kreis um P1 durch P3</Circle>
+<Intersection name="S1" n="23" hidden="true" first="r1" second="k1" which="first">Schnitt zwischen r1 und k1</Intersection>
+<Circle name="k2" n="24" hidden="super" through="P3" midpoint="S1" acute="true">Kreis um S1 durch P3</Circle>
+<Circle name="k3" n="25" hidden="super" through="S1" midpoint="P3" acute="true">Kreis um P3 durch S1</Circle>
+<Intersection name="S2" n="26" hidden="super" first="k2" second="k3" which="second">Schnitt zwischen k2 und k3</Intersection>
+<Intersection name="S3" n="27" hidden="super" first="k3" second="k2" which="second">Schnitt zwischen k3 und k2</Intersection>
+<Line name="g2" n="28" from="S2" to="S3">Gerade durch S2 und S3</Line>
+<Ray name="r2" n="38" hidden="true" from="P1" to="P3">Strahl von P1 in Richtung P3</Ray>
+<Circle name="k4" n="39" hidden="true" through="P2" midpoint="P1" acute="true">Kreis um P1 durch P2</Circle>
+<Intersection name="S4" n="40" hidden="true" first="r2" second="k4" which="first">Schnitt zwischen r2 und k4</Intersection>
+<Circle name="k5" n="41" hidden="super" through="P2" midpoint="S4" acute="true">Kreis um S4 durch P2</Circle>
+<Circle name="k6" n="42" hidden="super" through="S4" midpoint="P2" acute="true">Kreis um P2 durch S4</Circle>
+<Intersection name="S5" n="43" hidden="super" first="k5" second="k6" which="second">Schnitt zwischen k5 und k6</Intersection>
+<Intersection name="S6" n="44" hidden="super" first="k6" second="k5" which="second">Schnitt zwischen k6 und k5</Intersection>
+<Line name="g3" n="45" hidden="true" from="S5" to="S6">Gerade durch S5 und S6</Line>
+<Ray name="r3" n="55" hidden="true" from="P2" to="P1">Strahl von P2 in Richtung P1</Ray>
+<Circle name="k7" n="56" hidden="true" through="P3" midpoint="P2" acute="true">Kreis um P2 durch P3</Circle>
+<Intersection name="S7" n="57" hidden="true" first="r3" second="k7" which="first">Schnitt zwischen r3 und k7</Intersection>
+<Circle name="k8" n="58" hidden="super" through="P3" midpoint="S7" acute="true">Kreis um S7 durch P3</Circle>
+<Circle name="k9" n="59" hidden="super" through="S7" midpoint="P3" acute="true">Kreis um P3 durch S7</Circle>
+<Intersection name="S8" n="60" hidden="super" first="k8" second="k9" which="second">Schnitt zwischen k8 und k9</Intersection>
+<Intersection name="S9" n="61" hidden="super" first="k9" second="k8" which="second">Schnitt zwischen k9 und k8</Intersection>
+<Line name="g4" n="62" from="S8" to="S9">Gerade durch S8 und S9</Line>
+<Ray name="r4" n="72" hidden="true" from="P3" to="P2">Strahl von P3 in Richtung P2</Ray>
+<Circle name="k10" n="73" hidden="true" through="P1" midpoint="P3" acute="true">Kreis um P3 durch P1</Circle>
+<Intersection name="S10" n="74" hidden="true" first="r4" second="k10" which="first">Schnitt zwischen r4 und k10</Intersection>
+<Circle name="k11" n="75" hidden="super" through="P1" midpoint="S10" acute="true">Kreis um S10 durch P1</Circle>
+<Circle name="k12" n="76" hidden="super" through="S10" midpoint="P1" acute="true">Kreis um P1 durch S10</Circle>
+<Intersection name="S11" n="77" hidden="super" first="k11" second="k12" which="second">Schnitt zwischen k11 und k12</Intersection>
+<Intersection name="S12" n="78" hidden="super" first="k12" second="k11" which="second">Schnitt zwischen k12 und k11</Intersection>
+<Line name="g5" n="79" from="S11" to="S12">Gerade durch S11 und S12</Line>
+<Intersection name="S13" n="80" first="g2" second="g5" shape="circle">Schnitt zwischen g2 und g5</Intersection>
+<Intersection name="S14" n="83" first="s3" second="g4" shape="circle">Schnitt zwischen s3 und g4</Intersection>
+<Circle name="k13" n="84" through="S14" midpoint="S13" acute="true">Kreis um S13 durch S14</Circle>
+<Circle name="k14" n="91" hidden="super" through="P3" midpoint="P1" acute="true">Kreis um P1 durch P3</Circle>
+<Circle name="k15" n="92" hidden="super" through="P1" midpoint="P3" acute="true">Kreis um P3 durch P1</Circle>
+<Intersection name="S15" n="93" hidden="super" first="k14" second="k15" which="second">Schnitt zwischen k14 und k15</Intersection>
+<Intersection name="S16" n="94" hidden="super" first="k15" second="k14" which="second">Schnitt zwischen k15 und k14</Intersection>
+<Line name="g6" n="95" from="S15" to="S16">Gerade durch S15 und S16</Line>
+<Circle name="k16" n="102" hidden="super" through="P2" midpoint="P1" acute="true">Kreis um P1 durch P2</Circle>
+<Circle name="k17" n="103" hidden="super" through="P1" midpoint="P2" acute="true">Kreis um P2 durch P1</Circle>
+<Intersection name="S17" n="104" hidden="super" first="k16" second="k17" which="second">Schnitt zwischen k16 und k17</Intersection>
+<Intersection name="S18" n="105" hidden="super" first="k17" second="k16" which="second">Schnitt zwischen k17 und k16</Intersection>
+<Line name="g7" n="106" from="S17" to="S18">Gerade durch S17 und S18</Line>
+<Circle name="k18" n="113" hidden="super" through="P3" midpoint="P2" acute="true">Kreis um P2 durch P3</Circle>
+<Circle name="k19" n="114" hidden="super" through="P2" midpoint="P3" acute="true">Kreis um P3 durch P2</Circle>
+<Intersection name="S19" n="115" hidden="super" first="k18" second="k19" which="second">Schnitt zwischen k18 und k19</Intersection>
+<Intersection name="S20" n="116" hidden="super" first="k19" second="k18" which="second">Schnitt zwischen k19 und k18</Intersection>
+<Line name="g8" n="117" from="S19" to="S20">Gerade durch S19 und S20</Line>
+<Intersection name="S21" n="118" first="g7" second="g8" shape="circle">Schnitt zwischen g7 und g8</Intersection>
+<Circle name="k20" n="121" through="P1" midpoint="S21" acute="true">Kreis um S21 durch P1</Circle>
+</Objects>
+</Construction>
+</CaR>
