@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CaR version="12.0">
+<Construction>
+<Window x="0.0" y="-13.57645019878171" w="19.02731384004354"/>
+<Objects>
+<Point name="P1" alias="Kreismittelpunkt" n="7" x="-3.68421" y="-10.5" shape="circle">Punkt in -3.68421, -10.5</Point>
+<Circle name="K1" alias="Kreis" n="10" fixed="4" midpoint="P1" acute="true">Kreis um P1 mit Radius 4</Circle>
+<Point name="P2" n="11" x="7.82373" y="-10.640270000000001" shape="circle">Punkt in 7.82373, -10.64027</Point>
+<Segment name="s1" n="14" from="P1" to="P2">Strecke von P3 nach P4</Segment>
+<Circle name="k3" n="28" hidden="super" through="P2" midpoint="P1" acute="true">Kreis um P3 durch P4</Circle>
+<Circle name="k4" n="29" hidden="super" through="P1" midpoint="P2" acute="true">Kreis um P4 durch P3</Circle>
+<Intersection name="S1" n="30" hidden="super" first="k3" second="k4" which="second">Schnitt zwischen k3 und k4</Intersection>
+<Intersection name="S2" n="31" hidden="super" first="k4" second="k3" which="second">Schnitt zwischen k4 und k3</Intersection>
+<Line name="g1" alias="Mittelsenkrechte auf s1" n="32" from="S1" to="S2">Gerade durch S1 und S2</Line>
+<Intersection name="s2" n="45" first="s1" second="g1" shape="circle">Schnitt zwischen s1 und g1</Intersection>
+<Circle3 name="k2" n="93" from="s2" to="P1" midpoint="s2" acute="true">Kreis um S3 mit Radius von S3 nach P3</Circle3>
+<Intersection name="P3" alias="Schnittpunkt der Tangente von k1 durch P2" n="94" first="K1" second="k2" shape="circle" which="second">Schnitt zwischen Kreis und k12</Intersection>
+<Intersection name="P4" alias="Schnittpunkt der Tangelte von k1 durch P2" n="95" first="K1" second="k2" shape="circle" which="first">Schnitt zwischen Kreis und k12</Intersection>
+<Line name="t1" alias="Tangente von k1 die durch P2 geht" n="98" from="P3" to="P2">Gerade durch S13 und P4</Line>
+<Line name="t2" alias="Tangente von k1 die durch P2 geht" n="101" from="P2" to="P4">Gerade durch P4 und S14</Line>
+</Objects>
+</Construction>
+</CaR>
