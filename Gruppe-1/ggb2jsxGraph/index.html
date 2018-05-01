@@ -1,0 +1,63 @@
+<html>
+    <head>
+        <meta charset='UTF-8'>
+        <link rel='stylesheet' type='text/css' href='jsxgraph.css'>
+        <script src='jquery-1.12.0.min.js' type='text/javascript'></script>
+        <script src='jsxgraphcore.js' type='text/javascript'></script>
+        <script src='geogebra.js' type='text/javascript'></script>
+    </head>
+    <body>
+        <div>
+            <div style='width: 45%; height: 95%; float: left'>
+                <div style='width: 100%; margin-top: 5px'>
+                    <label style='margin-right: 10px'>Select Geogebra XML file or GGB archive: </label>
+                    <input type='file' id='ggbFileSelect' accept='.ggb,.xml'/>
+                </div>
+                <br />
+                <textarea id='xmlContainer' style='width: 100%; height: 80%'>
+                </textarea>
+                <button id='readFromTextarea'>Parse from text area</button>
+            </div>
+            <div id='box' class='jxgbox' style='width: 50%; height: 95%; float: right'></div>
+        </div>
+        <script type='text/javascript'>
+            $('#ggbFileSelect').change(handleUploadFile);
+            $('#readFromTextarea').click(handleReadFromTextarea);
+            // doesn't work on Chrome which by default does not allow XHRs for local files
+            //var board = JXG.JSXGraph.loadBoardFromFile('box', 'geogebra-export.ggb', 'Geogebra');
+            var board = JXG.JSXGraph.initBoard('box', {boundingbox: [-10, 10, 10, -10], axis:true});
+            var $xmlContainer = $('#xmlContainer');
+
+            function loadFromText(inputText) {
+                // board needs to be reset before loading new constructions
+                board = JXG.JSXGraph.initBoard('box', {boundingbox: [-10, 10, 10, -10], axis:true});
+                const ggbReader = new JXG.GeogebraReader(board, inputText);
+                // can't put inputText into xmlContainer directly, might be a compressed ggb
+                $xmlContainer.val(new XMLSerializer().serializeToString(ggbReader.tree.documentElement));
+                ggbReader.read();
+            }
+
+            function handleUploadFile() {
+                const file = this.files[0];
+                if (!file) {
+                    $xmlContainer.val('No file found');
+                    return;
+                }
+                if (!window.FileReader) {
+                    $xmlContainer.val('Your browser does not support the FileReader API');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    loadFromText(reader.result);
+                };
+                reader.readAsText(file, 'ISO-8859-1');
+            }
+
+            function handleReadFromTextarea() {
+                loadFromText($xmlContainer.val());
+            }
+        </script>
+    </body>
+</html>
