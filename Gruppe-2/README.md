@@ -6,5 +6,6 @@ die Ergebnisse auf einem gemeinsamen Meeting im Praktikum vorstellen.
 Team:
 * Kevin Marco Shrestra (PL)
 * Trung Duong
-* Dmitrij Denisenko
+* Dmitrij Denisenko (bisher kein Account am ifi gitlab)
 * Akber Sarchaddi
+* Johannes Michael (bisher kein Account am ifi gitlab)
