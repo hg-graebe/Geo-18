@@ -1018,6 +1018,7 @@ define([
          */
         intersectionFunction: function (board, el1, el2, i, j, alwaysintersect) {
             var func, that = this;
+               if (!el1) return;
 
             if (el1.elementClass === Const.OBJECT_CLASS_CURVE &&
                     el2.elementClass === Const.OBJECT_CLASS_CURVE) {

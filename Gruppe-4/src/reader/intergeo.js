@@ -282,12 +282,12 @@
             p = node.childNodes[i];
 
             // skip non element nodes
-            while (p.nodeType > 1) {
+            while (i < node.childNodes.length && p.nodeType > 1) {
                 i += 1;
                 p = node.childNodes[i];
             }
 
-            if (p.nodeName === 'matrix') {
+            if (p && p.nodeName === 'matrix') {
                 c = [];
 
                 for (j = 0; j < p.childNodes.length; j++) {
