@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="utf-8"?>
+<geogebra format="3.2">
+<gui>
+	<show algebraView="true" spreadsheetView="false" auxiliaryObjects="false" algebraInput="true" cmdList="true"/>
+	<splitDivider loc="650" locVertical="400" loc2="248" locVertical2="300" horizontal="true"/>
+	<labelingStyle  val="3"/>
+	<font  size="12"/>
+</gui>
+<euclidianView>
+	<size  width="635" height="513"/>
+	<coordSystem xZero="213.2364669421488" yZero="316.7635330578512" scale="48.97469008264463" yscale="48.97469008264463"/>
+	<evSettings axes="false" grid="false" gridIsBold="false" pointCapturing="3" pointStyle="0" rightAngleStyle="1" checkboxSize="13" gridType="0"/>
+	<bgColor r="255" g="255" b="255"/>
+	<axesColor r="0" g="0" b="0"/>
+	<gridColor r="192" g="192" b="192"/>
+	<lineStyle axes="1" grid="10"/>
+	<axis id="0" show="false" label="" unitLabel="" tickStyle="1" showNumbers="true"/>
+	<axis id="1" show="false" label="" unitLabel="" tickStyle="1" showNumbers="true"/>
+</euclidianView>
+<kernel>
+	<continuous val="false"/>
+	<decimals val="2"/>
+	<angleUnit val="degree"/>
+	<algebraStyle val="0"/>
+	<coordStyle val="0"/>
+</kernel>
+<construction title="" author="" date="">
+<element type="point" label="A">
+	<show object="true" label="true"/>
+	<objColor r="0" g="0" b="255" alpha="0.0"/>
+	<layer val="0"/>
+	<labelOffset x="-21" y="-5"/>
+	<labelMode val="0"/>
+	<animation step="0.1" speed="1.0" type="0" playing="false"/>
+	<coords x="-1.94" y="0.4" z="1.0"/>
+	<pointSize val="3"/>
+</element>
+<element type="point" label="B">
+	<show object="true" label="true"/>
+	<objColor r="0" g="0" b="255" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<animation step="0.1" speed="1.0" type="0" playing="false"/>
+	<coords x="5.18" y="-0.08" z="1.0"/>
+	<pointSize val="3"/>
+</element>
+<element type="point" label="C">
+	<show object="true" label="true"/>
+	<objColor r="0" g="0" b="255" alpha="0.0"/>
+	<layer val="0"/>
+	<labelOffset x="-26" y="6"/>
+	<labelMode val="0"/>
+	<animation step="0.1" speed="1.0" type="0" playing="false"/>
+	<coords x="0.8" y="4.72" z="1.0"/>
+	<pointSize val="3"/>
+</element>
+<command name="Line">
+	<input a0="A" a1="C"/>
+	<output a0="a"/>
+</command>
+<element type="line" label="a">
+	<lineStyle thickness="2" type="0"/>
+	<show object="true" label="false"/>
+	<objColor r="0" g="0" b="0" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<coords x="-4.319999999999999" y="2.74" z="-9.476799999999999"/>
+	<lineStyle thickness="2" type="0"/>
+	<eqnStyle style="implicit"/>
+</element>
+<command name="Line">
+	<input a0="C" a1="B"/>
+	<output a0="b"/>
+</command>
+<element type="line" label="b">
+	<lineStyle thickness="2" type="0"/>
+	<show object="true" label="false"/>
+	<objColor r="0" g="0" b="0" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<coords x="4.8" y="4.38" z="-24.513599999999997"/>
+	<lineStyle thickness="2" type="0"/>
+	<eqnStyle style="implicit"/>
+</element>
+<command name="Line">
+	<input a0="B" a1="A"/>
+	<output a0="c"/>
+</command>
+<element type="line" label="c">
+	<lineStyle thickness="2" type="0"/>
+	<show object="true" label="false"/>
+	<objColor r="0" g="0" b="0" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<coords x="-0.48000000000000004" y="-7.119999999999999" z="1.9168"/>
+	<lineStyle thickness="2" type="0"/>
+	<eqnStyle style="implicit"/>
+</element>
+<command name="Midpoint">
+	<input a0="B" a1="C"/>
+	<output a0="A_1"/>
+</command>
+<element type="point" label="A_1">
+	<show object="true" label="true"/>
+	<objColor r="64" g="64" b="64" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<coords x="2.9899999999999998" y="2.32" z="1.0"/>
+	<pointSize val="3"/>
+</element>
+<command name="Midpoint">
+	<input a0="C" a1="A"/>
+	<output a0="B_1"/>
+</command>
+<element type="point" label="B_1">
+	<show object="true" label="true"/>
+	<objColor r="64" g="64" b="64" alpha="0.0"/>
+	<layer val="0"/>
+	<labelOffset x="-27" y="-9"/>
+	<labelMode val="0"/>
+	<coords x="-0.57" y="2.56" z="1.0"/>
+	<pointSize val="3"/>
+</element>
+<command name="Midpoint">
+	<input a0="A" a1="B"/>
+	<output a0="C_1"/>
+</command>
+<element type="point" label="C_1">
+	<show object="true" label="true"/>
+	<objColor r="64" g="64" b="64" alpha="0.0"/>
+	<layer val="0"/>
+	<labelOffset x="4" y="23"/>
+	<labelMode val="0"/>
+	<coords x="1.6199999999999999" y="0.16" z="1.0"/>
+	<pointSize val="3"/>
+</element>
+<command name="Segment">
+	<input a0="B_1" a1="A_1"/>
+	<output a0="d"/>
+</command>
+<element type="segment" label="d">
+	<lineStyle thickness="2" type="0"/>
+	<show object="true" label="false"/>
+	<objColor r="102" g="102" b="255" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<coords x="0.2400000000000002" y="3.5599999999999996" z="-8.976799999999999"/>
+	<lineStyle thickness="2" type="0"/>
+	<eqnStyle style="implicit"/>
+	<outlyingIntersections val="false"/>
+	<keepTypeOnTransform val="true"/>
+</element>
+<command name="Segment">
+	<input a0="C_1" a1="A_1"/>
+	<output a0="e"/>
+</command>
+<element type="segment" label="e">
+	<lineStyle thickness="2" type="0"/>
+	<show object="true" label="false"/>
+	<objColor r="102" g="102" b="255" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<coords x="-2.1599999999999997" y="1.3699999999999999" z="3.2799999999999994"/>
+	<lineStyle thickness="2" type="0"/>
+	<eqnStyle style="implicit"/>
+	<outlyingIntersections val="false"/>
+	<keepTypeOnTransform val="true"/>
+</element>
+<command name="Segment">
+	<input a0="B_1" a1="C_1"/>
+	<output a0="f"/>
+</command>
+<element type="segment" label="f">
+	<lineStyle thickness="2" type="0"/>
+	<show object="true" label="false"/>
+	<objColor r="102" g="102" b="255" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<coords x="2.4" y="2.19" z="-4.2383999999999995"/>
+	<lineStyle thickness="2" type="0"/>
+	<eqnStyle style="implicit"/>
+	<outlyingIntersections val="false"/>
+	<keepTypeOnTransform val="true"/>
+</element>
+<command name="OrthogonalLine">
+	<input a0="A" a1="b"/>
+	<output a0="g"/>
+</command>
+<element type="line" label="g">
+	<lineStyle thickness="2" type="0"/>
+	<show object="true" label="false"/>
+	<objColor r="51" g="255" b="51" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<coords x="-4.38" y="4.8" z="-10.4172"/>
+	<lineStyle thickness="2" type="0"/>
+	<eqnStyle style="implicit"/>
+</element>
+<command name="OrthogonalLine">
+	<input a0="C" a1="c"/>
+	<output a0="h"/>
+</command>
+<element type="line" label="h">
+	<lineStyle thickness="2" type="0"/>
+	<show object="true" label="false"/>
+	<objColor r="51" g="255" b="51" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<coords x="7.119999999999999" y="-0.48000000000000004" z="-3.4303999999999997"/>
+	<lineStyle thickness="2" type="0"/>
+	<eqnStyle style="implicit"/>
+</element>
+<command name="OrthogonalLine">
+	<input a0="B" a1="a"/>
+	<output a0="i"/>
+</command>
+<element type="line" label="i">
+	<lineStyle thickness="2" type="0"/>
+	<show object="false" label="false"/>
+	<objColor r="51" g="255" b="51" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<coords x="-2.74" y="-4.319999999999999" z="13.847600000000002"/>
+	<lineStyle thickness="2" type="0"/>
+	<eqnStyle style="implicit"/>
+</element>
+<command name="Intersect">
+	<input a0="b" a1="g"/>
+	<output a0="A_2"/>
+</command>
+<element type="point" label="A_2">
+	<show object="false" label="true"/>
+	<objColor r="64" g="64" b="64" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<coords x="72.03794399999998" y="157.37212799999998" z="42.2244"/>
+	<pointSize val="3"/>
+</element>
+<command name="Intersect">
+	<input a0="a" a1="i"/>
+	<output a0="B_2"/>
+</command>
+<element type="point" label="B_2">
+	<show object="false" label="true"/>
+	<objColor r="64" g="64" b="64" alpha="0.0"/>
+	<layer val="0"/>
+	<labelOffset x="-33" y="8"/>
+	<labelMode val="0"/>
+	<coords x="-2.997351999999978" y="85.78806399999999" z="26.169999999999995"/>
+	<pointSize val="3"/>
+</element>
+<command name="Intersect">
+	<input a0="c" a1="h"/>
+	<output a0="C_2"/>
+</command>
+<element type="point" label="C_2">
+	<show object="false" label="true"/>
+	<objColor r="64" g="64" b="64" alpha="0.0"/>
+	<layer val="0"/>
+	<labelOffset x="-30" y="24"/>
+	<labelMode val="0"/>
+	<coords x="25.344511999999995" y="12.001024" z="50.92479999999999"/>
+	<pointSize val="3"/>
+</element>
+<command name="Intersect">
+	<input a0="g" a1="h"/>
+	<output a0="H"/>
+</command>
+<element type="point" label="H">
+	<show object="true" label="true"/>
+	<objColor r="64" g="64" b="64" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<coords x="21.466175999999997" y="89.19561599999997" z="32.07359999999999"/>
+	<pointSize val="3"/>
+</element>
+<command name="Line">
+	<input a0="C" a1="C_1"/>
+	<output a0="j"/>
+</command>
+<element type="line" label="j">
+	<lineStyle thickness="2" type="0"/>
+	<show object="true" label="false"/>
+	<objColor r="51" g="204" b="255" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<coords x="4.56" y="0.8199999999999998" z="-7.518399999999999"/>
+	<lineStyle thickness="2" type="0"/>
+	<eqnStyle style="implicit"/>
+</element>
+<command name="Line">
+	<input a0="A" a1="A_1"/>
+	<output a0="k"/>
+</command>
+<element type="line" label="k">
+	<lineStyle thickness="2" type="0"/>
+	<show object="true" label="false"/>
+	<objColor r="51" g="204" b="255" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<coords x="-1.92" y="4.93" z="-5.6968"/>
+	<lineStyle thickness="2" type="0"/>
+	<eqnStyle style="implicit"/>
+</element>
+<command name="Line">
+	<input a0="B" a1="B_1"/>
+	<output a0="l"/>
+</command>
+<element type="line" label="l">
+	<lineStyle thickness="2" type="0"/>
+	<show object="false" label="false"/>
+	<objColor r="51" g="204" b="255" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<coords x="-2.64" y="-5.75" z="13.2152"/>
+	<lineStyle thickness="2" type="0"/>
+	<eqnStyle style="implicit"/>
+</element>
+<command name="Intersect">
+	<input a0="k" a1="j"/>
+	<output a0="S"/>
+</command>
+<element type="point" label="S">
+	<show object="true" label="true"/>
+	<objColor r="64" g="64" b="64" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<coords x="32.394335999999996" y="40.412735999999995" z="24.055199999999996"/>
+	<pointSize val="3"/>
+</element>
+<command name="Midpoint">
+	<input a0="C" a1="H"/>
+	<output a0="C_3"/>
+</command>
+<element type="point" label="C_3">
+	<show object="false" label="true"/>
+	<objColor r="64" g="64" b="64" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<coords x="0.7346393295420534" y="3.7504833882071233" z="1.0"/>
+	<pointSize val="3"/>
+</element>
+<command name="Midpoint">
+	<input a0="H" a1="A"/>
+	<output a0="A_3"/>
+</command>
+<element type="point" label="A_3">
+	<show object="false" label="true"/>
+	<objColor r="64" g="64" b="64" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<coords x="-0.6353606704579466" y="1.5904833882071234" z="1.0"/>
+	<pointSize val="3"/>
+</element>
+<command name="Midpoint">
+	<input a0="H" a1="B"/>
+	<output a0="B_3"/>
+</command>
+<element type="point" label="B_3">
+	<show object="false" label="true"/>
+	<objColor r="64" g="64" b="64" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<coords x="2.924639329542053" y="1.3504833882071234" z="1.0"/>
+	<pointSize val="3"/>
+</element>
+<command name="Segment">
+	<input a0="A_3" a1="B_3"/>
+	<output a0="m"/>
+</command>
+<element type="segment" label="m">
+	<lineStyle thickness="2" type="0"/>
+	<show object="false" label="false"/>
+	<objColor r="153" g="0" b="153" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<coords x="0.24" y="3.5599999999999996" z="-5.509634301107452"/>
+	<lineStyle thickness="2" type="0"/>
+	<eqnStyle style="implicit"/>
+	<outlyingIntersections val="false"/>
+	<keepTypeOnTransform val="true"/>
+</element>
+<command name="Segment">
+	<input a0="B_3" a1="C_3"/>
+	<output a0="n"/>
+</command>
+<element type="segment" label="n">
+	<lineStyle thickness="2" type="0"/>
+	<show object="false" label="false"/>
+	<objColor r="153" g="0" b="153" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<coords x="-2.4" y="-2.19" z="9.976693011074527"/>
+	<lineStyle thickness="2" type="0"/>
+	<eqnStyle style="implicit"/>
+	<outlyingIntersections val="false"/>
+	<keepTypeOnTransform val="true"/>
+</element>
+<command name="Segment">
+	<input a0="C_3" a1="A_3"/>
+	<output a0="p"/>
+</command>
+<element type="segment" label="p">
+	<lineStyle thickness="2" type="0"/>
+	<show object="false" label="false"/>
+	<objColor r="153" g="0" b="153" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<coords x="2.16" y="-1.37" z="3.5513412900329238"/>
+	<lineStyle thickness="2" type="0"/>
+	<eqnStyle style="implicit"/>
+	<outlyingIntersections val="false"/>
+	<keepTypeOnTransform val="true"/>
+</element>
+<command name="OrthogonalLine">
+	<input a0="C_1" a1="c"/>
+	<output a0="q"/>
+</command>
+<element type="line" label="q">
+	<lineStyle thickness="2" type="0"/>
+	<show object="true" label="false"/>
+	<objColor r="0" g="0" b="0" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<coords x="7.119999999999999" y="-0.48000000000000004" z="-11.457599999999998"/>
+	<lineStyle thickness="2" type="0"/>
+	<eqnStyle style="implicit"/>
+</element>
+<command name="OrthogonalLine">
+	<input a0="A_1" a1="b"/>
+	<output a0="r"/>
+</command>
+<element type="line" label="r">
+	<lineStyle thickness="2" type="0"/>
+	<show object="true" label="false"/>
+	<objColor r="0" g="0" b="0" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<coords x="-4.38" y="4.8" z="1.9601999999999986"/>
+	<lineStyle thickness="2" type="0"/>
+	<eqnStyle style="implicit"/>
+</element>
+<command name="OrthogonalLine">
+	<input a0="B_1" a1="a"/>
+	<output a0="s"/>
+</command>
+<element type="line" label="s">
+	<lineStyle thickness="2" type="0"/>
+	<show object="false" label="false"/>
+	<objColor r="0" g="0" b="0" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<coords x="-2.74" y="-4.319999999999999" z="9.497399999999999"/>
+	<lineStyle thickness="2" type="0"/>
+	<eqnStyle style="implicit"/>
+</element>
+<command name="Intersect">
+	<input a0="s" a1="q"/>
+	<output a0="M"/>
+</command>
+<element type="point" label="M">
+	<show object="true" label="true"/>
+	<objColor r="64" g="64" b="64" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<coords x="54.05558399999998" y="36.22766399999999" z="32.07359999999999"/>
+	<pointSize val="3"/>
+</element>
+<command name="Line">
+	<input a0="H" a1="M"/>
+	<output a0="t"/>
+</command>
+<element type="line" label="t">
+	<lineStyle thickness="2" type="0"/>
+	<show object="true" label="false"/>
+	<objColor r="255" g="51" b="0" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<coords x="1.6514501646213706" y="1.01608201137384" z="-3.9309706674648304"/>
+	<lineStyle thickness="2" type="0"/>
+	<eqnStyle style="implicit"/>
+</element>
+<command name="Midpoint">
+	<input a0="H" a1="M"/>
+	<output a0="N"/>
+</command>
+<element type="point" label="N">
+	<show object="false" label="true"/>
+	<objColor r="64" g="64" b="64" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<coords x="1.1773196647710267" y="1.9552416941035617" z="1.0"/>
+	<pointSize val="3"/>
+</element>
+<command name="Circle">
+	<input a0="N" a1="C_3"/>
+	<output a0="c_1"/>
+</command>
+<element type="conic" label="c_1">
+	<lineStyle thickness="2" type="0"/>
+	<show object="false" label="false"/>
+	<objColor r="0" g="0" b="0" alpha="0.0"/>
+	<layer val="0"/>
+	<labelMode val="0"/>
+	<lineStyle thickness="2" type="0"/>
+	<eigenvectors  x0="1.0" y0="0.0" z0="1.0" x1="-0.0" y1="1.0" z1="1.0"/>
+	<matrix A0="1.0" A1="1.0" A2="1.7901930559712667" A3="0.0" A4="-1.1773196647710267" A5="-1.9552416941035617"/>
+	<eqnStyle style="specific"/>
+</element>
+</construction>
+</geogebra>
