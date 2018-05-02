@@ -16,7 +16,7 @@ class bcolors:
 
 
 def timestamp():
-    return bcolors.HEADER + str(datetime.datetime.now().strftime("%d %B %Y %I:%M:%S")) + " " + bcolors.ENDC
+    return bcolors.HEADER + str(datetime.datetime.now().strftime("%d %B %Y %H:%M:%S.%f")) + " " + bcolors.ENDC
 
 
 def unzip(path, destination_folder):

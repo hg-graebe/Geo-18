@@ -3,12 +3,40 @@
   <elements>
     <point id="A">
       <homogeneous_coordinates>
-        <double>1</double>
-        <double>2</double>
-        <double>3</double>
+        <double>-388380553522791/625000000000000</double>
+        <double>2053351100363973/1000000000000000</double>
+        <double>4</double>
       </homogeneous_coordinates>
     </point>
-    <circle id="a">
+    <point id="B">
+      <homogeneous_coordinates>
+        <double>4</double>
+        <double>-4264724801648871/2500000000000000</double>
+        <double>-5770340281171467/50000000000000000000</double>
+      </homogeneous_coordinates>
+    </point>
+    <point id="C">
+      <homogeneous_coordinates>
+        <double>4</double>
+        <double>-66855595497939/125000000000000</double>
+        <double>496696647587599/25000000000000000000</double>
+      </homogeneous_coordinates>
+    </point>
+    <line id="a">
+      <homogeneous_coordinates>
+        <double>4</double>
+        <double>-4264724801648871/2500000000000000</double>
+        <double>-5770340281171467/50000000000000000000</double>
+      </homogeneous_coordinates>
+    </line>
+    <line id="c">
+      <homogeneous_coordinates>
+        <double>4</double>
+        <double>-66855595497939/125000000000000</double>
+        <double>496696647587599/25000000000000000000</double>
+      </homogeneous_coordinates>
+    </line>
+    <circle id="C0">
       <matrix>
         <double>1</double>
         <double>2</double>
@@ -23,13 +51,31 @@
         <double>-1</double>
       </matrix>
     </circle>
-    <line id="t1">
-      <homogeneous_coordinates>
-        <double>5</double>
-        <double>2</double>
-        <double>1</double>
-      </homogeneous_coordinates>
-    </line>
   </elements>
-  <constraints/>
+  <constraints>
+    <free_point>
+      <point out="true">A</point>
+    </free_point>
+    <free_point>
+      <point out="true">B</point>
+    </free_point>
+    <free_point>
+      <point out="true">C</point>
+    </free_point>
+    <line_through_two_points>
+      <line out="true">a</line>
+      <point>B</point>
+      <point>A</point>
+    </line_through_two_points>
+    <line_through_two_points>
+      <line out="true">c</line>
+      <point>C</point>
+      <point>B</point>
+    </line_through_two_points>
+    <circle_by_center_and_point>
+      <circle out="true">C0</circle>
+      <point>B</point>
+      <point>C</point>
+    </circle_by_center_and_point>
+  </constraints>
 </construction>

@@ -4,8 +4,7 @@ Beispielen aufbauen, die Möglichkeit des Imports in JSXGraph untersuchen und
 die Ergebnisse auf einem gemeinsamen Meeting im Praktikum vorstellen.
 
 Team:
-* Kevin Marco Shrestra (PL)
+* Kevin Marco Shrestha (PL) - ks12dyle@studserv.uni-leipzig.de
 * Trung Duong
-* Dmitrij Denisenko (bisher kein Account am ifi gitlab)
 * Akber Sarchaddi
-* Johannes Michael (bisher kein Account am ifi gitlab)
+* Johannes Michael - jm85copi@studserv.uni-leipzig.de

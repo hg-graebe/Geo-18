@@ -1,4 +1,5 @@
 import xml.etree.ElementTree as etree
+from src.classes import *
 
 
 def createHomogeneousCoordinates(parent, x, y, z):
@@ -21,38 +22,72 @@ def createMatrix(parent, array):
         double.text = str(i)
 
 
-def createPoint(parent, thingObject):
-    element = etree.SubElement(parent, 'point')
-    element.set('id', 'A')
+def createConstraints(constraints, name, type, geoObject, points):
+    nameElem = etree.SubElement(constraints, name)
+    typeElem = etree.SubElement(nameElem, type)
+    typeElem.set('out', 'true')
+    typeElem.text = geoObject.getName()
 
-    createHomogeneousCoordinates(element, 1, 2, 3)
+    for point in points:
+        referencePoint = etree.SubElement(nameElem, 'point')
+        referencePoint.text = point.getName()
 
-    return element
 
-
-def createCircle(parent, thingObject):
+def createCircle(parent, constraints, geoObject):
     element = etree.SubElement(parent, 'circle')
-    element.set('id', 'a')
+    element.set('id', geoObject.getName())
 
     createMatrix(element, [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, -1])
 
+    createConstraints(constraints, 'circle_by_center_and_point', 'circle', geoObject, [geoObject.getPointA(), geoObject.getPointB()])
+
     return element
 
 
-def createLine(parent, thingObject):
+def createLine2D(parent, constraints, geoObject):
     element = etree.SubElement(parent, 'line')
-    element.set('id', 't1')
+    element.set('id', geoObject.getName())
 
-    createHomogeneousCoordinates(element, 5, 2, 1)
+    testpoint = geoObject.getPointA().getPoint3D()
+
+    createHomogeneousCoordinates(element, testpoint.x, testpoint.y, testpoint.z)
+
+    line_through_two_points = etree.SubElement(constraints, 'line_through_two_points')
+    line = etree.SubElement(line_through_two_points, 'line')
+    line.set('out', 'true')
+    line.text = geoObject.getName()
+    pointA = etree.SubElement(line_through_two_points, 'point')
+    pointB = etree.SubElement(line_through_two_points, 'point')
+    pointA.text = geoObject.getPointA().getName()
+    pointB.text = geoObject.getPointB().getName()
+
+    return element
+
+def createPoint3D(parent, constraints, geoObject):
+    element = etree.SubElement(parent, 'point')
+    element.set('id', geoObject.getName())
+
+    point3D = geoObject.getPoint3D()
+
+    createHomogeneousCoordinates(element, point3D.x, point3D.y, point3D.z)
+
+    free_point = etree.SubElement(constraints, 'free_point')
+    point = etree.SubElement(free_point, 'point')
+    point.set('out', 'true')
+    point.text = geoObject.getName()
 
     return element
 
 
-def createSubElement(parent, element):
-    # TODO: meaningful architecture
-    if element == 'point':
-        sub_element = createPoint(parent, element)
-    if element == 'circle':
-        sub_element = createCircle(parent, element)
-    if element == 'line':
-        sub_element = createLine(parent, element)
+def createSubElements(parent, constraints, elements):
+    for element in elements:
+        if type(element) is Point:
+            createPoint3D(parent, constraints, element)
+        if type(element) is MidPoint:
+            print('TODO') # createPoint3D(parent, element)
+        if type(element) is Line:
+            createLine2D(parent, constraints, element)
+        if type(element) is ParallelLine:
+            print('TODO') # createPoint3D(parent, element)
+        if type(element) is Circle:
+            createCircle(parent, constraints, element)

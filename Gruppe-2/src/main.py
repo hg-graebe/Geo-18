@@ -8,37 +8,34 @@ def main():
     print(timestamp() + "Starting")
 
     unzip("../data/original/test2.cdy", "../data/unpacked")
+    unzip("../data/original/construction.cdy", "../data/unpacked")
 
-    document = generateIntergeo()
+    readFile("../data/unpacked/construction.cdy/private/de.cinderella/construction.cdy")
+    writeFile("JS/geoCheck.js")
+
+    document = generateIntergeo(getPoints(), getLines(), getCircles(), getMidPoints(), getParallelLines())
     saveToFile(document, '../data/intergeo/generated.xml')
 
-    # webbrowser.open('file://' + os.path.realpath('jsxgraph.html'))
+    # won't work anymore nor for everyone: XHR cross origin
+    webbrowser.open('file://' + os.path.realpath('jsxgraph.html'))
+    webbrowser.open('file://' + os.path.realpath('JS/GeoProving.htm'))
 
     print(timestamp() + "Done")
 
 
-def cindyParser():
-    print(timestamp() + "Starting2")
-
-    unzip("../data/original/construction.cdy", "../data/unpacked/construction")
-    readFile("../data/unpacked/construction/private/de.cinderella/construction.cdy")
-    writeFile("JS/geoCheck.js")
-
-    print(timestamp() + "Done2")
-
-
-def generateIntergeo():
+def generateIntergeo(points, lines, circles, midPoints, parallelLines):
     construction = etree.Element('construction')
 
     elements = etree.SubElement(construction, 'elements')
     constraints = etree.SubElement(construction, 'constraints')
 
-    createSubElement(elements, 'point')  # TODO: pass geometry object
-    createSubElement(elements, 'circle')  # TODO: pass geometry object
-    createSubElement(elements, 'line')  # TODO: pass geometry object
+    createSubElements(elements, constraints, points)
+    createSubElements(elements, constraints, lines)
+    createSubElements(elements, constraints, circles)
+    createSubElements(elements, constraints, midPoints)
+    createSubElements(elements, constraints, parallelLines)
 
     return construction
 
 
 main()
-cindyParser()

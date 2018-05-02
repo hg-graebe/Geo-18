@@ -2,15 +2,19 @@ import sympy as sp
 
 
 class Point:
-    def __init__(self, n, x, y):
+    def __init__(self, n, x, y, z):
         self.name = n
-        self.point = sp.Point2D(x, y)
+        self.point2D = sp.Point2D(x, y)
+        self.point3D = sp.Point3D(x, y, z)
 
     def getName(self):
         return self.name
 
     def getPoint2D(self):
-        return self.point
+        return self.point2D
+
+    def getPoint3D(self):
+        return self.point3D
 
 
 class MidPoint:

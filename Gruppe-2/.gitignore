@@ -10,3 +10,4 @@ Gruppe-2.iml
 data/unpacked/*
 src/__pycache__/
 /data/intergeo/generated.xml
+src/jsxgraph

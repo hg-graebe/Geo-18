@@ -10,10 +10,24 @@ parallelLines = []
 circles = []
 
 
-def unzip(path, destinationFolder):
-    zip_ref = zipfile.ZipFile(path, 'r')
-    zip_ref.extractall(destinationFolder)
-    zip_ref.close()
+def getPoints():
+    return points
+
+
+def getMidPoints():
+    return midpoints
+
+
+def getLines():
+    return lines
+
+
+def getParallelLines():
+    return parallelLines
+
+
+def getCircles():
+    return circles
 
 
 # read content of a file
@@ -89,7 +103,8 @@ def initFreePoint(line):
     coord = line.split('[')[1].split(']')[0].split(',')
     x = coord[0]
     y = coord[1]
-    p = Point(name, x, y)
+    z = coord[2]
+    p = Point(name, x, y, z)
     points.append(p)
     return p.getName()
 

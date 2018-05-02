@@ -4,15 +4,22 @@
     <meta charset="UTF-8">
     <title>test</title>
 
-    <link rel="stylesheet" type="text/css" href="http://jsxgraph.uni-bayreuth.de/distrib/jsxgraph.css" />
-    <script type="text/javascript" src="http://jsxgraph.uni-bayreuth.de/distrib/jsxgraphcore.js"></script>
-    <script type="text/javascript" src="http://jsxgraph.uni-bayreuth.de/distrib/IntergeoReader.js"></script>
+    <link rel="stylesheet" href="jsxgraph/distrib/jsxgraph.css">
+    <script src="jsxgraph/distrib/jsxgraphcore.js"></script>
+    <script src="jsxgraph/src/reader/cinderella.js"></script>
+    <script src="jsxgraph/src/reader/intergeo.js"></script>
 </head>
 <body>
 
-<div id="box" class="jxgbox" style="width:700px; height:500px;"></div>
+generated.xml: <div id="box" class="jxgbox" style="width:700px; height:400px;"></div>
+test2.cdy: <div id="box2" class="jxgbox" style="width:700px; height:400px;"></div>
+test.xml: <div id="box3" class="jxgbox" style="width:700px; height:400px;"></div>
+construction.cdy: <div id="box4" class="jxgbox" style="width:700px; height:400px;"></div>
 <script type="text/javascript">
-    var brd = JXG.JSXGraph.loadBoardFromFile('box', '../data/intergeo/test.xml', 'Intergeo');
+    board1 = JXG.JSXGraph.loadBoardFromFile('box','../data/intergeo/generated.xml', 'intergeo');
+    board2 = JXG.JSXGraph.loadBoardFromFile('box2', '../data/original/test2.cdy', 'cinderella');
+    board3 = JXG.JSXGraph.loadBoardFromFile('box3', '../data/intergeo/test.xml', 'intergeo');
+    board4 = JXG.JSXGraph.loadBoardFromFile('box4', '../data/original/construction.cdy', 'cinderella');
 </script>
 </body>
 </html>
