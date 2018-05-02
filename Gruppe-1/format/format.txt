@@ -1,0 +1,15 @@
+Format GeoGebra:
+
+Gezipptes Archiv, bestehend aus einigen Hilfsdateien und einer XML-Datei.
+Die XML-Datei enthält die Daten, aus denen die gespeicherten Konstruktionen rekonstruiert werden können.
+Die anderen Dateien spielen eine untergeordnete Rolle.
+
+Eine Konstruktion (d.h. bspw. ein Punkt) ist mit dem Tag <element> versehen. EIn Beispiel (example.xml) ist angehängt. 
+
+Das XML-Format ist auf der folgenden Seite formuliert:
+
+https://wiki.geogebra.org/en/Reference:XML
+
+Ob GeoGebra im Intergeo-Format gespeichert wird, haben wir nicht herausgefunden, wir gehen aber nicht davon aus - ansonsten wäre das vmtl irgendwo erwähnt worden und die KOnvertierung würde nicht ab und an Probleme aufwerfen. 
+
+
