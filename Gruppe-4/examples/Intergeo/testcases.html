@@ -5,16 +5,60 @@
    <script type="text/javascript" src="http://jsxgraph.uni-bayreuth.de/distrib/prototype.js"></script>
    <!--type="text/javascript" src="http://jsxgraph.uni-bayreuth.de/distrib/jsxgraphcore.js"></script>-->
    <!--<script type="text/javascript" src="http://jsxgraph.uni-bayreuth.de/~alfred/jsxgraph/branches/0.80/src/loadjsxgraph.js"></script>-->
-   <script type="text/javascript" src="../../src/loadjsxgraph.js"></script></head>
-   <script type="text/javascript" src="../../src/reader/intergeo.js"></script></head>
+   <script type="text/javascript" src="../../src/loadjsxgraph.js"></script>
+   <script type="text/javascript" src="../../src/reader/intergeo.js"></script>
+   <script type="text/javascript" src='loadJSXG.js'></script>
+</head>
 <body>
   <h2>Intergeo test cases in JSXGraph</h2>
-  <form><input type='button' value='Show XML' onclick='board.showXML()'></form>
+  <div><select id="selection" onchange='loadJSXG();'>
+    <option value='all.xml'>all</option>
+    <option value='center_of_three_points.xml'>center_of_three_points</option>
+    <option value='circle.xml'>circle</option>
+    <!-- BROKEN <option value='conic.xml'>conic</option>-->
+    <option value='endpoints_of_line_segment.xml'>endpoints_of_line_segment</option>
+    <option value='free_point.xml'>free_point</option>
+    <option value='intersections_circles_line.xml'>intersections_circles_line</option>
+    <!-- BROKEN <option value='line.xml'>line</option>-->
+    <option value='line_segment_by_points.xml'>line_segment_by_points</option>
+    <option value='line_through_two_points.xml'>line_through_two_points</option>
+    <option value='linesegment.xml'>linesegment</option>
+    <option value='locus_cardioid.xml'>locus_cardioid</option>
+    <option value='locus_frequency_duplicator.xml'>locus_frequency_duplicator</option>
+    <option value='locus_pacman.xml'>locus_pacman</option>
+    <option value='locus_parabola.xml'>locus_parabola</option>
+    <option value='locus_shadow.xml'>locus_shadow</option>
+    <option value='midpoint_of_line_segment.xml'>midpoint_of_line_segment</option>
+    <option value='midpoint_of_two_points.xml'>midpoint_of_two_points</option>
+    <option value='other_intersections.xml'>other_intersections</option>
+    <option value='parallel_perpendicular_through.xml'>parallel_perpendicular_through</option>
+    <option value='point.xml'>point</option>
+    <option value='Points.i2g'>Points</option>
+    <option value='rotating_circle.xml'>rotating_circle</option>
+
+    <option value='Examples2/directed_line_segment.xml'>directed_line_segment</option>
+    <option value='Examples2/endpoints_of_line_segment.xml'>endpoints_of_line_segment</option>
+    <!-- BROKEN <option value='Examples2/foci_of_ellipse.xml'>foci_of_ellipse</option>-->
+    <option value='Examples2/line_angular_bisectors_of_two_lines.xml'>line_angular_bisectors_of_two_lines</option>
+    <option value='Examples2/lineangularbisectorofthreepoints.xml'>lineangularbisectorofthreepoints</option>
+    <option value='Examples2/polygon.xml'>polygon</option>
+    <option value='Examples2/ray_from_point_and_vector.xml'>ray_from_point_and_vector</option>
+    <option value='Examples2/ray_from_point_through_point.xml'>ray_from_point_through_point</option>
+    <option value='Examples2/symmetry_by_circle.xml'>symmetry_by_circle</option>
+    <option value='Examples2/symmetry_by_line.xml'>symmetry_by_line</option>
+    <option value='Examples2/symmetry_by_point.xml'>symmetry_by_point</option>
+    <option value='Examples2/translate.xml'>translate</option>
+    <!-- BROKEN <option value='Examples2/trigogenangleratios-vggb4.i2g'>trigogenangleratios-vggb4</option>-->
+    <option value='Examples2/vector_from_point_to_point.xml'>vector_from_point_to_point</option>
+
+  </select></div>
+  <!--<form><input type='button' value='Show XML' onclick='board.showXML()'></form>-->
   <div id="jxgbox" class="jxgbox" style="width:800px; height:500px;"></div>
   <div id="debug" style="display:block; margin-top:20px"></div>
    <script type="text/javascript">
+      loadJSXG();
     /* <![CDATA[ */
-        fname = 'linesegment.xml';
+        //fname = 'linesegment.xml';
 //-------- good ----------
 //fname = 'all.i2g';      // ok (GEONExT example)
 //fname = 'center_of_three_points.xml';
@@ -51,7 +95,8 @@
 //fname = 'all.xml';
 
 //-------  new ---------
-fname = 'http://localhost:8000/examples/Intergeo/Examples2/lineangularbisectorofthreepoints.xml';       // ok
+//fname = 'http://localhost:8000/examples/Intergeo/Examples2/lineangularbisectorofthreepoints.xml';       // ok
+//fname = 'http://localhost:8000/examples/Intergeo/circle.xml'
 //fname = 'Examples2/line_angular_bisectors_of_two_lines.xml';    // ok
 //fname = 'Examples2/polygon.xml';                                // ok
 //fname = 'Examples2/ray_from_point_through_point.xml';           // ok
@@ -59,9 +104,10 @@ fname = 'http://localhost:8000/examples/Intergeo/Examples2/lineangularbisectorof
 //fname = 'http://localhost:8000/examples/Intergeo/Examples2/ray_from_point_and_vector.xml';              // ok
 //
 //fname = 'stroke.xml';
-
-        $('debug').innerHTML = fname+'<br>';
-        board = JXG.JSXGraph.loadBoardFromFile('jxgbox', fname , 'Intergeo');
+        //var selection = document.getElementById("selection");
+        //fname = selection.options[selection.selectedIndex].value;
+        //$('debug').innerHTML = fname+'<br>';
+        //board = JXG.JSXGraph.loadBoardFromFile('jxgbox', fname , 'Intergeo');
   /* ]]> */
   </script>
 </body>

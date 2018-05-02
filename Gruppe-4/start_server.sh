@@ -4,7 +4,8 @@ UNAME=$(uname)
 
 if [ "$UNAME" == "Linux" ] ; then
 	echo "Linux"
-	echo "todo"
+	echo "python -m SimpleHTTPServer 8000"
+	python -m SimpleHTTPServer 8000
 elif [ "$UNAME" == "Darwin" ] ; then
 	echo "Mac"
 	echo "python -m SimpleHTTPServer 8000"
