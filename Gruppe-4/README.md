@@ -12,6 +12,10 @@ vorstellen.
 * Mirco Altenbernd
 * Max Braungardt
 
+# Quellen
+
+* examples/Intergeo/ = https://github.com/jsxgraph/jsxgraph/tree/master/examples/Intergeo
+* src = https://github.com/jsxgraph/jsxgraph/tree/master/src
 
 # Benutzung
 
@@ -19,11 +23,18 @@ vorstellen.
 2. **Website öffnen**, dazu `examples/Intergeo/testcases.html` in einem Webbrowser öffnen.
 3. **Beispiel auswählen**, dazu das *Dropdown-Menü* (oben-links) verwenden.
 
-
 # Dokumente
 
 In `doc/` sind einige Whitepaper/Spezifikationen zum Thema: `intergeo`- und `i2g`-Format zu finden.
+* Bianca Valentin and Michael Gerhäuser: Interactive SVG with JSXGraph. (2009)
+* The Intergeo Consortium: i2g Common File Format Specification. (2008)
+  * Identisches Paper in Gruupe-2
+  * Beschreibt den genaueren Aufbau von Intergeo-Dateien.
+  * Unklar bleibt die genaue Syntaxbeschreibung der Konstruktionswerkzeuge. 
+* Miguel Abánades u.a.: The Intergeo File Format in Progress. (2009) Proceedings of the 22nd OpenMath Meeting.
+  * Überlegungen, wie die Konstruktionswerkzeuge im OpenMath-Kontext beschrieben werden sollen, was später aber offensichtlich nicht so umgesetzt wurde. 
 
 ## Offene Fragen
 
 * Soll das `i2g`-Format auch betrachtet werden (speziell von Gruppe-4)?
+  * Nein, das kann später ergänzt werden

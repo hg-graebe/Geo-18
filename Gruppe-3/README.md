@@ -4,7 +4,14 @@ verschiedenen Beispielen aufbauen, die Möglichkeit des Imports in JSXGraph
 untersuchen und die Ergebnisse auf einem gemeinsamen Meeting im Praktikum
 vorstellen.
 
-Team:
+# Team
+
 * Nicole Scheeren (PL)
 * Liang Yuan
 * Christoph Georgi
+
+# Anmerkungen
+
+* Im Verzeichnis ZuL liegen noch weitere Beispiele
+
+
