@@ -28,9 +28,7 @@ vorstellen.
 In `doc/` sind einige Whitepaper/Spezifikationen zum Thema: `intergeo`- und `i2g`-Format zu finden.
 * Bianca Valentin and Michael Gerhäuser: Interactive SVG with JSXGraph. (2009)
 * The Intergeo Consortium: i2g Common File Format Specification. (2008)
-  * Identisches Paper in Gruupe-2
-  * Beschreibt den genaueren Aufbau von Intergeo-Dateien.
-  * Unklar bleibt die genaue Syntaxbeschreibung der Konstruktionswerkzeuge. 
+  * Identisches Paper in Gruppe-2, verschoben ins Verzeichnis Texte
 * Miguel Abánades u.a.: The Intergeo File Format in Progress. (2009) Proceedings of the 22nd OpenMath Meeting.
   * Überlegungen, wie die Konstruktionswerkzeuge im OpenMath-Kontext beschrieben werden sollen, was später aber offensichtlich nicht so umgesetzt wurde. 
 
