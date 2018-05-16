@@ -33,6 +33,12 @@ booleschen Funktion is_*[...]. Zur Visualisierung könnten die Aufrufparameter
 hergenommen werden und daraus geeignete geometrische Objekte erzeugt und
 speziell farblich hervorgehoben werden.  
 
+Siehe hierzu auch Überlegungen im Aufsatz
+* Pedro Quaresma, Nuno Baeta: Current Status of the I2GATP Common Format. 2015
+Text unter Texte/adg14PQNB.pdf
+
+Ist allerdings ziemlich spekulativ. 
+
 # GeoGebra
 
 Speicherformat und Zusammenhang zu JSXGraph ist in 
