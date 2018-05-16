@@ -14,8 +14,8 @@ vorstellen.
 
 # Quellen
 
-* examples/Intergeo/ = https://github.com/jsxgraph/jsxgraph/tree/master/examples/Intergeo
-* src = https://github.com/jsxgraph/jsxgraph/tree/master/src
+* examples/Intergeo/ = examples/Intergeo aus dem jsxgraph repo
+* src = src aus dem jsxgraph repo
 
 # Benutzung
 
