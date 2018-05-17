@@ -3,13 +3,14 @@ entsprechenden Eingabeformate analysieren, eine Datenbasis mit verschiedenen
 Beispielen aufbauen, die Möglichkeit des Imports in JSXGraph untersuchen und
 die Ergebnisse auf einem gemeinsamen Meeting im Praktikum vorstellen.
 
-Team:
+# Team
+
 * Kevin Marco Shrestha (PL) - ks12dyle@studserv.uni-leipzig.de
 * Trung "Kim" Duong - bss13ard@studserv.uni-leipzig.de
 * Akber Sarchaddi
 * Johannes Michael - jm85copi@studserv.uni-leipzig.de
 
-#Info
+# Info
 * __C2I_Java__: Java Implementation of the Cinderella to Intergeo converter
 * __CinderellaReaderPatch__: patch for reader/cinderella.js to make it compatible with the most recent version of Cinderella 2's .cdy save file format. Use the prepatched version in the TestWithJSXGraph folder or use the following commands:
     * `git clone https://github.com/jsxgraph/jsxgraph`
@@ -28,5 +29,5 @@ Team:
         * `cd TestWithJSXGraph` 
         * `python -m SimpleHTTPServer 8000`
 
-#Organisatorisch
+# Organisatorisch
 21.07.2018 - next sprint

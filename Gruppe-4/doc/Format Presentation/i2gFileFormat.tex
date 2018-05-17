@@ -1,0 +1,147 @@
+\documentclass[11pt]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+
+\usetheme{default}
+\usepackage{listings}
+\lstset{language=xml, frame=single}
+
+\begin{document}
+	%\author{Altenbernd, Braungardt, Thalheim}
+	\title{Intergeo File Format .i2g}
+	%\subtitle{}
+	%\logo{}
+	%\institute{}
+	\date{03.05.2018}
+	%\subject{}
+	%\setbeamercovered{transparent}
+	%\setbeamertemplate{navigation symbols}{}
+	\frame[plain]{\maketitle}
+	
+	\begin{frame}%[fragile]
+		\frametitle{Generelle Struktur}
+		\noindent
+		Zwei Parts:
+		\begin{description}
+			\item[statisch:] xml-Struktur\\
+			atomare Variablen
+			\item[dynamisch:] Elemente (Punkte, Linien, aber auch Buttons etc.)\\
+			Konstruktionen\\
+			Anzeigeoptionen (Farben, etc.)
+		\end{description}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{Generelle Struktur}
+		\begin{lstlisting}
+<xs:element name="construction">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element ref="elements"/>
+      <xs:element ref="constraints"/>
+      <xs:element ref="display" minOccurs="0" 
+                  maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+		\end{lstlisting}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{Elemente}
+		Zum Beispiel ein euklidischer Punkt:
+		\begin{lstlisting}
+<elements>
+  <point id="A">
+    <euclidian_coordinates>
+      <double>3.55</double>
+      <double>-4</double>
+      <double>0</double>
+    </euclidian_coordinates>
+  </point>
+</elements>
+		\end{lstlisting}
+	\end{frame}
+
+\begin{frame}
+	\frametitle{Elemente}
+	\begin{itemize}
+		\item \texttt{point}
+		\item \texttt{line} $(2,3,5)\to 2x+3y+5=0$
+		\item \texttt{line\_segment}
+		\item \texttt{ray} (unendliche Linie)
+		\item \texttt{polygon}
+		\item \texttt{vector}
+		\item \texttt{conic}
+		\item \texttt{circle}
+		\item \texttt{ellipse}
+		\item \texttt{parabola}
+		\item \texttt{hyperbola}
+		\item \texttt{locus}
+	\end{itemize}
+\end{frame}
+
+
+	\begin{frame}[fragile]
+		\frametitle{Konstruktion}
+		Zum Beispiel eine Gerade durch zwei Punkte als Vorschrift:
+		\begin{lstlisting}
+<constraints>
+  <line_through_two_points>
+    <line out="true">|</line>
+    <point>A</point>
+    <point>B</point>
+  </line_through_two_points>
+<constraints>
+		\end{lstlisting}
+	\end{frame}
+
+\begin{frame}
+	\frametitle{Konstruktionen}
+	Zum Beispiel möglich:
+	\begin{itemize}
+		\item \texttt{midpoint\_of\_two\_points}
+		\item \texttt{point\_intersection\_of\_two\_lines}
+		\item \texttt{midpoint\_of\_line\_segment}
+		\item \texttt{vector\_of\_ray}
+		\item \texttt{circle\_by\_center\_and\_point}
+		\item \texttt{circle\_by\_three\_points} (mit Degenerierung: gleiche Punkt, Punkte auf gemeinsamer Geraden)
+		\item \texttt{symmetry\_by\_line}
+	\end{itemize}
+\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{Darstellung}
+		Zum Beispiel Darstellung des Punktes A:
+		\begin{lstlisting}
+<display>
+  <style ref="A">
+    <label>The point A</label>
+    <fill>#ffffff</fill>
+    <stroke>#222222</stroke>
+    <stroke_width>2</stroke_width>
+    <point_size>5</point_size>
+  </style>
+</display>
+		\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Darstellung}
+	Typische Eigenschaften:
+	\begin{itemize}
+		\item \texttt{stroke}
+		\item \texttt{stroke-width}
+		\item \texttt{borderwidth}
+		\item \texttt{fill}
+		\item \texttt{fill-opacity}
+		\item \texttt{point-size}
+		\item \texttt{point-style}
+		\item \texttt{label}
+		\item \texttt{visible}
+		\item \texttt{background-color}
+	\end{itemize}
+\end{frame}
+
+\end{document}
