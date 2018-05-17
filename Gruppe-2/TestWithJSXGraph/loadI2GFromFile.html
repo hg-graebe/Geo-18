@@ -1,0 +1,20 @@
+<html>
+	<head>
+		<title>Load Intergeo Board From File</title>
+		<link rel="stylesheet" type="text/css" href="src/jsxgraph.css" />
+		<script type="text/javascript" src="distrib/prototype.js"></script>
+		<script type="text/javascript" src="src/loadjsxgraph.js"></script>
+		<script type="text/javascript" src="src/reader/intergeo.js"></script>
+	</head>
+	<body>
+		<h2>Load Intergeo Board From File</h2>
+		<div id="box" class="jxgbox" style="width:1400px; height:650px;"></div>
+		<script type="text/javascript">
+			board = JXG.JSXGraph.loadBoardFromFile('box','testConvertibleElements.i2g', 'i2g');
+			board.createElement('axis', [[0,0], [0,1]], {});
+			board.createElement('axis', [[0,0], [1,0]], {});
+			board.setZoom(0.5,0.5);
+		</script>
+	</body>
+</html>
+

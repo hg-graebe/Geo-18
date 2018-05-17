@@ -75,7 +75,7 @@
     <circle_by_center_and_point>
       <circle out="true">C0</circle>
       <point>B</point>
-      <point>C</point>
+      <point>A</point>
     </circle_by_center_and_point>
   </constraints>
 </construction>

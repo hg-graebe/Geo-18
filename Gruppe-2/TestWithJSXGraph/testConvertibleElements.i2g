@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<construction>
+  <elements>
+    <point id="A">
+      <homogeneous_coordinates>
+        <double>3.0</double>
+        <double>3.84</double>
+        <double>1</double>
+      </homogeneous_coordinates>
+    </point>
+    <point id="B">
+      <homogeneous_coordinates>
+        <double>10.96</double>
+        <double>-2.2</double>
+        <double>1</double>
+      </homogeneous_coordinates>
+    </point>
+    <point id="C">
+      <homogeneous_coordinates>
+        <double>8.24</double>
+        <double>5.4</double>
+        <double>1</double>
+      </homogeneous_coordinates>
+    </point>
+    <point id="D">
+      <homogeneous_coordinates>
+        <double>-0.36</double>
+        <double>-3.24</double>
+        <double>1</double>
+      </homogeneous_coordinates>
+    </point>
+    <point id="E">
+      <homogeneous_coordinates>
+        <double>11.600000000000001</double>
+        <double>1.16</double>
+        <double>1</double>
+      </homogeneous_coordinates>
+    </point>
+    <line id="c">
+      <homogeneous_coordinates>
+        <double>2.625</double>
+        <double>-1</double>
+        <double>-29.290000000000003</double>
+      </homogeneous_coordinates>
+    </line>
+    <point id="F">
+      <homogeneous_coordinates>
+        <double>13.920000000000002</double>
+        <double>3.56</double>
+        <double>1</double>
+      </homogeneous_coordinates>
+    </point>
+    <point id="G">
+      <homogeneous_coordinates>
+        <double>8.76</double>
+        <double>1.8400000000000003</double>
+        <double>1</double>
+      </homogeneous_coordinates>
+    </point>
+    <point id="H">
+      <homogeneous_coordinates>
+        <double>21.68</double>
+        <double>-6.080000000000001</double>
+        <double>1</double>
+      </homogeneous_coordinates>
+    </point>
+    <point id="O">
+      <homogeneous_coordinates>
+        <double>25.32</double>
+        <double>6.040000000000001</double>
+        <double>1</double>
+      </homogeneous_coordinates>
+    </point>
+    <point id="M">
+      <homogeneous_coordinates>
+        <double>24.040000000000003</double>
+        <double>2.52</double>
+        <double>1</double>
+      </homogeneous_coordinates>
+    </point>
+    <point id="P">
+      <homogeneous_coordinates>
+        <double>24.68</double>
+        <double>4.28</double>
+        <double>1</double>
+      </homogeneous_coordinates>
+    </point>
+    <point id="K">
+      <homogeneous_coordinates>
+        <double>0.44</double>
+        <double>0.6</double>
+        <double>1</double>
+      </homogeneous_coordinates>
+    </point>
+    <point id="L">
+      <homogeneous_coordinates>
+        <double>3.0399999999999996</double>
+        <double>-1.8</double>
+        <double>1</double>
+      </homogeneous_coordinates>
+    </point>
+    <point id="R">
+      <homogeneous_coordinates>
+        <double>11.080000000000002</double>
+        <double>-7.400000000000001</double>
+        <double>1</double>
+      </homogeneous_coordinates>
+    </point>
+    <point id="S">
+      <homogeneous_coordinates>
+        <double>13.08</double>
+        <double>-10.320000000000002</double>
+        <double>1</double>
+      </homogeneous_coordinates>
+    </point>
+    <circle id="C0">
+      <matrix/>
+    </circle>
+    <point id="T">
+      <homogeneous_coordinates>
+        <double>32.68</double>
+        <double>-2.3600000000000003</double>
+        <double>1</double>
+      </homogeneous_coordinates>
+    </point>
+    <point id="U">
+      <homogeneous_coordinates>
+        <double>19.6</double>
+        <double>-4.92</double>
+        <double>1</double>
+      </homogeneous_coordinates>
+    </point>
+    <point id="V">
+      <homogeneous_coordinates>
+        <double>35.88</double>
+        <double>-6.4</double>
+        <double>1</double>
+      </homogeneous_coordinates>
+    </point>
+    <circle id="C2">
+      <matrix/>
+    </circle>
+  </elements>
+  <constraints>
+    <free_point>
+      <point out="true">A</point>
+    </free_point>
+    <free_point>
+      <point out="true">B</point>
+    </free_point>
+    <line_through_two_points>
+      <line out="true">a</line>
+      <point>A</point>
+      <point>B</point>
+    </line_through_two_points>
+    <free_point>
+      <point out="true">C</point>
+    </free_point>
+    <free_point>
+      <point out="true">D</point>
+    </free_point>
+    <line_segment_by_points>
+      <line_segment out="true">b</line_segment>
+      <point>C</point>
+      <point>D</point>
+    </line_segment_by_points>
+    <free_point>
+      <point out="true">E</point>
+    </free_point>
+    <line_through_point>
+      <line out="true">c</line>
+      <point>E</point>
+    </line_through_point>
+    <free_point>
+      <point out="true">F</point>
+    </free_point>
+    <line_parallel_to_line_through_point>
+      <line out="true">d</line>
+      <point>F</point>
+      <line>a</line>
+    </line_parallel_to_line_through_point>
+    <free_point>
+      <point out="true">G</point>
+    </free_point>
+    <line_parallel_to_line_through_point>
+      <line out="true">e</line>
+      <point>G</point>
+      <line>b</line>
+    </line_parallel_to_line_through_point>
+    <free_point>
+      <point out="true">H</point>
+    </free_point>
+    <line_perpendicular_to_line_through_point>
+      <line out="true">f</line>
+      <point>H</point>
+      <line>a</line>
+    </line_perpendicular_to_line_through_point>
+    <point_intersection_of_two_lines>
+      <point out="true">N</point>
+      <line>d</line>
+      <line>f</line>
+    </point_intersection_of_two_lines>
+    <free_point>
+      <point out="true">O</point>
+    </free_point>
+    <free_point>
+      <point out="true">M</point>
+    </free_point>
+    <free_point>
+      <point out="true">P</point>
+    </free_point>
+    <midpoint_of_two_points>
+      <line out="true">P</line>
+      <point>M</point>
+      <point>O</point>
+    </midpoint_of_two_points>
+    <free_point>
+      <point out="true">K</point>
+    </free_point>
+    <free_point>
+      <point out="true">L</point>
+    </free_point>
+    <line_segment_by_points>
+      <line_segment out="true">g</line_segment>
+      <point>K</point>
+      <point>L</point>
+    </line_segment_by_points>
+    <point_intersection_of_two_lines>
+      <point out="true">Q</point>
+      <line>b</line>
+      <line>g</line>
+    </point_intersection_of_two_lines>
+    <free_point>
+      <point out="true">R</point>
+    </free_point>
+    <free_point>
+      <point out="true">S</point>
+    </free_point>
+    <circle_by_center_and_point>
+      <xmlCircleC out="true">C0</xmlCircleC>
+      <point>R</point>
+      <point>S</point>
+    </circle_by_center_and_point>
+    <free_point>
+      <point out="true">T</point>
+    </free_point>
+    <free_point>
+      <point out="true">U</point>
+    </free_point>
+    <free_point>
+      <point out="true">V</point>
+    </free_point>
+    <circle_by_three_points>
+      <xmlCircleC out="true">C2</xmlCircleC>
+      <point>T</point>
+      <point>U</point>
+      <point>V</point>
+    </circle_by_three_points>
+    <point_intersection_of_two_lines>
+      <point out="true">W</point>
+      <line>a</line>
+      <line>e</line>
+    </point_intersection_of_two_lines>
+  </constraints>
+</construction>
