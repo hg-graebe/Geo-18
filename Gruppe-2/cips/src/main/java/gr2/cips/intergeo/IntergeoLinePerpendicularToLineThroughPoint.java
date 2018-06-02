@@ -1,0 +1,49 @@
+package gr2.cips.intergeo;
+
+/**
+ * @author Duong Trung Duong
+ *
+ */
+public class IntergeoLinePerpendicularToLineThroughPoint extends IntergeoElement {
+	private IntergeoElement point;
+	private IntergeoElement line;
+	
+	public IntergeoLinePerpendicularToLineThroughPoint(String id, IntergeoElement point, IntergeoElement line) {
+		this.setID(id);
+		this.setPoint(point);
+		this.setLine(line);
+	}
+	
+	public void setPoint(IntergeoElement point) {
+		this.point = point;
+	}
+
+	public IntergeoElement getPoint() {
+		return this.point;
+	}	
+	
+	public void setLine(IntergeoElement line) {
+		this.line = line;
+	}
+
+	public IntergeoElement getLine() {
+		return this.line;
+	}	
+	
+	public double getA() {
+		return this.getLine().getA();
+	}
+
+	public double getB() {
+		return this.getLine().getB();
+	}
+
+	public double getC() {
+		return -(this.getPoint().getY() * this.getLine().getB() + this.getLine().getA() * this.getPoint().getX());
+	}
+	
+	@Override
+	public String toString() {
+		return "Point:(" + point.toString() + "), " + "Line:[" + line.toString() + "]";
+	}
+}
