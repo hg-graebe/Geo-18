@@ -216,6 +216,10 @@ public class GeoProofScheme {
 							} else {
 								return false;
 							}
+						} else {
+							logger.error("Error while parsing element ID:" + id);
+							logger.error("Not yet implemented: " + rawData);
+							return false;
 						}
 					}
 				}

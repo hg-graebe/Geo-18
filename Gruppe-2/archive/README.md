@@ -6,7 +6,7 @@ die Ergebnisse auf einem gemeinsamen Meeting im Praktikum vorstellen.
 # Team
 
 * Kevin Marco Shrestha (PL) - ks12dyle@studserv.uni-leipzig.de
-* Trung "Kim" Duong - bss13ard@studserv.uni-leipzig.de
+* Duong Trung Duong - bss13ard@studserv.uni-leipzig.de
 * Akber Sarchaddi
 * Johannes Michael - jm85copi@studserv.uni-leipzig.de
 
