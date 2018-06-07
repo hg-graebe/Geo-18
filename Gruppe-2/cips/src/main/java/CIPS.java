@@ -22,12 +22,12 @@ import net.lingala.zip4j.exception.ZipException;
 
 /**
  * @author Duong Trung Duong
- *
+ * @author <a href=
+ *         "mailto:bss13ard@studserv.uni-leipzig.de">bss13ard@studserv.uni-leipzig.de</a>
  */
 public class CIPS {
 	public static void main(String argv[]) throws IOException, ParseException, TransformerException, ZipException {
 		Options options = new Options();
-
 		Option oJobType = new Option("j", "job-type", true,
 				"\"c2i\": cinderella to intergeo,\n" + "\"g2i\": geoproofscheme to intergeo,\n"
 						+ "\"vc\":  cinderella visualisation with jsxgraph,\n"
@@ -40,13 +40,9 @@ public class CIPS {
 		oInput.setRequired(true);
 		options.addOption(oInput);
 
-		Option oParameter = new Option("p", "parameter", true, "parameter file path");
+		Option oParameter = new Option("p", "parameter", true, "default parameter file path");
 		oParameter.setRequired(false);
 		options.addOption(oParameter);
-
-		Option oVariable = new Option("v", "variable", true, "variable file path");
-		oVariable.setRequired(false);
-		options.addOption(oVariable);
 
 		Option oOutput = new Option("o", "output", true, "output file path");
 		oOutput.setRequired(true);
@@ -60,10 +56,10 @@ public class CIPS {
 		HelpFormatter formatter = new HelpFormatter();
 		CommandLine cmd;
 		String helpString = "\njava -jar cips.jar -j c2i -i <cinderella file> -o <intergeo file>\n"
-				+ "java -jar cips.jar -j g2i -i <geoproofscheme file> -o <intergeo file> -p [parameter file] -v [variable file]\n"
+				+ "java -jar cips.jar -j g2i -i <geoproofscheme file> -o <intergeo file> -p [default parameter file]\n"
 				+ "java -jar cips.jar -j vc -i <cinderella file> -o <visualization file>\n"
 				+ "java -jar cips.jar -j vi -i <intergeo file> -o <visualization file>\n"
-				+ "java -jar cips.jar -j vg -i <geoproofscheme file> -o <visualization file> -p [parameter file] -v [variable file]\n\n";
+				+ "java -jar cips.jar -j vg -i <geoproofscheme file> -o <visualization file> -p [default parameter file]\n\n";
 
 		try {
 			cmd = parser.parse(options, argv);
@@ -95,9 +91,8 @@ public class CIPS {
 			String geoProofSchemeFilePath = cmd.getOptionValue("input");
 			String intergeoFilePath = cmd.getOptionValue("output");
 			String parametersFilePath = cmd.getOptionValue("parameter");
-			String variablesFilePath = cmd.getOptionValue("variable");
 
-			if (!geoProofScheme.loadFromFile(geoProofSchemeFilePath, parametersFilePath, variablesFilePath))
+			if (!geoProofScheme.loadFromFile(geoProofSchemeFilePath, parametersFilePath))
 				return;
 
 			GeoProofScheme2Intergeo geoProofScheme2Intergeo = new GeoProofScheme2Intergeo(geoProofScheme);
@@ -129,9 +124,8 @@ public class CIPS {
 			String geoProofSchemeFilePath = cmd.getOptionValue("input");
 			String visualizationFilePath = cmd.getOptionValue("output");
 			String parametersFilePath = cmd.getOptionValue("parameter");
-			String variablesFilePath = cmd.getOptionValue("variable");
 
-			if (!geoProofScheme.loadFromFile(geoProofSchemeFilePath, parametersFilePath, variablesFilePath))
+			if (!geoProofScheme.loadFromFile(geoProofSchemeFilePath, parametersFilePath))
 				return;
 
 			GeoProofSchemeVisualization geoProofSchemeVisualization = new GeoProofSchemeVisualization(geoProofScheme,

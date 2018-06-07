@@ -19,12 +19,14 @@ import gr2.cips.jsxgraph.JSXGraphLine;
 import gr2.cips.jsxgraph.JSXGraphMidPoint;
 import gr2.cips.jsxgraph.JSXGraphPCCircle;
 import gr2.cips.jsxgraph.JSXGraphParallel;
+import gr2.cips.jsxgraph.JSXGraphParameter;
 import gr2.cips.jsxgraph.JSXGraphPerpendicular;
 import gr2.cips.jsxgraph.JSXGraphPoint;
 
 /**
  * @author Duong Trung Duong
- *
+ * @author <a href=
+ *         "mailto:bss13ard@studserv.uni-leipzig.de">bss13ard@studserv.uni-leipzig.de</a>
  */
 public class Cinderella2JSXGraph {
 	final static Logger logger = Logger.getLogger(Cinderella2JSXGraph.class);
@@ -48,15 +50,29 @@ public class Cinderella2JSXGraph {
 
 	public JSXGraph convert() {
 		JSXGraph jsxGraph = new JSXGraph();
-		
+
 		if (getCinderella().getTitle() != null) {
 			jsxGraph.setTitle(getCinderella().getTitle());
 		}
-		
+
 		for (CinderellaElement cinderellaElement : cinderella.getCinderellaElements()) {
 			if (cinderellaElement instanceof CinderellaFreePoint) {
-				jsxGraph.addElement(new JSXGraphPoint(cinderellaElement.getID(), cinderellaElement.getX(),
-						cinderellaElement.getY(), 1.0));
+				JSXGraphParameter xParameter = (JSXGraphParameter) jsxGraph
+						.getElementByID(JSXGraphParameter.CONST_IDENTITY + cinderellaElement.getX());
+				JSXGraphParameter yParameter = (JSXGraphParameter) jsxGraph
+						.getElementByID(JSXGraphParameter.CONST_IDENTITY + cinderellaElement.getY());
+				if (xParameter == null) {
+					xParameter = new JSXGraphParameter(JSXGraphParameter.CONST_IDENTITY + cinderellaElement.getX(),
+							cinderellaElement.getX());
+					jsxGraph.addElement(xParameter);
+				}
+				if (yParameter == null) {
+					yParameter = new JSXGraphParameter(JSXGraphParameter.CONST_IDENTITY + cinderellaElement.getY(),
+							cinderellaElement.getY());
+					jsxGraph.addElement(yParameter);
+				}
+				jsxGraph.addElement(new JSXGraphPoint(cinderellaElement.getID(), xParameter, yParameter,
+						jsxGraph.getElementByID(JSXGraphParameter.CONST_IDENTITY + String.valueOf(1.0))));
 				logger.info("FreePoint ID:" + cinderellaElement.getID() + " has been converted to JSXGraph point");
 			} else if (cinderellaElement instanceof CinderellaMid) {
 				jsxGraph.addElement(new JSXGraphMidPoint(cinderellaElement.getID(),
@@ -81,9 +97,11 @@ public class Cinderella2JSXGraph {
 			} else if (cinderellaElement instanceof CinderellaOrthogonal) {
 				jsxGraph.addElement(new JSXGraphPerpendicular(cinderellaElement.getID(),
 						jsxGraph.getElementByID(((CinderellaOrthogonal) cinderellaElement).getThroughPoint().getID()),
-						jsxGraph.getElementByID(((CinderellaOrthogonal) cinderellaElement).getOrthogonalLineOrSegment().getID())));
-				logger.info("Orthogonal ID:" + cinderellaElement.getID() + " has been converted to JSXGraph perpendicular");
-			} 		else if (cinderellaElement instanceof CinderellaCircleMP) {
+						jsxGraph.getElementByID(
+								((CinderellaOrthogonal) cinderellaElement).getOrthogonalLineOrSegment().getID())));
+				logger.info(
+						"Orthogonal ID:" + cinderellaElement.getID() + " has been converted to JSXGraph perpendicular");
+			} else if (cinderellaElement instanceof CinderellaCircleMP) {
 				jsxGraph.addElement(new JSXGraphPCCircle(cinderellaElement.getID(),
 						jsxGraph.getElementByID(((CinderellaCircleMP) cinderellaElement).getCenterPoint().getID()),
 						jsxGraph.getElementByID(((CinderellaCircleMP) cinderellaElement).getThroughPoint().getID())));

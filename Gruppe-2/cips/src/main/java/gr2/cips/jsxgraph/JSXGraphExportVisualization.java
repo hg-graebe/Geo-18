@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
@@ -18,7 +19,8 @@ import net.lingala.zip4j.exception.ZipException;
 
 /**
  * @author Duong Trung Duong
- *
+ * @author <a href=
+ *         "mailto:bss13ard@studserv.uni-leipzig.de">bss13ard@studserv.uni-leipzig.de</a>
  */
 public class JSXGraphExportVisualization {
 	final static Logger logger = Logger.getLogger(JSXGraphExportVisualization.class);
@@ -53,7 +55,8 @@ public class JSXGraphExportVisualization {
 
 	public void visualize() {
 		List<JSXGraphElement> jsxGraphElements = getJSXGraph().getJSXGraphElements();
-		String board = "var p = [];" + System.lineSeparator();
+		String board = visualizeJSXGraphParameters(getParameters(jsxGraphElements)) + System.lineSeparator();
+		board = board + "\t\t\tvar e = [];" + System.lineSeparator();
 		for (JSXGraphElement jsxGraphElement : jsxGraphElements) {
 			if (jsxGraphElement instanceof JSXGraphPoint) {
 				jsxGraphElement.setProperties(JSXGraphElement.INDEPENDENT_POINT_PROP);
@@ -67,6 +70,22 @@ public class JSXGraphExportVisualization {
 				jsxGraphElement.setProperties(JSXGraphElement.DEPENDENT_POINT_PROP);
 				board += visualizeJSXGraphIntersection((JSXGraphIntersection) jsxGraphElement);
 				logger.info("intersection ID:" + jsxGraphElement.getID() + " has been visualized");
+			} else if (jsxGraphElement instanceof JSXGraphVarPoint) {
+				jsxGraphElement.setProperties(JSXGraphElement.DEPENDENT_POINT_PROP);
+				board += visualizeJSXGraphVarPoint((JSXGraphVarPoint) jsxGraphElement);
+				logger.info("varpoint ID:" + jsxGraphElement.getID() + " has been visualized");
+			} else if (jsxGraphElement instanceof JSXGraphFixedPoint) {
+				jsxGraphElement.setProperties(JSXGraphElement.DEPENDENT_POINT_PROP);
+				board += visualizeJSXGraphFixedPoint((JSXGraphFixedPoint) jsxGraphElement);
+				logger.info("fixedpoint ID:" + jsxGraphElement.getID() + " has been visualized");
+			} else if (jsxGraphElement instanceof JSXGraphLineGlider) {
+				jsxGraphElement.setProperties("");
+				board += visualizeJSXGraphLineGlider((JSXGraphLineGlider) jsxGraphElement);
+				logger.info("line_glider ID:" + jsxGraphElement.getID() + " has been visualized");
+			} else if (jsxGraphElement instanceof JSXGraphCircleGlider) {
+				jsxGraphElement.setProperties("");
+				board += visualizeJSXGraphCircleGlider((JSXGraphCircleGlider) jsxGraphElement);
+				logger.info("circle_glider ID:" + jsxGraphElement.getID() + " has been visualized");
 			} else if (jsxGraphElement instanceof JSXGraphLine) {
 				jsxGraphElement.setProperties(JSXGraphElement.INDEPENDENT_LINE_PROP);
 				board += visualizeJSXGraphLine((JSXGraphLine) jsxGraphElement);
@@ -93,7 +112,7 @@ public class JSXGraphExportVisualization {
 				logger.info("circumcircle ID:" + jsxGraphElement.getID() + " has been visualized");
 			}
 		}
-
+		board += visualizeJSXGraphRelation(getParameters(jsxGraphElements), jsxGraphElements);
 		String htmlContent = readHTMLTemplate().replace("TITLE_PATTERN", getJSXGraph().getTitle())
 				.replace("BOARD_PATTERN", board);
 
@@ -105,72 +124,218 @@ public class JSXGraphExportVisualization {
 		}
 	}
 
+	private String visualizeJSXGraphParameters(List<JSXGraphParameter> parameters) {
+		String parameterVisualiztion = "";
+		for (JSXGraphParameter parameter : parameters) {
+			if (!parameter.isConstant()) {
+				int yCoord = 33 - parameters.indexOf(parameter) * 3;
+				parameterVisualiztion += "\t\t\tvar " + parameter.getID() + "= board.create('slider',[[60," + yCoord
+						+ "],[90," + yCoord + "],[-40,0,40]],{name:'" + parameter.getID() + "',snapWidth:-1});"
+						+ System.lineSeparator();
+				parameterVisualiztion += "\t\t\t" + parameter.getID() + ".setValue(" + parameter.getValue() + ");"
+						+ System.lineSeparator();
+			}
+		}
+		return parameterVisualiztion;
+	}
+
+	private String visualizeJSXGraphRelation(List<JSXGraphParameter> parameters,
+			List<JSXGraphElement> jsxGraphElements) {
+		String relation = System.lineSeparator();
+		for (JSXGraphParameter parameter : parameters) {
+			if (!parameter.isConstant()) {
+				String parameterID = parameter.getID();
+				relation = relation + "\t\t\t" + parameterID + ".on('drag', function(){" + System.lineSeparator();
+				for (JSXGraphElement jsxGraphElement : jsxGraphElements) {
+					if (jsxGraphElement instanceof JSXGraphPoint) {
+						relation += visualizeJSXGraphPointRelation(parameterID, (JSXGraphPoint) jsxGraphElement);
+					} else if (jsxGraphElement instanceof JSXGraphVarPoint) {
+						relation += visualizeJSXGraphVarPointRelation(parameterID, (JSXGraphVarPoint) jsxGraphElement);
+					} else if (jsxGraphElement instanceof JSXGraphLineGlider) {
+						relation += visualizeJSXGraphLineGliderRelation(parameterID,
+								(JSXGraphLineGlider) jsxGraphElement);
+					} else if (jsxGraphElement instanceof JSXGraphCircleGlider) {
+						relation += visualizeJSXGraphCircleGliderRelation(parameterID,
+								(JSXGraphCircleGlider) jsxGraphElement);
+					}
+				}
+				relation += "\t\t\t});" + System.lineSeparator();
+			}
+		}
+		return relation;
+	}
+
+	private String visualizeJSXGraphPointRelation(String parameterID, JSXGraphPoint jsxGraphPoint) {
+		String pointRelation = "";
+		String xElementID = jsxGraphPoint.getXElement().getID();
+		String yElementID = jsxGraphPoint.getYElement().getID();
+		if (xElementID.equals(parameterID) || yElementID.equals(parameterID)) {
+			xElementID = (xElementID.contains(JSXGraphParameter.CONST_IDENTITY)
+					? xElementID.replace(JSXGraphParameter.CONST_IDENTITY, "")
+					: xElementID + ".Value()");
+			yElementID = (yElementID.contains(JSXGraphParameter.CONST_IDENTITY)
+					? yElementID.replace(JSXGraphParameter.CONST_IDENTITY, "")
+					: yElementID + ".Value()");
+			pointRelation = "\t\t\t\te[" + getIndexByElement(jsxGraphPoint) + "].setPosition(JXG.COORDS_BY_USER,["
+					+ xElementID + "," + yElementID + "]);" + System.lineSeparator();
+		}
+		return pointRelation;
+	}
+
+	private String visualizeJSXGraphVarPointRelation(String parameterID, JSXGraphVarPoint jsxGraphVarPoint) {
+		String varpointRelation = "";
+		int point1Index = getIndexByElement(jsxGraphVarPoint.getPoint1());
+		int point2Index = getIndexByElement(jsxGraphVarPoint.getPoint2());
+		String varPointParameterID = jsxGraphVarPoint.getParameter().getID();
+		if (varPointParameterID.equals(parameterID)) {
+			varpointRelation = "\t\t\t\te[" + getIndexByElement(jsxGraphVarPoint) + "].setPosition(JXG.COORDS_BY_USER,["
+					+ "getLineSliderX(e[" + point1Index + "].X(),e[" + point2Index + "].X()," + varPointParameterID
+					+ ".Value()),getLineSliderY(e[" + point1Index + "].Y(),e[" + point2Index + "].Y(),"
+					+ varPointParameterID + ".Value())]);" + System.lineSeparator();
+		}
+		return varpointRelation;
+	}
+
+	private String visualizeJSXGraphLineGliderRelation(String parameterID, JSXGraphLineGlider jsxGraphLineGlider) {
+		String lineGliderRelation = "";
+		int lineIndex = getIndexByElement(jsxGraphLineGlider.getLine());
+		String lineGliderParameterID = jsxGraphLineGlider.getParameter().getID();
+		if (lineGliderParameterID.equals(parameterID)) {
+			lineGliderParameterID = (lineGliderParameterID.contains(JSXGraphParameter.CONST_IDENTITY)
+					? lineGliderParameterID.replace(JSXGraphParameter.CONST_IDENTITY, "")
+					: lineGliderParameterID + ".Value()");
+			String tempString = "e[" + lineIndex + "].point1.X(),e[" + lineIndex + "].point2.X(),e[" + lineIndex
+					+ "].point1.Y(),e[" + lineIndex + "].point2.Y(),";
+			lineGliderRelation = "\t\t\t\te[" + getIndexByElement(jsxGraphLineGlider)
+					+ "].setPosition(JXG.COORDS_BY_USER,[" + "getLineSliderX(" + tempString + lineGliderParameterID
+					+ "),getLineSliderY(" + tempString + lineGliderParameterID + ")]);" + System.lineSeparator();
+		}
+		return lineGliderRelation;
+	}
+
+	private String visualizeJSXGraphCircleGliderRelation(String parameterID,
+			JSXGraphCircleGlider jsxGraphCircleGlider) {
+		String circleGliderRelation = "";
+		int circleIndex = getIndexByElement(jsxGraphCircleGlider.getCircle());
+		String circleGliderParameterID = jsxGraphCircleGlider.getParameter().getID();
+		if (circleGliderParameterID.equals(parameterID)) {
+			circleGliderParameterID = (circleGliderParameterID.contains(JSXGraphParameter.CONST_IDENTITY)
+					? circleGliderParameterID.replace(JSXGraphParameter.CONST_IDENTITY, "")
+					: circleGliderParameterID + ".Value()");
+			circleGliderRelation = "\t\t\t\te[" + getIndexByElement(jsxGraphCircleGlider)
+					+ "].setPosition(JXG.COORDS_BY_USER,[" + "getCircleSliderX(e[" + circleIndex + "].center.X(),e["
+					+ circleIndex + "].radius," + circleGliderParameterID + "),getCircleSliderY(e[" + circleIndex
+					+ "].center.Y(),e[" + circleIndex + "].radius," + circleGliderParameterID + ")]);"
+					+ System.lineSeparator();
+		}
+		return circleGliderRelation;
+	}
+
 	private String visualizeJSXGraphPoint(JSXGraphPoint jsxGraphPoint) {
-		return "\t\t\tp[" + getIndexByElement(jsxGraphPoint) + "] = board.createElement('point', ["
-				+ jsxGraphPoint.getW() + "," + jsxGraphPoint.getX() + "," + jsxGraphPoint.getY() + "], {name:'"
-				+ jsxGraphPoint.getID() + "'," + jsxGraphPoint.getProperties() + "})" + System.lineSeparator();
+		return "\t\t\te[" + getIndexByElement(jsxGraphPoint) + "] = board.create('point', [" + jsxGraphPoint.getW()
+				+ "," + jsxGraphPoint.getX() + "," + jsxGraphPoint.getY() + "], {name:'" + jsxGraphPoint.getID() + "',"
+				+ jsxGraphPoint.getProperties() + "})" + System.lineSeparator();
 	}
 
 	private String visualizeJSXGraphMidPoint(JSXGraphMidPoint jsxGraphMidPoint) {
-		return "\t\t\tp[" + getIndexByElement(jsxGraphMidPoint) + "] = board.createElement('midpoint', [p["
-				+ getIndexByElement(jsxGraphMidPoint.getPoint1()) + "],p["
+		return "\t\t\te[" + getIndexByElement(jsxGraphMidPoint) + "] = board.create('midpoint', [e["
+				+ getIndexByElement(jsxGraphMidPoint.getPoint1()) + "],e["
 				+ getIndexByElement(jsxGraphMidPoint.getPoint2()) + "]], {name:'" + jsxGraphMidPoint.getID() + "',"
 				+ jsxGraphMidPoint.getProperties() + "})" + System.lineSeparator();
 	}
 
 	private String visualizeJSXGraphIntersection(JSXGraphIntersection jsxGraphIntersection) {
-		return "\t\t\tp[" + getIndexByElement(jsxGraphIntersection) + "] = board.createElement('intersection', [p["
-				+ getIndexByElement(jsxGraphIntersection.getLine1()) + "],p["
-				+ getIndexByElement(jsxGraphIntersection.getLine2()) + "],0], {name:'" + jsxGraphIntersection.getID()
+		return "\t\t\te[" + getIndexByElement(jsxGraphIntersection) + "] = board.create('intersection', [e["
+				+ getIndexByElement(jsxGraphIntersection.getElement1()) + "],e["
+				+ getIndexByElement(jsxGraphIntersection.getElement2()) + "],0], {name:'" + jsxGraphIntersection.getID()
 				+ "'," + jsxGraphIntersection.getProperties() + "})" + System.lineSeparator();
 	}
 
+	private String visualizeJSXGraphVarPoint(JSXGraphVarPoint jsxGraphVarPoint) {
+		return "\t\t\te[" + getIndexByElement(jsxGraphVarPoint) + "] = board.create('point', ["
+				+ jsxGraphVarPoint.getW() + "," + jsxGraphVarPoint.getX() + "," + jsxGraphVarPoint.getY() + "], {name:'"
+				+ jsxGraphVarPoint.getID() + "'," + jsxGraphVarPoint.getProperties() + "})" + System.lineSeparator();
+	}
+
+	private String visualizeJSXGraphFixedPoint(JSXGraphFixedPoint jsxGraphFixedPoint) {
+		return "\t\t\te[" + getIndexByElement(jsxGraphFixedPoint) + "] = board.create('point', ["
+				+ jsxGraphFixedPoint.getW() + "," + jsxGraphFixedPoint.getX() + "," + jsxGraphFixedPoint.getY()
+				+ "], {name:'" + jsxGraphFixedPoint.getID() + "'," + jsxGraphFixedPoint.getProperties() + "})"
+				+ System.lineSeparator();
+	}
+
+	private String visualizeJSXGraphLineGlider(JSXGraphLineGlider jsxGraphLineGlider) {
+		return "\t\t\te[" + getIndexByElement(jsxGraphLineGlider) + "] = board.create('glider', ["
+				+ jsxGraphLineGlider.getX() + "," + jsxGraphLineGlider.getY() + ",e["
+				+ getIndexByElement(jsxGraphLineGlider.getLine()) + "]], {name:'" + jsxGraphLineGlider.getID() + "',"
+				+ jsxGraphLineGlider.getProperties() + "})" + System.lineSeparator();
+
+	}
+
+	private String visualizeJSXGraphCircleGlider(JSXGraphCircleGlider jsxGraphCircleGlider) {
+		return "\t\t\te[" + getIndexByElement(jsxGraphCircleGlider) + "] = board.create('glider', ["
+				+ jsxGraphCircleGlider.getX() + "," + jsxGraphCircleGlider.getY() + ",e["
+				+ getIndexByElement(jsxGraphCircleGlider.getCircle()) + "]], {name:'" + jsxGraphCircleGlider.getID()
+				+ "'," + jsxGraphCircleGlider.getProperties() + "})" + System.lineSeparator();
+
+	}
+
 	private String visualizeJSXGraphLine(JSXGraphLine jsxGraphLine) {
-		return "\t\t\tp[" + getIndexByElement(jsxGraphLine) + "] = board.createElement('line', [p["
-				+ getIndexByElement(jsxGraphLine.getPoint1()) + "],p[" + getIndexByElement(jsxGraphLine.getPoint2())
+		return "\t\t\te[" + getIndexByElement(jsxGraphLine) + "] = board.create('line', [e["
+				+ getIndexByElement(jsxGraphLine.getPoint1()) + "],e[" + getIndexByElement(jsxGraphLine.getPoint2())
 				+ "]], {name:'" + jsxGraphLine.getID() + "'," + jsxGraphLine.getProperties() + "})"
 				+ System.lineSeparator();
 	}
 
 	private String visualizeJSXGraphParallel(JSXGraphParallel jsxGraphParallel) {
-		return "\t\t\tp[" + getIndexByElement(jsxGraphParallel) + "] = board.createElement('parallel', [p["
-				+ getIndexByElement(jsxGraphParallel.getLine()) + "],p["
+		return "\t\t\te[" + getIndexByElement(jsxGraphParallel) + "] = board.create('parallel', [e["
+				+ getIndexByElement(jsxGraphParallel.getLine()) + "],e["
 				+ getIndexByElement(jsxGraphParallel.getPoint()) + "]], {name:'" + jsxGraphParallel.getID() + "',"
 				+ jsxGraphParallel.getProperties() + "})" + System.lineSeparator();
 	}
 
 	private String visualizeJSXGraphPerpendicular(JSXGraphPerpendicular jsxGraphPerpendicular) {
-		return "\t\t\tp[" + getIndexByElement(jsxGraphPerpendicular) + "] = board.createElement('perpendicular', [p["
-				+ getIndexByElement(jsxGraphPerpendicular.getLine()) + "],p["
+		return "\t\t\te[" + getIndexByElement(jsxGraphPerpendicular) + "] = board.create('perpendicular', [e["
+				+ getIndexByElement(jsxGraphPerpendicular.getLine()) + "],e["
 				+ getIndexByElement(jsxGraphPerpendicular.getPoint()) + "]], {name:'" + jsxGraphPerpendicular.getID()
 				+ "'," + jsxGraphPerpendicular.getProperties() + "})" + System.lineSeparator();
 	}
 
 	private String visualizeJSXGraphP3Bisector(JSXGraphP3Bisector jsxGraphP3Bisector) {
-		return "\t\t\tp[" + getIndexByElement(jsxGraphP3Bisector) + "] = board.createElement('bisector', [p["
-				+ getIndexByElement(jsxGraphP3Bisector.getPoint1()) + "],p["
-				+ getIndexByElement(jsxGraphP3Bisector.getPoint2()) + "],p["
-				+ getIndexByElement(jsxGraphP3Bisector.getPoint3()) + "]], {name:'" + jsxGraphP3Bisector.getID()
-				+ "'," + jsxGraphP3Bisector.getProperties() + "})" + System.lineSeparator();
+		return "\t\t\te[" + getIndexByElement(jsxGraphP3Bisector) + "] = board.create('bisector', [e["
+				+ getIndexByElement(jsxGraphP3Bisector.getPoint1()) + "],e["
+				+ getIndexByElement(jsxGraphP3Bisector.getPoint2()) + "],e["
+				+ getIndexByElement(jsxGraphP3Bisector.getPoint3()) + "]], {name:'" + jsxGraphP3Bisector.getID() + "',"
+				+ jsxGraphP3Bisector.getProperties() + "})" + System.lineSeparator();
 	}
-	
+
 	private String visualizeJSXGraphPCCircle(JSXGraphPCCircle jsxGraphPCCircle) {
-		return "\t\t\tp[" + getIndexByElement(jsxGraphPCCircle) + "] = board.createElement('circle', [p["
-				+ getIndexByElement(jsxGraphPCCircle.getCenterPoint()) + "],p["
+		return "\t\t\te[" + getIndexByElement(jsxGraphPCCircle) + "] = board.create('circle', [e["
+				+ getIndexByElement(jsxGraphPCCircle.getCenterPoint()) + "],e["
 				+ getIndexByElement(jsxGraphPCCircle.getThroughPoint()) + "]], {name:'" + jsxGraphPCCircle.getID() + "'"
 				+ jsxGraphPCCircle.getProperties() + "})" + System.lineSeparator();
 	}
 
 	private String visualizeJSXGraphCircumCircle(JSXGraphCircumCircle jsxGraphCircumCircle) {
-		return "\t\t\tp[" + getIndexByElement(jsxGraphCircumCircle) + "] = board.createElement('circumcircle', [p["
-				+ getIndexByElement(jsxGraphCircumCircle.getPoint1()) + "],p["
-				+ getIndexByElement(jsxGraphCircumCircle.getPoint2()) + "],p["
+		return "\t\t\te[" + getIndexByElement(jsxGraphCircumCircle) + "] = board.create('circumcircle', [e["
+				+ getIndexByElement(jsxGraphCircumCircle.getPoint1()) + "],e["
+				+ getIndexByElement(jsxGraphCircumCircle.getPoint2()) + "],e["
 				+ getIndexByElement(jsxGraphCircumCircle.getPoint3()) + "]], {name:'" + jsxGraphCircumCircle.getID()
 				+ "'," + jsxGraphCircumCircle.getProperties() + "})" + System.lineSeparator();
 	}
 
 	private int getIndexByElement(JSXGraphElement jsxGraphElement) {
 		return getJSXGraph().getJSXGraphElements().indexOf(jsxGraphElement);
+	}
+
+	private List<JSXGraphParameter> getParameters(List<JSXGraphElement> jsxGraphElements) {
+		List<JSXGraphParameter> jsxGraphParamters = new ArrayList<JSXGraphParameter>();
+		for (JSXGraphElement jsxGraphElement : jsxGraphElements) {
+			if (jsxGraphElement instanceof JSXGraphParameter) {
+				jsxGraphParamters.add((JSXGraphParameter) jsxGraphElement);
+			}
+		}
+		return jsxGraphParamters;
 	}
 
 	private String readHTMLTemplate() {

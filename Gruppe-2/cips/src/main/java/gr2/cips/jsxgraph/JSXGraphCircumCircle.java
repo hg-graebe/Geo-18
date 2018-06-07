@@ -2,15 +2,15 @@ package gr2.cips.jsxgraph;
 
 /**
  * @author Duong Trung Duong
- *
+ * @author <a href=
+ *         "mailto:bss13ard@studserv.uni-leipzig.de">bss13ard@studserv.uni-leipzig.de</a>
  */
 public class JSXGraphCircumCircle extends JSXGraphElement {
 	private JSXGraphElement point1;
 	private JSXGraphElement point2;
 	private JSXGraphElement point3;
 
-	public JSXGraphCircumCircle(String id, JSXGraphElement point1, JSXGraphElement point2,
-			JSXGraphElement point3) {
+	public JSXGraphCircumCircle(String id, JSXGraphElement point1, JSXGraphElement point2, JSXGraphElement point3) {
 		this.setID(id);
 		this.setPoint1(point1);
 		this.setPoint2(point2);

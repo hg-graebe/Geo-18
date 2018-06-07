@@ -24,7 +24,8 @@ import gr2.cips.intergeo.IntergeoPointIntersectionOfTwoLines;
 
 /**
  * @author Duong Trung Duong
- *
+ * @author <a href=
+ *         "mailto:bss13ard@studserv.uni-leipzig.de">bss13ard@studserv.uni-leipzig.de</a>
  */
 public class Cinderella2Intergeo {
 	final static Logger logger = Logger.getLogger(Cinderella2Intergeo.class);

@@ -2,7 +2,8 @@ package gr2.cips.intergeo;
 
 /**
  * @author Duong Trung Duong
- *
+ * @author <a href=
+ *         "mailto:bss13ard@studserv.uni-leipzig.de">bss13ard@studserv.uni-leipzig.de</a>
  */
 public class IntergeoLineAngularBisectorOfThreePoints extends IntergeoElement {
 	private IntergeoElement point1;
@@ -40,7 +41,7 @@ public class IntergeoLineAngularBisectorOfThreePoints extends IntergeoElement {
 	public IntergeoElement getPoint3() {
 		return this.point3;
 	}
-	
+
 	public double getA() {
 		IntergeoLineThroughTwoPoints p1p2 = new IntergeoLineThroughTwoPoints(null, point1, point2);
 		IntergeoLineThroughTwoPoints p2p3 = new IntergeoLineThroughTwoPoints(null, point2, point3);

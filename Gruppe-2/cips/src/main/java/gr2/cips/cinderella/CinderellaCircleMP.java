@@ -2,34 +2,35 @@ package gr2.cips.cinderella;
 
 /**
  * @author Duong Trung Duong
- *
+ * @author <a href=
+ *         "mailto:bss13ard@studserv.uni-leipzig.de">bss13ard@studserv.uni-leipzig.de</a>
  */
 public class CinderellaCircleMP extends CinderellaElement {
 	private CinderellaElement centerPoint;
 	private CinderellaElement throughPoint;
-	
+
 	public CinderellaCircleMP(String id, CinderellaElement centerPoint, CinderellaElement throughPoint) {
 		this.setID(id);
 		this.setCenterPoint(centerPoint);
 		this.setThroughPoint(throughPoint);
 	}
-	
+
 	public void setCenterPoint(CinderellaElement centerPoint) {
 		this.centerPoint = centerPoint;
 	}
-	
+
 	public void setThroughPoint(CinderellaElement throughPoint) {
 		this.throughPoint = throughPoint;
-	}	
-	
+	}
+
 	public CinderellaElement getCenterPoint() {
 		return this.centerPoint;
 	}
-	
+
 	public CinderellaElement getThroughPoint() {
 		return this.throughPoint;
-	}	
-	
+	}
+
 	public double getRadius() {
 		double xC = this.centerPoint.getX();
 		double yC = this.centerPoint.getY();
@@ -56,5 +57,5 @@ public class CinderellaCircleMP extends CinderellaElement {
 	@Override
 	public String toString() {
 		return "Point1:(" + centerPoint.toString() + "), Point2:(" + throughPoint.toString() + ")";
-	}	
+	}
 }

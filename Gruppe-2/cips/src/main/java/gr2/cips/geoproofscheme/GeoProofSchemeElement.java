@@ -2,7 +2,8 @@ package gr2.cips.geoproofscheme;
 
 /**
  * @author Duong Trung Duong
- *
+ * @author <a href=
+ *         "mailto:bss13ard@studserv.uni-leipzig.de">bss13ard@studserv.uni-leipzig.de</a>
  */
 public abstract class GeoProofSchemeElement {
 	private String id;
@@ -29,15 +30,22 @@ public abstract class GeoProofSchemeElement {
 
 	public boolean isPoint() {
 		return this instanceof GeoProofSchemeFreePoint || this instanceof GeoProofSchemeMidPoint
-				|| this instanceof GeoProofSchemeIntersectionPoint ? true : false;
+				|| this instanceof GeoProofSchemeIntersectionPoint || this instanceof GeoProofSchemeCircleSlider
+				|| this instanceof GeoProofSchemeLineSlider || this instanceof GeoProofSchemeVarPoint
+				|| this instanceof GeoProofSchemeFixedPoint ? true : false;
 	}
 
 	public boolean isLine() {
-		return this instanceof GeoProofSchemePPLine || this instanceof GeoProofSchemeParLine ? true : false;
+		return this instanceof GeoProofSchemePPLine || this instanceof GeoProofSchemeParLine
+				|| this instanceof GeoProofSchemeOrthoLine || this instanceof GeoProofSchemeP3Bisector ? true : false;
 	}
 
 	public boolean isCircle() {
 		return this instanceof GeoProofSchemeP3Circle || this instanceof GeoProofSchemePCCircle ? true : false;
+	}
+
+	public double getValue() {
+		return Double.NaN;
 	}
 
 	public double getX() {

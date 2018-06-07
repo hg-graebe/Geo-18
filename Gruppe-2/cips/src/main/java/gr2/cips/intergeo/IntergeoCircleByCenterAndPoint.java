@@ -2,7 +2,8 @@ package gr2.cips.intergeo;
 
 /**
  * @author Duong Trung Duong
- *
+ * @author <a href=
+ *         "mailto:bss13ard@studserv.uni-leipzig.de">bss13ard@studserv.uni-leipzig.de</a>
  */
 public class IntergeoCircleByCenterAndPoint extends IntergeoElement {
 	private IntergeoElement centerPoint;

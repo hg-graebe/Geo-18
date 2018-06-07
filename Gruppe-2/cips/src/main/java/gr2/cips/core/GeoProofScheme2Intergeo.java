@@ -3,9 +3,11 @@ package gr2.cips.core;
 import org.apache.log4j.Logger;
 
 import gr2.cips.geoproofscheme.GeoProofScheme;
+import gr2.cips.geoproofscheme.GeoProofSchemeCircleSlider;
 import gr2.cips.geoproofscheme.GeoProofSchemeElement;
 import gr2.cips.geoproofscheme.GeoProofSchemeFreePoint;
 import gr2.cips.geoproofscheme.GeoProofSchemeIntersectionPoint;
+import gr2.cips.geoproofscheme.GeoProofSchemeLineSlider;
 import gr2.cips.geoproofscheme.GeoProofSchemeMidPoint;
 import gr2.cips.geoproofscheme.GeoProofSchemeOrthoLine;
 import gr2.cips.geoproofscheme.GeoProofSchemeP3Bisector;
@@ -23,10 +25,13 @@ import gr2.cips.intergeo.IntergeoLinePerpendicularToLineThroughPoint;
 import gr2.cips.intergeo.IntergeoLineThroughTwoPoints;
 import gr2.cips.intergeo.IntergeoMidPointOfTwoPoints;
 import gr2.cips.intergeo.IntergeoPointIntersectionOfTwoLines;
+import gr2.cips.intergeo.IntergeoPointOnCircle;
+import gr2.cips.intergeo.IntergeoPointOnLine;
 
 /**
  * @author Duong Trung Duong
- *
+ * @author <a href=
+ *         "mailto:bss13ard@studserv.uni-leipzig.de">bss13ard@studserv.uni-leipzig.de</a>
  */
 public class GeoProofScheme2Intergeo {
 	final static Logger logger = Logger.getLogger(GeoProofScheme2Intergeo.class);
@@ -67,6 +72,29 @@ public class GeoProofScheme2Intergeo {
 						intergeo.getElementByID(
 								((GeoProofSchemeIntersectionPoint) geoProofSchemeElement).getLine2().getID())));
 				logger.info("intersection_point ID:" + geoProofSchemeElement.getID() + " has been converted");
+			} else if (geoProofSchemeElement instanceof GeoProofSchemeCircleSlider) {
+				GeoProofSchemePCCircle tempGeoProofSchemePCCirle = null;
+				for (GeoProofSchemeElement tempGeoProofSchemeElement : geoProofScheme.getGeoProofSchemeElements()) {
+					if (tempGeoProofSchemeElement instanceof GeoProofSchemePCCircle) {
+						if (((GeoProofSchemePCCircle) tempGeoProofSchemeElement).getCenterPoint().getID()
+								.equals(((GeoProofSchemeCircleSlider) geoProofSchemeElement).getCenterPoint().getID())
+								&& ((GeoProofSchemePCCircle) tempGeoProofSchemeElement).getThroughPoint().getID()
+										.equals(((GeoProofSchemeCircleSlider) geoProofSchemeElement).getThroughPoint()
+												.getID())) {
+							tempGeoProofSchemePCCirle = (GeoProofSchemePCCircle) tempGeoProofSchemeElement;
+							break;
+						}
+					}
+				}
+				intergeo.addElement(new IntergeoPointOnCircle(geoProofSchemeElement.getID(),
+						intergeo.getElementByID(tempGeoProofSchemePCCirle.getID()), geoProofSchemeElement.getX(),
+						geoProofSchemeElement.getY(), 1.0));
+				logger.info("circle_slider ID:" + geoProofSchemeElement.getID() + " has been converted");
+			} else if (geoProofSchemeElement instanceof GeoProofSchemeLineSlider) {
+				intergeo.addElement(new IntergeoPointOnLine(geoProofSchemeElement.getID(),
+						intergeo.getElementByID(((GeoProofSchemeLineSlider) geoProofSchemeElement).getLine().getID()),
+						geoProofSchemeElement.getX(), geoProofSchemeElement.getY(), 1.0));
+				logger.info("line_slider ID:" + geoProofSchemeElement.getID() + " has been converted");
 			} else if (geoProofSchemeElement instanceof GeoProofSchemePPLine) {
 				intergeo.addElement(new IntergeoLineThroughTwoPoints(geoProofSchemeElement.getID(),
 						intergeo.getElementByID(((GeoProofSchemePPLine) geoProofSchemeElement).getPoint1().getID()),
@@ -86,7 +114,8 @@ public class GeoProofScheme2Intergeo {
 				intergeo.addElement(new IntergeoLineAngularBisectorOfThreePoints(geoProofSchemeElement.getID(),
 						intergeo.getElementByID(((GeoProofSchemeP3Bisector) geoProofSchemeElement).getPoint1().getID()),
 						intergeo.getElementByID(((GeoProofSchemeP3Bisector) geoProofSchemeElement).getPoint2().getID()),
-						intergeo.getElementByID(((GeoProofSchemeP3Bisector) geoProofSchemeElement).getPoint3().getID())));
+						intergeo.getElementByID(
+								((GeoProofSchemeP3Bisector) geoProofSchemeElement).getPoint3().getID())));
 				logger.info("p3_bisector ID:" + geoProofSchemeElement.getID() + " has been converted");
 			} else if (geoProofSchemeElement instanceof GeoProofSchemePCCircle) {
 				intergeo.addElement(new IntergeoCircleByCenterAndPoint(geoProofSchemeElement.getID(),

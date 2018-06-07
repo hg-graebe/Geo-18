@@ -2,44 +2,46 @@ package gr2.cips.cinderella;
 
 /**
  * @author Duong Trung Duong
- *
+ * @author <a href=
+ *         "mailto:bss13ard@studserv.uni-leipzig.de">bss13ard@studserv.uni-leipzig.de</a>
  */
 public class CinderellaCircleBy3 extends CinderellaElement {
 	private CinderellaElement point1;
 	private CinderellaElement point2;
 	private CinderellaElement point3;
-	
-	public CinderellaCircleBy3(String id, CinderellaElement point1, CinderellaElement point2, CinderellaElement point3) {
+
+	public CinderellaCircleBy3(String id, CinderellaElement point1, CinderellaElement point2,
+			CinderellaElement point3) {
 		this.setID(id);
 		this.setPoint1(point1);
 		this.setPoint2(point2);
 		this.setPoint3(point3);
 	}
-	
+
 	public void setPoint1(CinderellaElement point1) {
 		this.point1 = point1;
 	}
-	
+
 	public void setPoint2(CinderellaElement point2) {
 		this.point2 = point2;
-	}	
-	
+	}
+
 	public void setPoint3(CinderellaElement point3) {
 		this.point3 = point3;
-	}		
-	
+	}
+
 	public CinderellaElement getPoint1() {
 		return this.point1;
 	}
-	
+
 	public CinderellaElement getPoint2() {
 		return this.point2;
-	}	
-	
+	}
+
 	public CinderellaElement getPoint3() {
 		return this.point3;
 	}
-	
+
 	public double getCenterPointX() {
 		double x1 = this.point1.getX();
 		double y1 = this.point1.getY();
@@ -110,5 +112,5 @@ public class CinderellaCircleBy3 extends CinderellaElement {
 	public String toString() {
 		return "Point1:(" + point1.toString() + "), Point2:(" + point2.toString() + "), Point3:(" + point3.toString()
 				+ ")";
-	}	
+	}
 }

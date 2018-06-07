@@ -2,46 +2,59 @@ package gr2.cips.jsxgraph;
 
 /**
  * @author Duong Trung Duong
- *
+ * @author <a href=
+ *         "mailto:bss13ard@studserv.uni-leipzig.de">bss13ard@studserv.uni-leipzig.de</a>
  */
 public class JSXGraphPoint extends JSXGraphElement {
-	private double x;
-	private double y;
-	private double w;
-	
-	public JSXGraphPoint(String id, double x, double y, double w) {
+	private JSXGraphElement xElement;
+	private JSXGraphElement yElement;
+	private JSXGraphElement wElement;
+
+	public JSXGraphPoint(String id, JSXGraphElement xElement, JSXGraphElement yElement, JSXGraphElement wElement) {
 		this.setID(id);
-		this.setX(x);
-		this.setY(y);
-		this.setW(w);
+		this.setXElement(xElement);
+		this.setYElement(yElement);
+		this.setWElement(wElement);
 	}
-	
-	public void setX(double x) {
-		this.x = x;
+
+	public JSXGraphElement getXElement() {
+		return xElement;
 	}
-	
-	public void setY(double y) {
-		this.y = y;
+
+	public void setXElement(JSXGraphElement xElement) {
+		this.xElement = xElement;
 	}
-	
-	public void setW(double w) {
-		this.w = w;
-	}	
-	
+
+	public JSXGraphElement getYElement() {
+		return yElement;
+	}
+
+	public void setYElement(JSXGraphElement yElement) {
+		this.yElement = yElement;
+	}
+
+	public JSXGraphElement getWElement() {
+		return wElement;
+	}
+
+	public void setWElement(JSXGraphElement wElement) {
+		this.wElement = wElement;
+	}
+
 	public double getX() {
-		return this.x;
+		return this.xElement.getValue();
 	}
-	
+
 	public double getY() {
-		return this.y;
-	}	
-	
+		return this.yElement.getValue();
+	}
+
 	public double getW() {
-		return this.w;
-	}	
+		return this.wElement.getValue();
+	}
 
 	@Override
 	public String toString() {
 		return "X:" + getX() + ", Y:" + getY();
-	}	
+	}
 }

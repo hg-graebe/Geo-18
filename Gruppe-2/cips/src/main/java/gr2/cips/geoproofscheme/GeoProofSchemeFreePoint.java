@@ -2,36 +2,45 @@ package gr2.cips.geoproofscheme;
 
 /**
  * @author Duong Trung Duong
- *
+ * @author <a href=
+ *         "mailto:bss13ard@studserv.uni-leipzig.de">bss13ard@studserv.uni-leipzig.de</a>
  */
 public class GeoProofSchemeFreePoint extends GeoProofSchemeElement {
-	private double x;
-	private double y;
-	
-	public GeoProofSchemeFreePoint(String id, double x, double y) {
+	private GeoProofSchemeParameter xParameter;
+	private GeoProofSchemeParameter yParameter;
+
+	public GeoProofSchemeFreePoint(String id, GeoProofSchemeParameter xParameter, GeoProofSchemeParameter yParameter) {
 		this.setID(id);
-		this.setX(x);
-		this.setY(y);
+		this.setXParameter(xParameter);
+		this.setYParameter(yParameter);
 	}
-	
-	public void setX(double x) {
-		this.x = x;
+
+	public GeoProofSchemeParameter getXParameter() {
+		return xParameter;
 	}
-	
-	public void setY(double y) {
-		this.y = y;
-	}	
-	
+
+	public void setXParameter(GeoProofSchemeParameter xParameter) {
+		this.xParameter = xParameter;
+	}
+
+	public GeoProofSchemeParameter getYParameter() {
+		return yParameter;
+	}
+
+	public void setYParameter(GeoProofSchemeParameter yParameter) {
+		this.yParameter = yParameter;
+	}
+
 	public double getX() {
-		return this.x;
+		return this.xParameter.getValue();
 	}
-	
+
 	public double getY() {
-		return this.y;
-	}	
+		return this.yParameter.getValue();
+	}
 
 	@Override
 	public String toString() {
 		return "X:" + getX() + ", Y:" + getY();
-	}	
+	}
 }

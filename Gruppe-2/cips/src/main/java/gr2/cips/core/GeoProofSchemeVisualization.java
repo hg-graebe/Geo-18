@@ -7,7 +7,8 @@ import gr2.cips.jsxgraph.JSXGraph;
 
 /**
  * @author Duong Trung Duong
- *
+ * @author <a href=
+ *         "mailto:bss13ard@studserv.uni-leipzig.de">bss13ard@studserv.uni-leipzig.de</a>
  */
 public class GeoProofSchemeVisualization {
 	final static Logger logger = Logger.getLogger(GeoProofSchemeVisualization.class);

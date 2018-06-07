@@ -16,7 +16,8 @@ import org.w3c.dom.Element;
 
 /**
  * @author Duong Trung Duong
- *
+ * @author <a href=
+ *         "mailto:bss13ard@studserv.uni-leipzig.de">bss13ard@studserv.uni-leipzig.de</a>
  */
 public class IntergeoExportXML {
 	private Intergeo intergeo;
@@ -57,6 +58,10 @@ public class IntergeoExportXML {
 				appendXMLIntergeoPointIntersectionOfTwoLines((IntergeoPointIntersectionOfTwoLines) intergeoElement);
 			} else if (intergeoElement instanceof IntergeoMidPointOfTwoPoints) {
 				appendXMLIntergeoMidPointOfTwoPoints((IntergeoMidPointOfTwoPoints) intergeoElement);
+			} else if (intergeoElement instanceof IntergeoPointOnCircle) {
+				appendXMLIntergeoPointOnCircle((IntergeoPointOnCircle) intergeoElement);
+			} else if (intergeoElement instanceof IntergeoPointOnLine) {
+				appendXMLIntergeoPointLine((IntergeoPointOnLine) intergeoElement);
 			} else if (intergeoElement instanceof IntergeoLineThroughTwoPoints) {
 				appendXMLIntergeoLineThroughTwoPoints((IntergeoLineThroughTwoPoints) intergeoElement);
 			} else if (intergeoElement instanceof IntergeoLineParallelToLineThroughPoint) {
@@ -66,7 +71,8 @@ public class IntergeoExportXML {
 				appendXMLIntergeoLinePerpendicularToLineThroughPoint(
 						(IntergeoLinePerpendicularToLineThroughPoint) intergeoElement);
 			} else if (intergeoElement instanceof IntergeoLineAngularBisectorOfThreePoints) {
-				appendXMLIntergeoLineAngularBisectorOfThreePoints((IntergeoLineAngularBisectorOfThreePoints) intergeoElement);
+				appendXMLIntergeoLineAngularBisectorOfThreePoints(
+						(IntergeoLineAngularBisectorOfThreePoints) intergeoElement);
 			} else if (intergeoElement instanceof IntergeoCircleByCenterAndPoint) {
 				appendXMLIntergeoCircleByCenterAndPoint((IntergeoCircleByCenterAndPoint) intergeoElement);
 			} else if (intergeoElement instanceof IntergeoCircleByThreePoints) {
@@ -168,6 +174,60 @@ public class IntergeoExportXML {
 		xmlMidpointOfTwoPoints.appendChild(xmlPoint1);
 		xmlMidpointOfTwoPoints.appendChild(xmlPoint2);
 		xmlConstraints.appendChild(xmlMidpointOfTwoPoints);
+	}
+
+	private void appendXMLIntergeoPointOnCircle(IntergeoPointOnCircle intergeoPointOnCircle) {
+		Element xmlPointE = doc.createElement("point");
+		xmlPointE.setAttribute("id", intergeoPointOnCircle.getID());
+		Element xmlHomogeneousCoordinates = doc.createElement("homogeneous_coordinates");
+		Element xmlDoubleX = doc.createElement("double");
+		xmlDoubleX.appendChild(doc.createTextNode("" + intergeoPointOnCircle.getX()));
+		xmlHomogeneousCoordinates.appendChild(xmlDoubleX);
+		Element xmlDoubleY = doc.createElement("double");
+		xmlDoubleY.appendChild(doc.createTextNode("" + intergeoPointOnCircle.getY()));
+		xmlHomogeneousCoordinates.appendChild(xmlDoubleY);
+		Element xmlDoubleW = doc.createElement("double");
+		xmlDoubleW.appendChild(doc.createTextNode("" + intergeoPointOnCircle.getW()));
+		xmlHomogeneousCoordinates.appendChild(xmlDoubleW);
+		xmlPointE.appendChild(xmlHomogeneousCoordinates);
+		xmlElements.appendChild(xmlPointE);
+
+		Element xmlPointOnCircle = doc.createElement("point_on_circle");
+		Element xmlPointC = doc.createElement("point");
+		xmlPointC.setAttribute("out", "true");
+		xmlPointC.appendChild(doc.createTextNode(intergeoPointOnCircle.getID()));
+		Element xmlCircle = doc.createElement("circle");
+		xmlCircle.appendChild(doc.createTextNode(intergeoPointOnCircle.getCircle().getID()));
+		xmlPointOnCircle.appendChild(xmlPointC);
+		xmlPointOnCircle.appendChild(xmlCircle);
+		xmlConstraints.appendChild(xmlPointOnCircle);
+	}
+
+	private void appendXMLIntergeoPointLine(IntergeoPointOnLine intergeoPointOnLine) {
+		Element xmlPointE = doc.createElement("point");
+		xmlPointE.setAttribute("id", intergeoPointOnLine.getID());
+		Element xmlHomogeneousCoordinates = doc.createElement("homogeneous_coordinates");
+		Element xmlDoubleX = doc.createElement("double");
+		xmlDoubleX.appendChild(doc.createTextNode("" + intergeoPointOnLine.getX()));
+		xmlHomogeneousCoordinates.appendChild(xmlDoubleX);
+		Element xmlDoubleY = doc.createElement("double");
+		xmlDoubleY.appendChild(doc.createTextNode("" + intergeoPointOnLine.getY()));
+		xmlHomogeneousCoordinates.appendChild(xmlDoubleY);
+		Element xmlDoubleW = doc.createElement("double");
+		xmlDoubleW.appendChild(doc.createTextNode("" + intergeoPointOnLine.getW()));
+		xmlHomogeneousCoordinates.appendChild(xmlDoubleW);
+		xmlPointE.appendChild(xmlHomogeneousCoordinates);
+		xmlElements.appendChild(xmlPointE);
+
+		Element xmlPointOnLine = doc.createElement("point_on_line");
+		Element xmlPointC = doc.createElement("point");
+		xmlPointC.setAttribute("out", "true");
+		xmlPointC.appendChild(doc.createTextNode(intergeoPointOnLine.getID()));
+		Element xmlLine = doc.createElement("line");
+		xmlLine.appendChild(doc.createTextNode(intergeoPointOnLine.getLine().getID()));
+		xmlPointOnLine.appendChild(xmlPointC);
+		xmlPointOnLine.appendChild(xmlLine);
+		xmlConstraints.appendChild(xmlPointOnLine);
 	}
 
 	private void appendXMLIntergeoLineThroughTwoPoints(IntergeoLineThroughTwoPoints intergeoLineThroughTwoPoints) {
@@ -295,7 +355,7 @@ public class IntergeoExportXML {
 		xmlLineParallelToLineThroughPoint.appendChild(xmlPoint3);
 		xmlConstraints.appendChild(xmlLineParallelToLineThroughPoint);
 	}
-	
+
 	public void appendXMLIntergeoCircleByCenterAndPoint(IntergeoCircleByCenterAndPoint intergeoCircleByCenterAndPoint) {
 		Element xmlCircleE = doc.createElement("circle");
 		xmlCircleE.setAttribute("id", intergeoCircleByCenterAndPoint.getID());

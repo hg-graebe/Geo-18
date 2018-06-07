@@ -2,7 +2,8 @@ package gr2.cips.jsxgraph;
 
 /**
  * @author Duong Trung Duong
- *
+ * @author <a href=
+ *         "mailto:bss13ard@studserv.uni-leipzig.de">bss13ard@studserv.uni-leipzig.de</a>
  */
 public class JSXGraphPerpendicular extends JSXGraphElement {
 	private JSXGraphElement point;
@@ -31,15 +32,15 @@ public class JSXGraphPerpendicular extends JSXGraphElement {
 	}
 
 	public double getA() {
-		return this.getLine().getA();
-	}
-
-	public double getB() {
 		return this.getLine().getB();
 	}
 
+	public double getB() {
+		return -this.getLine().getA();
+	}
+
 	public double getC() {
-		return -(this.getPoint().getY() * this.getLine().getB() + this.getLine().getA() * this.getPoint().getX());
+		return -(this.getPoint().getX() * this.getLine().getB() - this.getLine().getA() * this.getPoint().getY());
 	}
 
 	@Override

@@ -19,7 +19,8 @@ import org.w3c.dom.NodeList;
 
 /**
  * @author Duong Trung Duong
- *
+ * @author <a href=
+ *         "mailto:bss13ard@studserv.uni-leipzig.de">bss13ard@studserv.uni-leipzig.de</a>
  */
 public class Intergeo {
 	final static Logger logger = Logger.getLogger(Intergeo.class);
@@ -107,7 +108,33 @@ public class Intergeo {
 									+ constraintsChildNodes.item(i).getAttributes().getNamedItem("id").getNodeValue());
 							return false;
 						}
-					} else if (constraintsChildNodes.item(i).getNodeName().equals("line_through_two_points")) {
+					} else if (constraintsChildNodes.item(i).getNodeName().equals("point_on_circle")) {
+						IntergeoPointOnCircle intergeoPointOnCircle = parsePointOnCircle(constraintsChildNodes.item(i));
+						if (intergeoPointOnCircle != null) {
+							removeElementByID(intergeoPointOnCircle.getID());
+							addElement(intergeoPointOnCircle);
+							logger.info("Found point_on_circle: ID:" + intergeoPointOnCircle.getID() + ", "
+									+ intergeoPointOnCircle.toString());
+						} else {
+							logger.error("Error while parsing point_on_circle: ID:"
+									+ constraintsChildNodes.item(i).getAttributes().getNamedItem("id").getNodeValue());
+							return false;
+						}
+					} else if (constraintsChildNodes.item(i).getNodeName().equals("point_on_line")) {
+						IntergeoPointOnLine intergeoPointOnLine = parsePointOnLine(constraintsChildNodes.item(i));
+						if (intergeoPointOnLine != null) {
+							removeElementByID(intergeoPointOnLine.getID());
+							addElement(intergeoPointOnLine);
+							logger.info("Found point_on_line: ID:" + intergeoPointOnLine.getID() + ", "
+									+ intergeoPointOnLine.toString());
+						} else {
+							logger.error("Error while parsing point_on_line: ID:"
+									+ constraintsChildNodes.item(i).getAttributes().getNamedItem("id").getNodeValue());
+							return false;
+						}
+					}
+
+					else if (constraintsChildNodes.item(i).getNodeName().equals("line_through_two_points")) {
 						IntergeoLineThroughTwoPoints intergeoLineThroughTwoPoints = parseLineThroughTwoPoints(
 								constraintsChildNodes.item(i));
 						if (intergeoLineThroughTwoPoints != null) {
@@ -147,12 +174,14 @@ public class Intergeo {
 									+ constraintsChildNodes.item(i).getAttributes().getNamedItem("id").getNodeValue());
 							return false;
 						}
-					} else if (constraintsChildNodes.item(i).getNodeName().equals("line_angular_bisector_of_three_points")) {
+					} else if (constraintsChildNodes.item(i).getNodeName()
+							.equals("line_angular_bisector_of_three_points")) {
 						IntergeoLineAngularBisectorOfThreePoints intergeoLineAngularBisectorOfThreePoints = parseLineAngularBisectorOfThreePoints(
 								constraintsChildNodes.item(i));
 						if (intergeoLineAngularBisectorOfThreePoints != null) {
 							addElement(intergeoLineAngularBisectorOfThreePoints);
-							logger.info("Found line_angular_bisector_of_three_points: ID:" + intergeoLineAngularBisectorOfThreePoints.getID() + ", "
+							logger.info("Found line_angular_bisector_of_three_points: ID:"
+									+ intergeoLineAngularBisectorOfThreePoints.getID() + ", "
 									+ intergeoLineAngularBisectorOfThreePoints.toString());
 						} else {
 							logger.error("Error while parsing line_angular_bisector_of_three_points: ID:"
@@ -215,7 +244,6 @@ public class Intergeo {
 			IntergeoElement point2 = getElementByID(rawNode.getChildNodes().item(5).getFirstChild().getNodeValue());
 			return new IntergeoMidPointOfTwoPoints(id, point1, point2);
 		}
-		System.out.println(rawNode.getChildNodes().item(3).getFirstChild().getNodeValue());
 		return null;
 	}
 
@@ -226,7 +254,26 @@ public class Intergeo {
 			IntergeoElement line2 = getElementByID(rawNode.getChildNodes().item(5).getFirstChild().getNodeValue());
 			return new IntergeoPointIntersectionOfTwoLines(id, line1, line2);
 		}
-		System.out.println(rawNode.getChildNodes().item(3).getFirstChild().getNodeValue());
+		return null;
+	}
+
+	public IntergeoPointOnCircle parsePointOnCircle(Node rawNode) {
+		if (rawNode.getChildNodes().getLength() == 5) {
+			String id = rawNode.getChildNodes().item(1).getFirstChild().getNodeValue();
+			IntergeoElement point = getElementByID(id);
+			IntergeoElement circle = getElementByID(rawNode.getChildNodes().item(3).getFirstChild().getNodeValue());
+			return new IntergeoPointOnCircle(id, circle, point.getX(), point.getY(), 1.0);
+		}
+		return null;
+	}
+
+	public IntergeoPointOnLine parsePointOnLine(Node rawNode) {
+		if (rawNode.getChildNodes().getLength() == 5) {
+			String id = rawNode.getChildNodes().item(1).getFirstChild().getNodeValue();
+			IntergeoElement point = getElementByID(id);
+			IntergeoElement line = getElementByID(rawNode.getChildNodes().item(3).getFirstChild().getNodeValue());
+			return new IntergeoPointOnLine(id, line, point.getX(), point.getY(), 1.0);
+		}
 		return null;
 	}
 
@@ -249,7 +296,7 @@ public class Intergeo {
 		}
 		return null;
 	}
-	
+
 	public IntergeoLinePerpendicularToLineThroughPoint parseIntergeoLinePerpendicularToLineThroughPoint(Node rawNode) {
 		if (rawNode.getChildNodes().getLength() == 7) {
 			String id = rawNode.getChildNodes().item(1).getFirstChild().getNodeValue();
@@ -259,7 +306,7 @@ public class Intergeo {
 		}
 		return null;
 	}
-	
+
 	public IntergeoLineAngularBisectorOfThreePoints parseLineAngularBisectorOfThreePoints(Node rawNode) {
 		if (rawNode.getChildNodes().getLength() == 9) {
 			String id = rawNode.getChildNodes().item(1).getFirstChild().getNodeValue();
@@ -270,7 +317,7 @@ public class Intergeo {
 		}
 		return null;
 	}
-	
+
 	public IntergeoCircleByCenterAndPoint parseCircleByCenterAndPoint(Node rawNode) {
 		if (rawNode.getChildNodes().getLength() == 7) {
 			String id = rawNode.getChildNodes().item(1).getFirstChild().getNodeValue();

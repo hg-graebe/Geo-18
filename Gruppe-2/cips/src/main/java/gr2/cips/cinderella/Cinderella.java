@@ -19,7 +19,8 @@ import net.lingala.zip4j.exception.ZipException;
 
 /**
  * @author Duong Trung Duong
- *
+ * @author <a href=
+ *         "mailto:bss13ard@studserv.uni-leipzig.de">bss13ard@studserv.uni-leipzig.de</a>
  */
 public class Cinderella {
 	final static Logger logger = Logger.getLogger(Cinderella.class);
@@ -50,8 +51,6 @@ public class Cinderella {
 
 	public boolean loadFromFile(String cinderellaFilePath) throws IOException, ZipException {
 		String dataLine;
-		// BufferedReader bufferedReader = null;
-
 		Path path = Paths.get(cinderellaFilePath);
 		setTitle(path.getFileName().toString());
 
@@ -252,8 +251,7 @@ public class Cinderella {
 
 		String[] elements = dataLine.split(",");
 		CinderellaElement lineOrSegment = getElementByID(elements[0].substring(1, elements[0].length() - 1));
-		CinderellaElement throughPoint = getElementByID(
-				elements[1].substring(1, elements[1].length() - 1));
+		CinderellaElement throughPoint = getElementByID(elements[1].substring(1, elements[1].length() - 1));
 		return new CinderellaParallel(elementName, throughPoint, lineOrSegment);
 	}
 
@@ -339,46 +337,46 @@ public class Cinderella {
 		return true;
 	}
 
-//	private void unzip2(String filePath) throws IOException {
-//		byte[] buffer = new byte[1024];
-//		String outputFolder = TEMP_FOLDER;
-//
-//		try {
-//			File folder = new File(outputFolder);
-//			if (!folder.exists()) {
-//				folder.mkdir();
-//			}
-//
-//			ZipInputStream zis = new ZipInputStream(new FileInputStream(filePath));
-//			ZipEntry ze = zis.getNextEntry();
-//
-//			while (ze != null) {
-//				String fileName = ze.getName();
-//				if (ze.isDirectory()) {
-//					ze = zis.getNextEntry();
-//					continue;
-//				}
-//				fileName = new File(fileName).getName();
-//				File newFile = new File(outputFolder + File.separator + fileName);
-//
-//				new File(newFile.getParent()).mkdirs();
-//
-//				FileOutputStream fos = new FileOutputStream(newFile);
-//
-//				int len;
-//				while ((len = zis.read(buffer)) > 0) {
-//					fos.write(buffer, 0, len);
-//				}
-//
-//				fos.close();
-//				ze = zis.getNextEntry();
-//			}
-//
-//			zis.closeEntry();
-//			zis.close();
-//
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
+	// private void unzip2(String filePath) throws IOException {
+	// byte[] buffer = new byte[1024];
+	// String outputFolder = TEMP_FOLDER;
+	//
+	// try {
+	// File folder = new File(outputFolder);
+	// if (!folder.exists()) {
+	// folder.mkdir();
+	// }
+	//
+	// ZipInputStream zis = new ZipInputStream(new FileInputStream(filePath));
+	// ZipEntry ze = zis.getNextEntry();
+	//
+	// while (ze != null) {
+	// String fileName = ze.getName();
+	// if (ze.isDirectory()) {
+	// ze = zis.getNextEntry();
+	// continue;
+	// }
+	// fileName = new File(fileName).getName();
+	// File newFile = new File(outputFolder + File.separator + fileName);
+	//
+	// new File(newFile.getParent()).mkdirs();
+	//
+	// FileOutputStream fos = new FileOutputStream(newFile);
+	//
+	// int len;
+	// while ((len = zis.read(buffer)) > 0) {
+	// fos.write(buffer, 0, len);
+	// }
+	//
+	// fos.close();
+	// ze = zis.getNextEntry();
+	// }
+	//
+	// zis.closeEntry();
+	// zis.close();
+	//
+	// } catch (IOException e) {
+	// e.printStackTrace();
+	// }
+	// }
 }

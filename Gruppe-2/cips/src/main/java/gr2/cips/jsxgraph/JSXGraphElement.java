@@ -2,21 +2,22 @@ package gr2.cips.jsxgraph;
 
 /**
  * @author Duong Trung Duong
- *
+ * @author <a href=
+ *         "mailto:bss13ard@studserv.uni-leipzig.de">bss13ard@studserv.uni-leipzig.de</a>
  */
 public abstract class JSXGraphElement {
-	public static String INDEPENDENT_POINT_PROP = "strokecolor:'red',fillColor:'red'";
-	public static String DEPENDENT_POINT_PROP = "strokecolor:'green',fillColor:'green'";
-	public static String INDEPENDENT_LINE_PROP = "strokecolor:'blue',fillColor:'blue'";
-	public static String DEPENDENT_LINE_PROP = "strokecolor:'black',fillColor:'black'";
+	public final static String INDEPENDENT_POINT_PROP = "strokecolor:'red',fillColor:'red'";
+	public final static String DEPENDENT_POINT_PROP = "strokecolor:'green',fillColor:'green'";
+	public final static String INDEPENDENT_LINE_PROP = "strokecolor:'blue',fillColor:'blue'";
+	public final static String DEPENDENT_LINE_PROP = "strokecolor:'black',fillColor:'black'";
 
 	private String id;
 	private String properties;
-	
+
 	public JSXGraphElement() {
-		
+
 	}
-	
+
 	public JSXGraphElement(String id, String properties) {
 		this.id = id;
 		this.properties = properties;
@@ -25,19 +26,46 @@ public abstract class JSXGraphElement {
 	public void setID(String id) {
 		this.id = id;
 	}
-	
+
 	public void setProperties(String properties) {
 		this.properties = properties;
-	}	
-	
+	}
+
 	public String getID() {
 		return this.id;
 	}
-	
+
 	public String getProperties() {
 		return this.properties;
 	}
-	
+
+	public boolean isParameter() {
+		return this instanceof JSXGraphParameter ? true : false;
+	}
+
+	public boolean isVariable() {
+		return this instanceof JSXGraphVariable ? true : false;
+	}
+
+	public boolean isPoint() {
+		return this instanceof JSXGraphPoint || this instanceof JSXGraphMidPoint || this instanceof JSXGraphIntersection
+				|| this instanceof JSXGraphLineGlider || this instanceof JSXGraphCircleGlider
+				|| this instanceof JSXGraphVarPoint || this instanceof JSXGraphFixedPoint ? true : false;
+	}
+
+	public boolean isLine() {
+		return this instanceof JSXGraphLine || this instanceof JSXGraphParallel || this instanceof JSXGraphPerpendicular
+				|| this instanceof JSXGraphP3Bisector ? true : false;
+	}
+
+	public boolean isCircle() {
+		return this instanceof JSXGraphPCCircle || this instanceof JSXGraphCircumCircle ? true : false;
+	}
+
+	public double getValue() {
+		return Double.NaN;
+	}
+
 	public double getX() {
 		return Double.NaN;
 	}

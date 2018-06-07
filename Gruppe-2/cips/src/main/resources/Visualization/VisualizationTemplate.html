@@ -1,20 +1,69 @@
 <html>
 	<head>
+		<meta charset="UTF-8"/>
 		<title>TITLE_PATTERN</title>
+		<style>
+  			.boardPosition {
+    			position: fixed;
+    			width: 98%;
+    			height: 92%;
+				float:left;
+  			}
+		</style>		
 		<link rel="stylesheet" type="text/css" href="JSXGraphCore/src/jsxgraph.css" />
 		<script type="text/javascript" src="JSXGraphCore/distrib/prototype.js"></script>
 		<script type="text/javascript" src="JSXGraphCore/src/loadjsxgraph.js"></script>
 	</head>
 	<body>
 		<h2>TITLE_PATTERN</h2>
-		<div id="jxgbox" class="jxgbox" style="width:1400px; height:650px;"></div>
+		<div id="jxgbox" class="boardPosition" ></div>
 		<script type="text/javascript">
-			board = JXG.JSXGraph.initBoard('jxgbox', {originX: 250, originY: 250, unitX: 25, unitY: 25});
-			board.createElement('axis', [[0,0], [0,1]], {});
-			board.createElement('axis', [[0,0], [1,0]], {});
-			board.setZoom(0.65,0.65);
+			var board = JXG.JSXGraph.initBoard('jxgbox', {axis:true,keepAspectRatio:true,boundingbox: [-40,30,30,-30]});
+			board.setZoom(0.9,0.9);
 			
-			BOARD_PATTERN
+BOARD_PATTERN
+			board.fullUpdate();
+			
+			function getLineSliderX(x1,x2,y1,y2,u) {
+				a=y2-y1;
+				b=x1-x2;
+				c=x2*y1-x1*y2;
+				if (a===0){
+					return u;
+				} else if (b===0){
+					return (-c/a);
+				} else {
+					return u;
+				}
+			};
+			
+			function getLineSliderY(x1,x2,y1,y2,u) {
+				a=y2-y1;
+				b=x1-x2;
+				c=x2*y1-x1*y2;
+				if (a===0){
+					return (-c/b);
+				} else if (b===0){
+					return u;
+				} else {
+					return (-(a*u-c)/b);
+				}
+			};	
+			
+			function getCircleSliderX(a,r,u) {
+				return (a+r* Math.cos(u));
+			};
+			
+			function getCircleSliderY(b,r,u) {
+				return (b+r* Math.sin(u));
+			};		
+			
+			function gcd(a, b) {
+				if ( ! b) {
+					return a;
+				}
+				return gcd(b, a % b);
+			};					
 		</script>
 	</body>
 </html>

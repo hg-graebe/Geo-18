@@ -2,7 +2,8 @@ package gr2.cips.intergeo;
 
 /**
  * @author Duong Trung Duong
- *
+ * @author <a href=
+ *         "mailto:bss13ard@studserv.uni-leipzig.de">bss13ard@studserv.uni-leipzig.de</a>
  */
 public class IntergeoCircleByThreePoints extends IntergeoElement {
 	private IntergeoElement point1;
@@ -111,5 +112,5 @@ public class IntergeoCircleByThreePoints extends IntergeoElement {
 	public String toString() {
 		return "Point1:(" + point1.toString() + "), Point2:(" + point2.toString() + "), Point3:(" + point3.toString()
 				+ ")";
-	}	
+	}
 }

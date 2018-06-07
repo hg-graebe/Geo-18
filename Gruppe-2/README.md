@@ -1,8 +1,8 @@
 # CIPS
 **C**inderella - **I**ntergeo - Geo<b>P</b>roof<b>S</b>cheme
 
-CIPS, a Java application for conversion [Cinderella](https://www.cinderella.de) and [GeoProofSchemes](https://symbolicdata.github.io/Geo) format to [Intergeo](http://i2geo.net/) format.
-CIPS also offers a simple visualization of the above formats by means of [JSXGraph](https://jsxgraph.org).
+CIPS is a Java application for conversion [Cinderella](https://www.cinderella.de) and [GeoProofSchemes](https://symbolicdata.github.io/Geo) format to [Intergeo](http://i2geo.net/) format.
+CIPS also offers a simple visualization of the above formats by means of [JSXGraph](https://jsxgraph.org). (for more details see *cips.pdf*)
 
 # Build CIPS
 Prerequisites: [Maven](https://maven.apache.org/)
@@ -16,10 +16,10 @@ mvn clean install
 # Usage
 ```
 java -jar cips.jar -j c2i -i <cinderella file> -o <intergeo file>
-java -jar cips.jar -j g2i -i <geoproofscheme file> -o <intergeo file> -p [parameter file] -v [variable file]
+java -jar cips.jar -j g2i -i <geoproofscheme file> -o <intergeo file> -p [default parameter file]
 java -jar cips.jar -j vc -i <cinderella file> -o <visualization file>
 java -jar cips.jar -j vi -i <intergeo file> -o <visualization file>
-java -jar cips.jar -j vg -i <geoproofscheme file> -o <visualization file> -p [parameter file] -v [variable file]
+java -jar cips.jar -j vg -i <geoproofscheme file> -o <visualization file> -p [default parameter file]
 
  -h,--help              print this message
  -i,--input <arg>       input file path
@@ -29,15 +29,14 @@ java -jar cips.jar -j vg -i <geoproofscheme file> -o <visualization file> -p [pa
                         "vi":  intergeo visualisation with jsxgraph,
                         "vg":  geoproofscheme visualisation with jsxgraph
  -o,--output <arg>      output file path
- -p,--parameter <arg>   parameter file path
- -v,--variable <arg>    variable file path
+ -p,--parameter <arg>   default parameter file path
 ```
 
 # Examples
 Test data found in folder testdata
 * Convert GeoProofScheme format to Intergeo format
 ```
-java -jar cips.jar -j g2i -i geoproofscheme_test.xml -o intergeo_from_geoproofscheme.xml -p parameters.txt -v variables.txt
+java -jar cips.jar -j g2i -i geoproofscheme_test.xml -o intergeo_from_geoproofscheme.xml -p defaultparameters.txt
 ```
 * Convert Cinderella format to Intergeo format
 ```
@@ -45,7 +44,7 @@ java -jar cips.jar -j c2i -i cinderella_test.cdy -o intergeo_from_cinderella.xml
 ```
 * Visualize GeoProofScheme format
 ```
-java -jar cips.jar -j vg -i geoproofscheme_test.xml -o geoproofscheme_test.html -p parameters.txt -v variables.txt
+java -jar cips.jar -j vg -i geoproofscheme_test.xml -o geoproofscheme_test.html -p defaultparameters.txt
 ```
 * Visualize Intergeo format
 ```
@@ -65,5 +64,3 @@ java -jar cips.jar -j vc -i cinderella_test.cdy -o cinderella_test.html
 
 # Next Sprint
 21.06.2018
-
-

@@ -7,7 +7,8 @@ import org.apache.log4j.Logger;
 
 /**
  * @author Duong Trung Duong
- *
+ * @author <a href=
+ *         "mailto:bss13ard@studserv.uni-leipzig.de">bss13ard@studserv.uni-leipzig.de</a>
  */
 public class JSXGraph {
 	final static Logger logger = Logger.getLogger(JSXGraph.class);
@@ -16,6 +17,7 @@ public class JSXGraph {
 
 	public JSXGraph() {
 		jsxGraphElements = new ArrayList<JSXGraphElement>();
+		addElement(new JSXGraphParameter(JSXGraphParameter.CONST_IDENTITY + String.valueOf(1.0), 1.0));
 	}
 
 	public void setTitle(String title) {

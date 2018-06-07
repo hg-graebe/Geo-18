@@ -2,7 +2,8 @@ package gr2.cips.geoproofscheme;
 
 /**
  * @author Duong Trung Duong
- *
+ * @author <a href=
+ *         "mailto:bss13ard@studserv.uni-leipzig.de">bss13ard@studserv.uni-leipzig.de</a>
  */
 public class GeoProofSchemeP3Bisector extends GeoProofSchemeElement {
 	private GeoProofSchemeElement point1;
@@ -72,7 +73,7 @@ public class GeoProofSchemeP3Bisector extends GeoProofSchemeElement {
 		double c2 = -p2p3.getC();
 		return -(c1 * Math.sqrt(a2 * a2 + b2 * b2) - c2 * Math.sqrt(a1 * a1 + b1 * b1));
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Point1:(" + point1.toString() + "), Point2:(" + point2.toString() + "), Point3:(" + point3.toString()

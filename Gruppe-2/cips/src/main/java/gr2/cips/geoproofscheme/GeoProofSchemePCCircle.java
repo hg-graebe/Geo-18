@@ -2,7 +2,8 @@ package gr2.cips.geoproofscheme;
 
 /**
  * @author Duong Trung Duong
- *
+ * @author <a href=
+ *         "mailto:bss13ard@studserv.uni-leipzig.de">bss13ard@studserv.uni-leipzig.de</a>
  */
 public class GeoProofSchemePCCircle extends GeoProofSchemeElement {
 	private GeoProofSchemeElement centerPoint;
@@ -63,6 +64,6 @@ public class GeoProofSchemePCCircle extends GeoProofSchemeElement {
 
 	@Override
 	public String toString() {
-		return "Point1:(" + centerPoint.toString() + "), Point2:(" + throughPoint.toString() + ")";
+		return "CenterPoint:(" + centerPoint.toString() + "), ThroughPoint:(" + throughPoint.toString() + ")";
 	}
 }

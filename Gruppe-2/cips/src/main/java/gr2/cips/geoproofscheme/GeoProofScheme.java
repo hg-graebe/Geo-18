@@ -22,7 +22,8 @@ import org.w3c.dom.Node;
 
 /**
  * @author Duong Trung Duong
- *
+ * @author <a href=
+ *         "mailto:bss13ard@studserv.uni-leipzig.de">bss13ard@studserv.uni-leipzig.de</a>
  */
 public class GeoProofScheme {
 	final static Logger logger = Logger.getLogger(GeoProofScheme.class);
@@ -49,8 +50,7 @@ public class GeoProofScheme {
 		return this.title;
 	}
 
-	public boolean loadFromFile(String geoProofSchemeFilePath, String parameterFilePath, String variableFilePath)
-			throws IOException {
+	public boolean loadFromFile(String geoProofSchemeFilePath, String parameterFilePath) throws IOException {
 		try {
 			File geoProofSchemeFile = new File(geoProofSchemeFilePath);
 			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -59,19 +59,16 @@ public class GeoProofScheme {
 
 			document.getDocumentElement().normalize();
 
-			if (document.getElementsByTagName("Title").getLength() == 1) {
-				setTitle(document.getElementsByTagName("Title").item(0).getChildNodes().item(0).getNodeValue());
-			}
-
-			if (document.getElementsByTagName("vars").getLength() == 1) {
-				List<String> variableIDs = Arrays.asList(document.getElementsByTagName("vars").item(0).getChildNodes()
-						.item(0).getNodeValue().split(","));
-				if (isVariableMatching(variableIDs, variableFilePath) == true) {
-					parseVariables(variableIDs, variableFilePath);
-				} else {
-					logger.error("Variables do not match");
+			if (document.getElementsByTagName("prooftype").getLength() == 1) {
+				if (!document.getElementsByTagName("prooftype").item(0).getChildNodes().item(0).getNodeValue().trim()
+						.toLowerCase().equals("constructive")) {
+					logger.error("Only support constructive-prooftype.");
 					return false;
 				}
+			}
+
+			if (document.getElementsByTagName("Title").getLength() == 1) {
+				setTitle(document.getElementsByTagName("Title").item(0).getChildNodes().item(0).getNodeValue());
 			}
 
 			if (document.getElementsByTagName("parameters").getLength() == 1) {
@@ -126,6 +123,42 @@ public class GeoProofScheme {
 								addElement(geoProofSchemeIntersectionPoint);
 								logger.info("Found intersection_point: ID:" + geoProofSchemeIntersectionPoint.getID()
 										+ ", " + geoProofSchemeIntersectionPoint.toString());
+							} else {
+								return false;
+							}
+						} else if (rawData.matches(".*circle_slider.*")) {
+							GeoProofSchemeCircleSlider geoProofSchemeCircleSlider = parseCircleSlider(id, rawData);
+							if (geoProofSchemeCircleSlider != null) {
+								addElement(geoProofSchemeCircleSlider);
+								logger.info("Found circle_slider: ID:" + geoProofSchemeCircleSlider.getID() + ", "
+										+ geoProofSchemeCircleSlider.toString());
+							} else {
+								return false;
+							}
+						} else if (rawData.matches(".*line_slider.*")) {
+							GeoProofSchemeLineSlider geoProofSchemeLineSlider = parseLineSlider(id, rawData);
+							if (geoProofSchemeLineSlider != null) {
+								addElement(geoProofSchemeLineSlider);
+								logger.info("Found line_slider: ID:" + geoProofSchemeLineSlider.getID() + ", "
+										+ geoProofSchemeLineSlider.toString());
+							} else {
+								return false;
+							}
+						} else if (rawData.matches(".*varpoint.*")) {
+							GeoProofSchemeVarPoint geoProofSchemeVarPoint = parseVarPoint(id, rawData);
+							if (geoProofSchemeVarPoint != null) {
+								addElement(geoProofSchemeVarPoint);
+								logger.info("Found varpoint: ID:" + geoProofSchemeVarPoint.getID() + ", "
+										+ geoProofSchemeVarPoint.toString());
+							} else {
+								return false;
+							}
+						} else if (rawData.matches(".*fixedpoint.*")) {
+							GeoProofSchemeFixedPoint geoProofSchemeFixedPoint = parseFixedPoint(id, rawData);
+							if (geoProofSchemeFixedPoint != null) {
+								addElement(geoProofSchemeFixedPoint);
+								logger.info("Found fixedpoint: ID:" + geoProofSchemeFixedPoint.getID() + ", "
+										+ geoProofSchemeFixedPoint.toString());
 							} else {
 								return false;
 							}
@@ -194,26 +227,6 @@ public class GeoProofScheme {
 		return true;
 	}
 
-	public void parseVariables(List<String> variableIDs, String variableFilePath) {
-		Map<String, Double> variablesFromFile = new HashMap<String, Double>();
-		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(variableFilePath))) {
-			String tempString;
-			while ((tempString = bufferedReader.readLine()) != null) {
-				variablesFromFile.put(tempString.split("\t")[0], NumberUtils.toDouble(tempString.split("\t")[1]));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		for (String variableID : variableIDs) {
-			GeoProofSchemeVariable geoProofSchemeVariable = new GeoProofSchemeVariable(variableID,
-					variablesFromFile.get(variableID));
-			addElement(geoProofSchemeVariable);
-			logger.info("Found variable: ID:" + geoProofSchemeVariable.getID() + ", Value:"
-					+ geoProofSchemeVariable.getValue());
-		}
-	}
-
 	public void parseParameters(List<String> parameterIDs, String parameterFilePath) {
 		Map<String, Double> parametersFromFile = new HashMap<String, Double>();
 		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(parameterFilePath))) {
@@ -237,45 +250,41 @@ public class GeoProofScheme {
 	public GeoProofSchemeFreePoint parseFreePoint(String id, String rawData) {
 		String rawX = rawData.substring(6, rawData.length() - 1).split(",")[0].trim();
 		String rawY = rawData.substring(6, rawData.length() - 1).split(",")[1].trim();
-		double x = 0.0d;
-		double y = 0.0d;
+		GeoProofSchemeParameter xParameter;
+		GeoProofSchemeParameter yParameter;
+
 		if (NumberUtils.isCreatable(rawX)) {
-			x = NumberUtils.toDouble(rawX);
+			String xID = GeoProofSchemeParameter.CONST_IDENTITY + String.valueOf(rawX);
+			xParameter = (GeoProofSchemeParameter) getElementByID(xID);
+			if (xParameter == null) {
+				xParameter = new GeoProofSchemeParameter(GeoProofSchemeParameter.CONST_IDENTITY + String.valueOf(rawX),
+						NumberUtils.toDouble(rawX));
+				addElement(xParameter);
+			}
 		} else {
-			GeoProofSchemeElement xElement = getElementByID(rawX);
-			if (xElement != null) {
-				if (xElement.isParameter()) {
-					x = ((GeoProofSchemeParameter) xElement).getValue();
-				} else if (xElement.isVariable()) {
-					x = ((GeoProofSchemeVariable) xElement).getValue();
-				} else {
-					logger.error("Error while parsing FreePoint: ID:" + id);
-					return null;
-				}
-			} else {
+			xParameter = (GeoProofSchemeParameter) getElementByID(rawX);
+			if (xParameter == null) {
 				logger.error("Error while parsing FreePoint: ID:" + id);
 				return null;
 			}
 		}
+
 		if (NumberUtils.isCreatable(rawY)) {
-			y = NumberUtils.toDouble(rawY);
+			String yID = GeoProofSchemeParameter.CONST_IDENTITY + String.valueOf(rawY);
+			yParameter = (GeoProofSchemeParameter) getElementByID(yID);
+			if (yParameter == null) {
+				yParameter = new GeoProofSchemeParameter(GeoProofSchemeParameter.CONST_IDENTITY + String.valueOf(rawY),
+						NumberUtils.toDouble(rawY));
+				addElement(yParameter);
+			}
 		} else {
-			GeoProofSchemeElement yElement = getElementByID(rawY);
-			if (yElement != null) {
-				if (yElement.isParameter()) {
-					y = ((GeoProofSchemeParameter) yElement).getValue();
-				} else if (yElement.isVariable()) {
-					y = ((GeoProofSchemeVariable) yElement).getValue();
-				} else {
-					logger.error("Error while parsing FreePoint: ID:" + id);
-					return null;
-				}
-			} else {
+			yParameter = (GeoProofSchemeParameter) getElementByID(rawY);
+			if (yParameter == null) {
 				logger.error("Error while parsing FreePoint: ID:" + id);
 				return null;
 			}
 		}
-		return new GeoProofSchemeFreePoint(id, x, y);
+		return new GeoProofSchemeFreePoint(id, xParameter, yParameter);
 	}
 
 	public GeoProofSchemeMidPoint parseMidPoint(String id, String rawData) {
@@ -312,6 +321,146 @@ public class GeoProofScheme {
 				return new GeoProofSchemeIntersectionPoint(id, line1, line2);
 			}
 		}
+	}
+
+	public GeoProofSchemeCircleSlider parseCircleSlider(String id, String rawData) {
+		String centerPointID = rawData.substring(14, rawData.length() - 1).split(",")[0].trim();
+		String throughPointID = rawData.substring(14, rawData.length() - 1).split(",")[1].trim();
+		String rawParameter = rawData.substring(14, rawData.length() - 1).split(",")[2].trim();
+
+		GeoProofSchemeElement centerPoint = getElementByID(centerPointID);
+		GeoProofSchemeElement throughPoint = getElementByID(throughPointID);
+		GeoProofSchemeParameter parameter;
+
+		if (centerPoint == null || throughPoint == null) {
+			logger.error("Error while parsing circle_slider: ID:" + id);
+			return null;
+		} else if (!centerPoint.isPoint() || !throughPoint.isPoint()) {
+			logger.error("Error while parsing circle_slider: ID:" + id);
+			return null;
+		}
+
+		if (NumberUtils.isCreatable(rawParameter)) {
+			String xID = GeoProofSchemeParameter.CONST_IDENTITY + String.valueOf(rawParameter);
+			parameter = (GeoProofSchemeParameter) getElementByID(xID);
+			if (parameter == null) {
+				parameter = new GeoProofSchemeParameter(
+						GeoProofSchemeParameter.CONST_IDENTITY + String.valueOf(rawParameter),
+						NumberUtils.toDouble(rawParameter));
+				addElement(parameter);
+			}
+		} else {
+			parameter = (GeoProofSchemeParameter) getElementByID(rawParameter);
+			if (parameter == null) {
+				logger.error("Error while parsing circle_slider: ID:" + id);
+				return null;
+			}
+		}
+
+		GeoProofSchemePCCircle tempPCCirle = null;
+		for (GeoProofSchemeElement geoProofSchemeElement : geoProofSchemeElements) {
+			if (geoProofSchemeElement instanceof GeoProofSchemePCCircle) {
+				if (((GeoProofSchemePCCircle) geoProofSchemeElement).getCenterPoint().getID()
+						.equals(centerPoint.getID())
+						&& ((GeoProofSchemePCCircle) geoProofSchemeElement).getThroughPoint().getID()
+								.equals(throughPoint.getID())) {
+					tempPCCirle = (GeoProofSchemePCCircle) geoProofSchemeElement;
+					break;
+				} else {
+					tempPCCirle = null;
+				}
+			}
+		}
+		if (tempPCCirle == null) {
+			tempPCCirle = new GeoProofSchemePCCircle(centerPoint.getID() + throughPoint.getID(), centerPoint,
+					throughPoint);
+			addElement(tempPCCirle);
+		}
+		return new GeoProofSchemeCircleSlider(id, centerPoint, throughPoint, parameter);
+	}
+
+	public GeoProofSchemeLineSlider parseLineSlider(String id, String rawData) {
+		String lineID = rawData.substring(12, rawData.length() - 1).split(",")[0].trim();
+		String rawParameter = rawData.substring(12, rawData.length() - 1).split(",")[1].trim();
+
+		GeoProofSchemeElement line = getElementByID(lineID);
+		GeoProofSchemeParameter parameter;
+
+		if (line == null) {
+			logger.error("Error while parsing line_slider: ID:" + id);
+			return null;
+		} else if (!line.isLine()) {
+			logger.error("Error while parsing line_slider: ID:" + id);
+			return null;
+		}
+		if (NumberUtils.isCreatable(rawParameter)) {
+			String xID = GeoProofSchemeParameter.CONST_IDENTITY + String.valueOf(rawParameter);
+			parameter = (GeoProofSchemeParameter) getElementByID(xID);
+			if (parameter == null) {
+				parameter = new GeoProofSchemeParameter(
+						GeoProofSchemeParameter.CONST_IDENTITY + String.valueOf(rawParameter),
+						NumberUtils.toDouble(rawParameter));
+				addElement(parameter);
+			}
+		} else {
+			parameter = (GeoProofSchemeParameter) getElementByID(rawParameter);
+			if (parameter == null) {
+				logger.error("Error while parsing line_slider: ID:" + id);
+				return null;
+			}
+		}
+		return new GeoProofSchemeLineSlider(id, line, parameter);
+	}
+
+	public GeoProofSchemeVarPoint parseVarPoint(String id, String rawData) {
+		String point1ID = rawData.substring(9, rawData.length() - 1).split(",")[0].trim();
+		String point2ID = rawData.substring(9, rawData.length() - 1).split(",")[1].trim();
+		String parameterID = rawData.substring(12, rawData.length() - 1).split(",")[2].trim();
+
+		GeoProofSchemeElement point1 = getElementByID(point1ID);
+		GeoProofSchemeElement point2 = getElementByID(point2ID);
+		GeoProofSchemeElement parameter = getElementByID(parameterID);
+
+		if (point1 == null || point2 == null || parameter == null) {
+			logger.error("Error while parsing line_slider: ID:" + id);
+			return null;
+		} else if (!point1.isPoint() || !point2.isPoint() || !parameter.isParameter()) {
+			logger.error("Error while parsing line_slider: ID:" + id);
+			return null;
+		}
+		/*
+		 * GeoProofSchemePPLine tempPPLine = null; for (GeoProofSchemeElement
+		 * geoProofSchemeElement : geoProofSchemeElements) { if (geoProofSchemeElement
+		 * instanceof GeoProofSchemePPLine) { if (((GeoProofSchemePPLine)
+		 * geoProofSchemeElement).getPoint1().getID().equals(point1.getID()) &&
+		 * ((GeoProofSchemePPLine)
+		 * geoProofSchemeElement).getPoint2().getID().equals(point2.getID())) {
+		 * tempPPLine = (GeoProofSchemePPLine) geoProofSchemeElement; break; } else {
+		 * tempPPLine = null; } } }
+		 * 
+		 * if (tempPPLine == null) { tempPPLine = new
+		 * GeoProofSchemePPLine(point1.getID() + point2.getID(), point1, point2);
+		 * addElement(tempPPLine); }
+		 */
+		return new GeoProofSchemeVarPoint(id, point1, point2, (GeoProofSchemeParameter) parameter);
+	}
+
+	public GeoProofSchemeFixedPoint parseFixedPoint(String id, String rawData) {
+		String point1ID = rawData.substring(11, rawData.length() - 1).split(",")[0].trim();
+		String point2ID = rawData.substring(11, rawData.length() - 1).split(",")[1].trim();
+		String rawParameter = rawData.substring(12, rawData.length() - 1).split(",")[2].trim();
+
+		GeoProofSchemeElement point1 = getElementByID(point1ID);
+		GeoProofSchemeElement point2 = getElementByID(point2ID);
+
+		if (point1 == null || point2 == null || !NumberUtils.isCreatable(rawParameter)) {
+			logger.error("Error while parsing fixedpoint: ID:" + id);
+			return null;
+		} else if (!point1.isPoint() || !point2.isPoint()) {
+			logger.error("Error while parsing fixedpoint: ID:" + id);
+			return null;
+		}
+		return new GeoProofSchemeFixedPoint(id, point1, point2, NumberUtils.toDouble(rawParameter));
 	}
 
 	public GeoProofSchemePPLine parsePPLine(String id, String rawData) {
@@ -367,7 +516,7 @@ public class GeoProofScheme {
 			}
 		}
 	}
-	
+
 	public GeoProofSchemeP3Bisector parseP3Bisector(String id, String rawData) {
 		String point1ID = rawData.substring(12, rawData.length() - 1).split(",")[0].trim();
 		String point2ID = rawData.substring(12, rawData.length() - 1).split(",")[1].trim();
@@ -424,20 +573,6 @@ public class GeoProofScheme {
 				return new GeoProofSchemePCCircle(id, point1, point2);
 			}
 		}
-	}
-
-	public boolean isVariableMatching(List<String> variableIDs, String variableFilePath) throws IOException {
-		List<String> variablesFromFile = new ArrayList<String>();
-		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(variableFilePath))) {
-			String tempString;
-			while ((tempString = bufferedReader.readLine()) != null) {
-				variablesFromFile.add(tempString.split("\t")[0]);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-		return new HashSet<>(variableIDs).equals(new HashSet<>(variablesFromFile));
 	}
 
 	public boolean isParameterMatching(List<String> parameterIDs, String parameterFilePath) throws IOException {

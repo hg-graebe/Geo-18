@@ -2,7 +2,8 @@ package gr2.cips.jsxgraph;
 
 /**
  * @author Duong Trung Duong
- *
+ * @author <a href=
+ *         "mailto:bss13ard@studserv.uni-leipzig.de">bss13ard@studserv.uni-leipzig.de</a>
  */
 public class JSXGraphP3Bisector extends JSXGraphElement {
 	private JSXGraphElement point1;
@@ -39,7 +40,7 @@ public class JSXGraphP3Bisector extends JSXGraphElement {
 	public JSXGraphElement getPoint3() {
 		return this.point3;
 	}
-	
+
 	public double getA() {
 		JSXGraphLine p1p2 = new JSXGraphLine(null, point1, point2);
 		JSXGraphLine p2p3 = new JSXGraphLine(null, point2, point3);

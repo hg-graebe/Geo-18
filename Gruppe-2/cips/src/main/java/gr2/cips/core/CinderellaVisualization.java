@@ -7,7 +7,8 @@ import gr2.cips.jsxgraph.JSXGraph;
 
 /**
  * @author Duong Trung Duong
- *
+ * @author <a href=
+ *         "mailto:bss13ard@studserv.uni-leipzig.de">bss13ard@studserv.uni-leipzig.de</a>
  */
 public class CinderellaVisualization {
 	final static Logger logger = Logger.getLogger(CinderellaVisualization.class);
@@ -22,7 +23,7 @@ public class CinderellaVisualization {
 	public void setCinderella(Cinderella cinderella) {
 		this.cinderella = cinderella;
 	}
-	
+
 	public void setVisualizationFilePath(String visualizationFilePath) {
 		this.visualizationFilePath = visualizationFilePath;
 	}
@@ -30,7 +31,7 @@ public class CinderellaVisualization {
 	public Cinderella getCinderella() {
 		return this.cinderella;
 	}
-	
+
 	public String getVisualizationFilePath() {
 		return this.visualizationFilePath;
 	}
