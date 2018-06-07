@@ -12,6 +12,12 @@ const geogebraBoilerplate = `<?xml version="1.0" encoding="utf-8"?>
 </construction>
 </geogebra>`;
 
+// to keep track of ids of construction tools used by macros
+// so we don't use them multiple times
+const macroIdRepository = {};
+
+const propExplanations = [];
+
 // construction tools that are entirely equivalent between Geoproof/GeoGebra, including parameters and their order
 const commandNameMapping = {
     'p_bisector': 'LineBisector',
@@ -26,10 +32,28 @@ const commandNameMapping = {
 const commandMacroMapping = {
     'altitude': (pointTop, pointBase1, pointBase2, finalOutput) => {
         const lineId = `base of ${finalOutput}`;
-        return createCommandXml('Line', [pointBase1, pointBase2], lineId, 'line') + 
+        const returnStr = createCommandXml('Line', [pointBase1, pointBase2], lineId, 'line') +
             createCommandXml('OrthogonalLine', [pointTop, lineId], finalOutput, 'line');
+        markIdUsed(lineId);
+        return returnStr;
     }
 };
+
+const propMacroMapping = {
+    'eq_dist': (firstLineFirstPoint, firstLineSecondPoint, secondLineFirstPoint, secondLineSecondPoint) => {
+        const firstLineId = `dist(${firstLineFirstPoint}, ${firstLineSecondPoint})`;
+        const secondLineId = `dist(${secondLineFirstPoint}, ${secondLineSecondPoint})`;
+        const returnStr = createCommandXml('Segment', [firstLineFirstPoint, firstLineSecondPoint], firstLineId, 'line', true) +
+            createCommandXml('Segment', [secondLineFirstPoint, secondLineSecondPoint], secondLineId, 'line', true);
+        markIdUsed(firstLineId, secondLineId);
+        propExplanations.push(`Distance (${firstLineFirstPoint}, ${firstLineSecondPoint}) is equal to distance (${secondLineFirstPoint}, ${secondLineSecondPoint})`)
+        return returnStr;
+    }
+};
+
+function markIdUsed(...ids) {
+    for (const id of ids) macroIdRepository[id] = true;
+}
 
 function transformXml(inputXml) {
     const $inputXml = $($.parseXML(inputXml));
@@ -62,14 +86,22 @@ function* createCoordGenerator() {
     yield [0.7, 1.7];
 }
 
-function createCommandXml(commandName, inputIds, outputId, outputType) {
+function createCommandXml(commandName, inputIds, outputId, outputType, highlight) {
+    // check if outputId has been used already, so we don't get duplicates
+    if (macroIdRepository[outputId]) return '';
+
     const inputsIdsAsAttributes = inputIds.map((str, i) => `a${i}="${str}"`);
     return (`
         <command name="${commandName}">
             <input ${inputsIdsAsAttributes.join(' ')}/>
             <output a0="${outputId}"/>
         </command>
-        <element type="${outputType}" label="${outputId}"/>`
+        ${highlight ?
+            `<element type="${outputType}" label="${outputId}">
+                <objColor r="255" g="0" b="0" alpha="0.0"/>
+            </element>` :
+            `<element type="${outputType}" label="${outputId}"/>`}
+        `
     );
 }
 
@@ -106,5 +138,16 @@ function transformCommandXml(inputXmlElement) {
 }
 
 function transformPropXml(inputXmlElement) {
+    const commandCallStr = inputXmlElement.textContent;
+    if (!commandCallStr) return '';
+    const commandName = commandCallStr.substring(0, commandCallStr.indexOf('['));
+    const uncleanInputIds = commandCallStr.substring(commandCallStr.indexOf('[') + 1, commandCallStr.indexOf(']')).split(',');
+    const inputIds = uncleanInputIds.map(str => str.trim().substr(1));
+    console.log(`prop ${commandName} with inputs ${inputIds}`);
+    if (commandName in propMacroMapping) {
+        return propMacroMapping[commandName](...inputIds);
+    } else {
+        throw "Unknown prop " + commandName;
+    }
     return '';
 }
