@@ -69,6 +69,7 @@
                 }
             }
             function loadFromText(format, text) {
+                resetData();
                 return (format === 'ggb' ? loadGgbFromText(text) : loadGeoproofFromText(text));
             }
             function loadGgbFromText(inputText) {
@@ -102,7 +103,7 @@
             }
 
             function handleReadFromTextarea() {
-                loadFromText(inputFormat, $xmlContainer.val());
+                loadGgbFromText($xmlContainer.val());
             }
         </script>
     </body>
