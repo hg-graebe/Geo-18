@@ -2,10 +2,10 @@
 **C**inderella - **I**ntergeo - Geo<b>P</b>roof<b>S</b>cheme
 
 CIPS is a Java application for conversion [Cinderella](https://www.cinderella.de) and [GeoProofSchemes](https://symbolicdata.github.io/Geo) format to [Intergeo](http://i2geo.net/) format.
-CIPS also offers a simple visualization of the above formats by means of [JSXGraph](https://jsxgraph.org). (for more details see *cips.pdf*)
+CIPS also offers a simple visualization of the above formats by means of [JSXGraph](https://jsxgraph.org) (for more details see [*cips.pdf*](https://git.informatik.uni-leipzig.de/graebe/Geo-18/blob/master/Gruppe-2/cips.pdf)).
 
 # Build CIPS
-Prerequisites: [Maven](https://maven.apache.org/)
+Prerequisites: [Java 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html), [Maven](https://maven.apache.org/)
 
 ```
 git clone git@git.informatik.uni-leipzig.de:graebe/Geo-18.git
@@ -33,7 +33,7 @@ java -jar cips.jar -j vg -i <geoproofscheme file> -o <visualization file> -p [de
 ```
 
 # Examples
-Test data found in folder testdata
+*Test data found in folder [testdata](https://git.informatik.uni-leipzig.de/graebe/Geo-18/tree/master/Gruppe-2/testdata)*
 * Convert GeoProofScheme format to Intergeo format
 ```
 java -jar cips.jar -j g2i -i geoproofscheme_test.xml -o intergeo_from_geoproofscheme.xml -p defaultparameters.txt
