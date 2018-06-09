@@ -3,16 +3,19 @@ package gr2.cips.core;
 import org.apache.log4j.Logger;
 
 import gr2.cips.geoproofscheme.GeoProofScheme;
+import gr2.cips.geoproofscheme.GeoProofSchemeAltitude;
 import gr2.cips.geoproofscheme.GeoProofSchemeCircleSlider;
 import gr2.cips.geoproofscheme.GeoProofSchemeElement;
 import gr2.cips.geoproofscheme.GeoProofSchemeFixedPoint;
 import gr2.cips.geoproofscheme.GeoProofSchemeFreePoint;
 import gr2.cips.geoproofscheme.GeoProofSchemeIntersectionPoint;
 import gr2.cips.geoproofscheme.GeoProofSchemeLineSlider;
+import gr2.cips.geoproofscheme.GeoProofSchemeMedian;
 import gr2.cips.geoproofscheme.GeoProofSchemeMidPoint;
 import gr2.cips.geoproofscheme.GeoProofSchemeOrthoLine;
 import gr2.cips.geoproofscheme.GeoProofSchemeP3Bisector;
 import gr2.cips.geoproofscheme.GeoProofSchemeP3Circle;
+import gr2.cips.geoproofscheme.GeoProofSchemePBisector;
 import gr2.cips.geoproofscheme.GeoProofSchemePCCircle;
 import gr2.cips.geoproofscheme.GeoProofSchemePPLine;
 import gr2.cips.geoproofscheme.GeoProofSchemeParLine;
@@ -150,7 +153,73 @@ public class GeoProofScheme2JSXGraph {
 						jsxGraph.getElementByID(((GeoProofSchemeOrthoLine) geoProofSchemeElement).getPoint().getID()),
 						jsxGraph.getElementByID(((GeoProofSchemeOrthoLine) geoProofSchemeElement).getLine().getID())));
 				logger.info(
-						"ortho_line ID:" + geoProofSchemeElement.getID() + " has been converted to JSXGraph parallel");
+						"ortho_line ID:" + geoProofSchemeElement.getID() + " has been converted to JSXGraph perpendicular");
+			} else if (geoProofSchemeElement instanceof GeoProofSchemeAltitude) {
+				GeoProofSchemePPLine tempGeoProofSchemePPLine = null;
+				for (GeoProofSchemeElement tempGeoProofSchemeElement : geoProofScheme.getGeoProofSchemeElements()) {
+					if (tempGeoProofSchemeElement instanceof GeoProofSchemePPLine) {
+						if (((GeoProofSchemePPLine) tempGeoProofSchemeElement).getPoint1().getID()
+								.equals(((GeoProofSchemeAltitude) geoProofSchemeElement).getPoint2().getID())
+								&& ((GeoProofSchemePPLine) tempGeoProofSchemeElement).getPoint2().getID()
+										.equals(((GeoProofSchemeAltitude) geoProofSchemeElement).getPoint3().getID())) {
+							tempGeoProofSchemePPLine = (GeoProofSchemePPLine) tempGeoProofSchemeElement;
+							break;
+						}
+					}
+				}
+				jsxGraph.addElement(new JSXGraphPerpendicular(geoProofSchemeElement.getID(),
+						jsxGraph.getElementByID(((GeoProofSchemeAltitude) geoProofSchemeElement).getPoint1().getID()),
+						jsxGraph.getElementByID(tempGeoProofSchemePPLine.getID())));
+				logger.info(
+						"altitude ID:" + geoProofSchemeElement.getID() + " has been converted to JSXGraph perpendicular");
+			} else if (geoProofSchemeElement instanceof GeoProofSchemePBisector) {
+				GeoProofSchemePPLine tempGeoProofSchemePPLine = null;
+				for (GeoProofSchemeElement tempGeoProofSchemeElement : geoProofScheme.getGeoProofSchemeElements()) {
+					if (tempGeoProofSchemeElement instanceof GeoProofSchemePPLine) {
+						if (((GeoProofSchemePPLine) tempGeoProofSchemeElement).getPoint1().getID()
+								.equals(((GeoProofSchemePBisector) geoProofSchemeElement).getPoint1().getID())
+								&& ((GeoProofSchemePPLine) tempGeoProofSchemeElement).getPoint2().getID().equals(
+										((GeoProofSchemePBisector) geoProofSchemeElement).getPoint2().getID())) {
+							tempGeoProofSchemePPLine = (GeoProofSchemePPLine) tempGeoProofSchemeElement;
+							break;
+						}
+					}
+				}
+				GeoProofSchemeMidPoint tempGeoProofSchemeMidPoint = null;
+				for (GeoProofSchemeElement tempGeoProofSchemeElement : geoProofScheme.getGeoProofSchemeElements()) {
+					if (tempGeoProofSchemeElement instanceof GeoProofSchemeMidPoint) {
+						if (((GeoProofSchemeMidPoint) tempGeoProofSchemeElement).getPoint1().getID()
+								.equals(((GeoProofSchemePBisector) geoProofSchemeElement).getPoint1().getID())
+								&& ((GeoProofSchemeMidPoint) tempGeoProofSchemeElement).getPoint2().getID().equals(
+										((GeoProofSchemePBisector) geoProofSchemeElement).getPoint2().getID())) {
+							tempGeoProofSchemeMidPoint = (GeoProofSchemeMidPoint) tempGeoProofSchemeElement;
+							break;
+						}
+					}
+				}
+				jsxGraph.addElement(new JSXGraphPerpendicular(geoProofSchemeElement.getID(),
+						jsxGraph.getElementByID(tempGeoProofSchemeMidPoint.getID()),
+						jsxGraph.getElementByID(tempGeoProofSchemePPLine.getID())));
+				logger.info(
+						"p_bisector ID:" + geoProofSchemeElement.getID() + " has been converted to JSXGraph perpendicular");
+			} else if (geoProofSchemeElement instanceof GeoProofSchemeMedian) {
+				GeoProofSchemeMidPoint tempGeoProofSchemeMidPoint = null;
+				for (GeoProofSchemeElement tempGeoProofSchemeElement : geoProofScheme.getGeoProofSchemeElements()) {
+					if (tempGeoProofSchemeElement instanceof GeoProofSchemeMidPoint) {
+						if (((GeoProofSchemeMidPoint) tempGeoProofSchemeElement).getPoint1().getID()
+								.equals(((GeoProofSchemeMedian) geoProofSchemeElement).getPoint2().getID())
+								&& ((GeoProofSchemeMidPoint) tempGeoProofSchemeElement).getPoint2().getID().equals(
+										((GeoProofSchemeMedian) geoProofSchemeElement).getPoint3().getID())) {
+							tempGeoProofSchemeMidPoint = (GeoProofSchemeMidPoint) tempGeoProofSchemeElement;
+							break;
+						}
+					}
+				}
+				jsxGraph.addElement(new JSXGraphLine(geoProofSchemeElement.getID(),
+						jsxGraph.getElementByID(((GeoProofSchemeMedian) geoProofSchemeElement).getPoint1().getID()),
+						jsxGraph.getElementByID(tempGeoProofSchemeMidPoint.getID())));
+				logger.info(
+						"median ID:" + geoProofSchemeElement.getID() + " has been converted to JSXGraph line");
 			} else if (geoProofSchemeElement instanceof GeoProofSchemeP3Bisector) {
 				jsxGraph.addElement(new JSXGraphP3Bisector(geoProofSchemeElement.getID(),
 						jsxGraph.getElementByID(((GeoProofSchemeP3Bisector) geoProofSchemeElement).getPoint1().getID()),

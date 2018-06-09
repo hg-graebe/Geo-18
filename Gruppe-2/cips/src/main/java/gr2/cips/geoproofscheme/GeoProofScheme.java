@@ -189,6 +189,33 @@ public class GeoProofScheme {
 							} else {
 								return false;
 							}
+						} else if (rawData.matches(".*altitude.*")) {
+							GeoProofSchemeAltitude geoProofSchemeAltitude = parseAltitude(id, rawData);
+							if (geoProofSchemeAltitude != null) {
+								addElement(geoProofSchemeAltitude);
+								logger.info("Found altitude: ID:" + geoProofSchemeAltitude.getID() + ", "
+										+ geoProofSchemeAltitude.toString());
+							} else {
+								return false;
+							}
+						} else if (rawData.matches(".*p_bisector.*")) {
+							GeoProofSchemePBisector geoProofSchemePBisector = parsePBisector(id, rawData);
+							if (geoProofSchemePBisector != null) {
+								addElement(geoProofSchemePBisector);
+								logger.info("Found p_bisector: ID:" + geoProofSchemePBisector.getID() + ", "
+										+ geoProofSchemePBisector.toString());
+							} else {
+								return false;
+							}
+						} else if (rawData.matches(".*median.*")) {
+							GeoProofSchemeMedian geoProofSchemeMedian = parseMedian(id, rawData);
+							if (geoProofSchemeMedian != null) {
+								addElement(geoProofSchemeMedian);
+								logger.info("Found median: ID:" + geoProofSchemeMedian.getID() + ", "
+										+ geoProofSchemeMedian.toString());
+							} else {
+								return false;
+							}
 						} else if (rawData.matches(".*p3_bisector.*")) {
 							GeoProofSchemeP3Bisector geoProofSchemeP3Bisector = parseP3Bisector(id, rawData);
 							if (geoProofSchemeP3Bisector != null) {
@@ -376,7 +403,7 @@ public class GeoProofScheme {
 			}
 		}
 		if (tempPCCirle == null) {
-			tempPCCirle = new GeoProofSchemePCCircle(centerPoint.getID() + throughPoint.getID(), centerPoint,
+			tempPCCirle = new GeoProofSchemePCCircle("cir" + centerPoint.getID() + throughPoint.getID(), centerPoint,
 					throughPoint);
 			addElement(tempPCCirle);
 		}
@@ -521,6 +548,164 @@ public class GeoProofScheme {
 		}
 	}
 
+	public GeoProofSchemeAltitude parseAltitude(String id, String rawData) {
+		String point1ID = rawData.substring(9, rawData.length() - 1).split(",")[0].trim();
+		String point2ID = rawData.substring(9, rawData.length() - 1).split(",")[1].trim();
+		String point3ID = rawData.substring(9, rawData.length() - 1).split(",")[2].trim();
+		GeoProofSchemeElement point1 = getElementByID(point1ID);
+		GeoProofSchemeElement point2 = getElementByID(point2ID);
+		GeoProofSchemeElement point3 = getElementByID(point3ID);
+
+		if (point1 == null || point2 == null || point3 == null) {
+			logger.error("Error while parsing altitude: ID:" + id);
+			return null;
+		} else {
+			if (!point1.isPoint() || !point2.isPoint() || !point3.isPoint()) {
+				logger.error("Error while altitude: ID:" + id);
+				return null;
+			} else {
+				GeoProofSchemePPLine tempGeoProofSchemePPLine = null;
+				for (GeoProofSchemeElement geoProofSchemeElement : geoProofSchemeElements) {
+					if (geoProofSchemeElement instanceof GeoProofSchemePPLine) {
+						if (((GeoProofSchemePPLine) geoProofSchemeElement).getPoint1().getID().equals(point2.getID())
+								&& ((GeoProofSchemePPLine) geoProofSchemeElement).getPoint2().getID()
+										.equals(point3.getID())) {
+							tempGeoProofSchemePPLine = (GeoProofSchemePPLine) geoProofSchemeElement;
+							break;
+						} else {
+							tempGeoProofSchemePPLine = null;
+						}
+					}
+				}
+
+				if (tempGeoProofSchemePPLine == null) {
+					tempGeoProofSchemePPLine = new GeoProofSchemePPLine("pp"+point2.getID() + point3.getID(), point2,
+							point3);
+					addElement(tempGeoProofSchemePPLine);
+				}
+				return new GeoProofSchemeAltitude(id, point1, point2, point3);
+			}
+		}
+	}
+
+	public GeoProofSchemePBisector parsePBisector(String id, String rawData) {
+		String point1ID = rawData.substring(11, rawData.length() - 1).split(",")[0].trim();
+		String point2ID = rawData.substring(11, rawData.length() - 1).split(",")[1].trim();
+		GeoProofSchemeElement point1 = getElementByID(point1ID);
+		GeoProofSchemeElement point2 = getElementByID(point2ID);
+
+		if (point1 == null || point2 == null) {
+			logger.error("Error while parsing altitude: ID:" + id);
+			return null;
+		} else {
+			if (!point1.isPoint() || !point2.isPoint()) {
+				logger.error("Error while altitude: ID:" + id);
+				return null;
+			} else {
+				GeoProofSchemePPLine tempGeoProofSchemePPLine = null;
+				for (GeoProofSchemeElement geoProofSchemeElement : geoProofSchemeElements) {
+					if (geoProofSchemeElement instanceof GeoProofSchemePPLine) {
+						if (((GeoProofSchemePPLine) geoProofSchemeElement).getPoint1().getID().equals(point1.getID())
+								&& ((GeoProofSchemePPLine) geoProofSchemeElement).getPoint2().getID()
+										.equals(point2.getID())) {
+							tempGeoProofSchemePPLine = (GeoProofSchemePPLine) geoProofSchemeElement;
+							break;
+						} else {
+							tempGeoProofSchemePPLine = null;
+						}
+					}
+				}
+
+				if (tempGeoProofSchemePPLine == null) {
+					tempGeoProofSchemePPLine = new GeoProofSchemePPLine("pp" + point1.getID() + point2.getID(), point1,
+							point2);
+					addElement(tempGeoProofSchemePPLine);
+				}
+
+				GeoProofSchemeMidPoint tempGeoProofSchemeMidPoint = null;
+				for (GeoProofSchemeElement geoProofSchemeElement : geoProofSchemeElements) {
+					if (geoProofSchemeElement instanceof GeoProofSchemeMidPoint) {
+						if (((GeoProofSchemeMidPoint) geoProofSchemeElement).getPoint1().getID().equals(point1.getID())
+								&& ((GeoProofSchemeMidPoint) geoProofSchemeElement).getPoint2().getID()
+										.equals(point2.getID())) {
+							tempGeoProofSchemeMidPoint = (GeoProofSchemeMidPoint) geoProofSchemeElement;
+							break;
+						} else {
+							tempGeoProofSchemeMidPoint = null;
+						}
+					}
+				}
+
+				if (tempGeoProofSchemeMidPoint == null) {
+					tempGeoProofSchemeMidPoint = new GeoProofSchemeMidPoint("mid" + point1.getID() + point2.getID(),
+							point1, point2);
+					addElement(tempGeoProofSchemeMidPoint);
+				}
+				return new GeoProofSchemePBisector(id, point1, point2);
+			}
+		}
+	}
+
+	public GeoProofSchemeMedian parseMedian(String id, String rawData) {
+		String point1ID = rawData.substring(7, rawData.length() - 1).split(",")[0].trim();
+		String point2ID = rawData.substring(7, rawData.length() - 1).split(",")[1].trim();
+		String point3ID = rawData.substring(7, rawData.length() - 1).split(",")[2].trim();
+		GeoProofSchemeElement point1 = getElementByID(point1ID);
+		GeoProofSchemeElement point2 = getElementByID(point2ID);
+		GeoProofSchemeElement point3 = getElementByID(point3ID);
+
+		if (point1 == null || point2 == null || point3 == null) {
+			logger.error("Error while parsing altitude: ID:" + id);
+			return null;
+		} else {
+			if (!point1.isPoint() || !point2.isPoint() || !point3.isPoint()) {
+				logger.error("Error while altitude: ID:" + id);
+				return null;
+			} else {
+				GeoProofSchemePPLine tempGeoProofSchemePPLine = null;
+				for (GeoProofSchemeElement geoProofSchemeElement : geoProofSchemeElements) {
+					if (geoProofSchemeElement instanceof GeoProofSchemePPLine) {
+						if (((GeoProofSchemePPLine) geoProofSchemeElement).getPoint1().getID().equals(point2.getID())
+								&& ((GeoProofSchemePPLine) geoProofSchemeElement).getPoint2().getID()
+										.equals(point3.getID())) {
+							tempGeoProofSchemePPLine = (GeoProofSchemePPLine) geoProofSchemeElement;
+							break;
+						} else {
+							tempGeoProofSchemePPLine = null;
+						}
+					}
+				}
+
+				if (tempGeoProofSchemePPLine == null) {
+					tempGeoProofSchemePPLine = new GeoProofSchemePPLine("pp" + point2.getID() + point3.getID(), point2,
+							point3);
+					addElement(tempGeoProofSchemePPLine);
+				}
+
+				GeoProofSchemeMidPoint tempGeoProofSchemeMidPoint = null;
+				for (GeoProofSchemeElement geoProofSchemeElement : geoProofSchemeElements) {
+					if (geoProofSchemeElement instanceof GeoProofSchemeMidPoint) {
+						if (((GeoProofSchemeMidPoint) geoProofSchemeElement).getPoint1().getID().equals(point2.getID())
+								&& ((GeoProofSchemeMidPoint) geoProofSchemeElement).getPoint2().getID()
+										.equals(point3.getID())) {
+							tempGeoProofSchemeMidPoint = (GeoProofSchemeMidPoint) geoProofSchemeElement;
+							break;
+						} else {
+							tempGeoProofSchemeMidPoint = null;
+						}
+					}
+				}
+
+				if (tempGeoProofSchemeMidPoint == null) {
+					tempGeoProofSchemeMidPoint = new GeoProofSchemeMidPoint("mid" + point2.getID() + point3.getID(),
+							point2, point3);
+					addElement(tempGeoProofSchemeMidPoint);
+				}
+				return new GeoProofSchemeMedian(id, point1, point2, point3);
+			}
+		}
+	}
+
 	public GeoProofSchemeP3Bisector parseP3Bisector(String id, String rawData) {
 		String point1ID = rawData.substring(12, rawData.length() - 1).split(",")[0].trim();
 		String point2ID = rawData.substring(12, rawData.length() - 1).split(",")[1].trim();
@@ -536,6 +721,25 @@ public class GeoProofScheme {
 				logger.error("Error while parsing p3_bisector: ID:" + id);
 				return null;
 			} else {
+				GeoProofSchemePPLine tempGeoProofSchemePPLine = null;
+				for (GeoProofSchemeElement geoProofSchemeElement : geoProofSchemeElements) {
+					if (geoProofSchemeElement instanceof GeoProofSchemePPLine) {
+						if (((GeoProofSchemePPLine) geoProofSchemeElement).getPoint1().getID().equals(point2.getID())
+								&& ((GeoProofSchemePPLine) geoProofSchemeElement).getPoint2().getID()
+										.equals(point3.getID())) {
+							tempGeoProofSchemePPLine = (GeoProofSchemePPLine) geoProofSchemeElement;
+							break;
+						} else {
+							tempGeoProofSchemePPLine = null;
+						}
+					}
+				}
+
+				if (tempGeoProofSchemePPLine == null) {
+					tempGeoProofSchemePPLine = new GeoProofSchemePPLine("pp" + point2.getID() + point3.getID(), point2,
+							point3);
+					addElement(tempGeoProofSchemePPLine);
+				}
 				return new GeoProofSchemeP3Bisector(id, point1, point2, point3);
 			}
 		}

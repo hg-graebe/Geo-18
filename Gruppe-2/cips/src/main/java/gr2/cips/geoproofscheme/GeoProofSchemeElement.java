@@ -29,19 +29,28 @@ public abstract class GeoProofSchemeElement {
 	}
 
 	public boolean isPoint() {
-		return this instanceof GeoProofSchemeFreePoint || this instanceof GeoProofSchemeMidPoint
-				|| this instanceof GeoProofSchemeIntersectionPoint || this instanceof GeoProofSchemeCircleSlider
-				|| this instanceof GeoProofSchemeLineSlider || this instanceof GeoProofSchemeVarPoint
+		return this instanceof GeoProofSchemeFreePoint 
+				|| this instanceof GeoProofSchemeMidPoint
+				|| this instanceof GeoProofSchemeIntersectionPoint 
+				|| this instanceof GeoProofSchemeCircleSlider
+				|| this instanceof GeoProofSchemeLineSlider 
+				|| this instanceof GeoProofSchemeVarPoint
 				|| this instanceof GeoProofSchemeFixedPoint ? true : false;
 	}
 
 	public boolean isLine() {
-		return this instanceof GeoProofSchemePPLine || this instanceof GeoProofSchemeParLine
-				|| this instanceof GeoProofSchemeOrthoLine || this instanceof GeoProofSchemeP3Bisector ? true : false;
+		return this instanceof GeoProofSchemePPLine 
+				|| this instanceof GeoProofSchemeParLine
+				|| this instanceof GeoProofSchemeOrthoLine 
+				|| this instanceof GeoProofSchemeP3Bisector
+				|| this instanceof GeoProofSchemeMedian
+				|| this instanceof GeoProofSchemeAltitude
+				|| this instanceof GeoProofSchemePBisector ? true : false;
 	}
 
 	public boolean isCircle() {
-		return this instanceof GeoProofSchemeP3Circle || this instanceof GeoProofSchemePCCircle ? true : false;
+		return this instanceof GeoProofSchemeP3Circle 
+				|| this instanceof GeoProofSchemePCCircle ? true : false;
 	}
 
 	public double getValue() {
