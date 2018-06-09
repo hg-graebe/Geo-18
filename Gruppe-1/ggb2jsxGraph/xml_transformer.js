@@ -13,13 +13,22 @@ const geogebraBoilerplate = `<?xml version="1.0" encoding="utf-8"?>
 </geogebra>`;
 
 const GGB_HIGHLIGHT_RED = '<objColor r="255" g="0" b="0" alpha="0.0"/>';
+const GGB_HIGHLIGHT_BLUE = '<objColor r="50" g="50" b="220" alpha="0.0"/>';
+const GGB_HIGHLIGHT_DARK_BLUE = '<objColor r="20" g="20" b="120" alpha="0.0"/>';
+const GGB_HIGHLIGHT_GREY = '<objColor r="150" g="150" b="150" alpha="0.0"/>';
 const GGB_COORDS_SLIDER = '<coords x="1" y="1" z="1"/>';
+const getGgbCoordsCircleSlider = () => {
+    const coords = circleSliderCoordGenerator.next().value;
+    return `<coords x="${coords[0]}" y="${coords[1]}" z="1"/>`;
+}
+const GGB_ELEMENT_HIDDEN = '<show object="false" label="false"/>';
+const GGB_LINE_DASHED = '<lineStyle type="15"/>';
 
 // to keep track of ids of construction tools used by macros
 // so we don't use them multiple times
 let macroIdRepository = {};
-
 let propExplanations = [];
+let circleSliderCoordGenerator = createCircleSliderCoordGenerator();
 
 // construction tools that are entirely equivalent between Geoproof/GeoGebra, including parameters and their order
 const commandNameMapping = {
@@ -38,7 +47,7 @@ const commandMacroMapping = {
     'altitude': (pointTop, pointBase1, pointBase2, finalOutput) => {
         const lineId = `base of ${finalOutput}`;
         const returnStr =
-            createCommandXml('Line', [pointBase1, pointBase2], lineId, 'line') +
+            createCommandXml('Line', [pointBase1, pointBase2], lineId, 'line', [GGB_LINE_DASHED, GGB_HIGHLIGHT_GREY]) +
             createCommandXml('OrthogonalLine', [pointTop, lineId], finalOutput, 'line');
         markIdUsed(lineId);
         return returnStr;
@@ -46,7 +55,7 @@ const commandMacroMapping = {
     'pedalpoint': (point, line, finalOutput) => {
         const orthogonalLineId = `ortho(${point}, ${line})`;
         const returnStr =
-            createCommandXml('OrthogonalLine', [point, line], orthogonalLineId, 'line') + 
+            createCommandXml('OrthogonalLine', [point, line], orthogonalLineId, 'line', [GGB_LINE_DASHED, GGB_HIGHLIGHT_GREY]) +
             createCommandXml('Intersect', [line, orthogonalLineId], finalOutput, 'point');
         markIdUsed(orthogonalLineId);
         return returnStr;
@@ -60,7 +69,23 @@ const commandMacroMapping = {
         return returnStr;
     },
     'line_slider': (line, finalOutput) => {
-        return createCommandXml('Point', [line], finalOutput, 'point', [GGB_COORDS_SLIDER]);
+        return createCommandXml('Point', [line], finalOutput, 'point', [GGB_COORDS_SLIDER, GGB_HIGHLIGHT_DARK_BLUE]);
+    },
+    'varpoint': (A, B, finalOutput) => {
+        const lineId = `line(${A}, ${B})`;
+        const returnStr =
+            createCommandXml('Line', [A, B], lineId, 'line') +
+            createCommandXml('Point', [lineId], finalOutput, 'point', [GGB_COORDS_SLIDER, GGB_HIGHLIGHT_DARK_BLUE]);
+        markIdUsed(lineId);
+        return returnStr;
+    },
+    'circle_slider': (pointMid, pointOnCircle, finalOutput) => {
+        const circleId = `circle(${pointMid}, ${pointOnCircle})`;
+        const returnStr =
+            createCommandXml('Circle', [pointMid, pointOnCircle], circleId, 'circle') +
+            createCommandXml('Point', [circleId], finalOutput, 'point', [getGgbCoordsCircleSlider(), GGB_HIGHLIGHT_DARK_BLUE]);
+        markIdUsed(circleId);
+        return returnStr;
     }
 };
 
@@ -90,6 +115,20 @@ const propMacroMapping = {
         const returnStr = createCommandXml('Intersect', lines, intersectionId, 'point', [GGB_HIGHLIGHT_RED]);
         markIdUsed(intersectionId);
         propExplanations.push(`Lines ${lines.join(', ')} are concurrent`);
+        return returnStr;
+    },
+    'is_collinear': (...points) => {
+        const lineId = `line(${points.join(', ')})`;
+        const returnStr = createCommandXml('Line', points.slice(0, 2), lineId, 'line', [GGB_HIGHLIGHT_RED]);
+        markIdUsed(lineId);
+        propExplanations.push(`Points ${points.join(', ')} are collinear`);
+        return returnStr;
+    },
+    'is_concyclic': (...points) => {
+        const circleId = `circle(${points.join(', ')})`;
+        const returnStr = createCommandXml('Circle', points.slice(0, 3), circleId, 'circle', [GGB_HIGHLIGHT_RED]);
+        markIdUsed(circleId);
+        propExplanations.push(`Points ${points.join(', ')} are concyclic`);
         return returnStr;
     }
 };
@@ -130,6 +169,17 @@ function* createCoordGenerator() {
     yield [3, 2];
 }
 
+// create new circle slider default positions by roughly moving around the circle in 37° increments
+// this generator is shared for all sliders, even if they're on different circles
+function* createCircleSliderCoordGenerator() {
+    let angle = 0;
+    const angleStep = 37 * 180 / Math.PI;
+    while (true) {
+        angle += angleStep;
+        yield [1000 * Math.cos(angle), 1000 * Math.sin(angle)];
+    }
+}
+
 function createCommandXml(commandName, inputIds, outputId, outputType, additionalElementData) {
     // check if outputId has been used already, so we don't get duplicates
     if (macroIdRepository[outputId]) return '';
@@ -150,20 +200,18 @@ function createCommandXml(commandName, inputIds, outputId, outputType, additiona
 }
 
 function transformFreePointXml(inputXmlElement, freePointGenerator) {
-    // the first character in geoproof IDs is always a $, so cut that
     const pointId = cleanId(inputXmlElement.getAttribute('id'));
     const coords = freePointGenerator.next().value;
     if (!coords) fatalError("Not enough free point coordinates available");
     return (
         `<element type="point" label="${pointId}">
             <coords x="${coords[0]}" y="${coords[1]}" z="1.0"/>
-            <objColor r="50" g="50" b="200" alpha="0.0"/>
+            ${GGB_HIGHLIGHT_BLUE}
         </element>`
     );
 }
 
 function transformCommandXml(inputXmlElement) {
-    // the first character in geoproof IDs is always a $, so cut that
     const outputId = cleanId(inputXmlElement.getAttribute('id'));
     const outputType = inputXmlElement.nodeName.toLowerCase();
     const commandCallStr = inputXmlElement.textContent;
@@ -201,6 +249,7 @@ function fatalError(msg) {
 function resetData() {
     macroIdRepository = {};
     propExplanations = [];
+    circleSliderCoordGenerator = createCircleSliderCoordGenerator();
 }
 
 // removes leading $
