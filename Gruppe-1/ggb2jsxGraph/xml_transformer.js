@@ -44,7 +44,7 @@ const commandNameMapping = {
 // any construction tools not covered by the above
 // callback arguments are always (...inputs, output)
 const commandMacroMapping = {
-    'altitude': (pointTop, pointBase1, pointBase2, finalOutput) => {
+    'altitude': function (pointTop, pointBase1, pointBase2, finalOutput) {
         const lineId = `base of ${finalOutput}`;
         const returnStr =
             createCommandXml('Line', [pointBase1, pointBase2], lineId, 'line', [GGB_LINE_DASHED, GGB_HIGHLIGHT_GREY]) +
@@ -52,47 +52,57 @@ const commandMacroMapping = {
         markIdUsed(lineId);
         return returnStr;
     },
-    'pedalpoint': (point, line, finalOutput) => {
-        const orthogonalLineId = `ortho(${point}, ${line})`;
+    'pedalpoint': function (point, line, finalOutput) {
+        const orthogonalLineId = generateToolId('ortho', point, line);
         const returnStr =
             createCommandXml('OrthogonalLine', [point, line], orthogonalLineId, 'line', [GGB_LINE_DASHED, GGB_HIGHLIGHT_GREY]) +
             createCommandXml('Intersect', [line, orthogonalLineId], finalOutput, 'point');
         markIdUsed(orthogonalLineId);
         return returnStr;
     },
-    'median': (pointTop, pointBase1, pointBase2, finalOutput) => {
-        const midpointId = `mid(${pointBase1}, ${pointBase2})`;
+    'median': function (pointTop, pointBase1, pointBase2, finalOutput) {
+        const midpointId = generateToolId('mid', pointBase1, pointBase2);
         const returnStr =
             createCommandXml('Midpoint', [pointBase1, pointBase2], midpointId, 'point') +
             createCommandXml('Line', [pointTop, midpointId], finalOutput, 'line');
         markIdUsed(midpointId);
         return returnStr;
     },
-    'line_slider': (line, finalOutput) => {
+    'line_slider': function (line, finalOutput) {
         return createCommandXml('Point', [line], finalOutput, 'point', [GGB_COORDS_SLIDER, GGB_HIGHLIGHT_DARK_BLUE]);
     },
-    'varpoint': (A, B, finalOutput) => {
-        const lineId = `line(${A}, ${B})`;
+    'varpoint': function (A, B, finalOutput) {
+        const lineId = generateToolId('line', A, B);
         const returnStr =
             createCommandXml('Line', [A, B], lineId, 'line') +
             createCommandXml('Point', [lineId], finalOutput, 'point', [GGB_COORDS_SLIDER, GGB_HIGHLIGHT_DARK_BLUE]);
         markIdUsed(lineId);
         return returnStr;
     },
-    'circle_slider': (pointMid, pointOnCircle, finalOutput) => {
-        const circleId = `circle(${pointMid}, ${pointOnCircle})`;
+    'circle_slider': function (pointMid, pointOnCircle, finalOutput) {
+        const circleId = generateToolId('circle', pointMid, pointOnCircle);
         const returnStr =
             createCommandXml('Circle', [pointMid, pointOnCircle], circleId, 'circle') +
             createCommandXml('Point', [circleId], finalOutput, 'point', [getGgbCoordsCircleSlider(), GGB_HIGHLIGHT_DARK_BLUE]);
         markIdUsed(circleId);
         return returnStr;
+    },
+    'orthocenter': function (A, B, C, finalOutput) {
+        const alt1Id = generateToolId('altitude', A, B, C);
+        const alt2Id = generateToolId('altitude', B, C, A);
+        const returnStr =
+            this['altitude'](A, B, C, alt1Id) +
+            this['altitude'](B, C, A, alt2Id) +
+            createCommandXml('Intersect', [alt1Id, alt2Id], finalOutput, 'point');
+        markIdUsed(alt1Id, alt2Id);
+        return returnStr;
     }
 };
 
 const propMacroMapping = {
-    'eq_dist': (A, B, C, D) => {
-        const firstLineId = `dist(${A}, ${B})`;
-        const secondLineId = `dist(${C}, ${D})`;
+    'eq_dist': function (A, B, C, D) {
+        const firstLineId = generateToolId('dist', A, B);
+        const secondLineId = generateToolId('dist', C, D);
         const returnStr =
             createCommandXml('Segment', [A, B], firstLineId, 'line', [GGB_HIGHLIGHT_RED]) +
             createCommandXml('Segment', [C, D], secondLineId, 'line', [GGB_HIGHLIGHT_RED]);
@@ -100,9 +110,9 @@ const propMacroMapping = {
         propExplanations.push(`Distance (${A}, ${B}) is equal to distance (${C}, ${D})`)
         return returnStr;
     },
-    'eq_angle': (A, B, C, D, E, F) => {
-        const firstAngleId = `ang(${A}, ${B}, ${C})`;
-        const secondAngleId = `ang(${D}, ${E}, ${F})`;
+    'eq_angle': function (A, B, C, D, E, F) {
+        const firstAngleId = generateToolId('ang', A, B, C);
+        const secondAngleId = generateToolId('ang', D, E, F);
         const returnStr =
             createCommandXml('Angle', [A, B, C], firstAngleId, 'angle', [GGB_HIGHLIGHT_RED]) +
             createCommandXml('Angle', [D, E, F], secondAngleId, 'angle', [GGB_HIGHLIGHT_RED]);
@@ -110,22 +120,22 @@ const propMacroMapping = {
         propExplanations.push(`Angle (${A}, ${B}, ${C}) is equal to angle (${D}, ${E}, ${F})`)
         return returnStr;
     },
-    'is_concurrent': (...lines) => {
-        const intersectionId = `inter(${lines.join(', ')})`;
+    'is_concurrent': function (...lines) {
+        const intersectionId = generateToolId('inter', ...lines);
         const returnStr = createCommandXml('Intersect', lines, intersectionId, 'point', [GGB_HIGHLIGHT_RED]);
         markIdUsed(intersectionId);
         propExplanations.push(`Lines ${lines.join(', ')} are concurrent`);
         return returnStr;
     },
-    'is_collinear': (...points) => {
-        const lineId = `line(${points.join(', ')})`;
+    'is_collinear': function (...points) {
+        const lineId = generateToolId('line', ...points);
         const returnStr = createCommandXml('Line', points.slice(0, 2), lineId, 'line', [GGB_HIGHLIGHT_RED]);
         markIdUsed(lineId);
         propExplanations.push(`Points ${points.join(', ')} are collinear`);
         return returnStr;
     },
-    'is_concyclic': (...points) => {
-        const circleId = `circle(${points.join(', ')})`;
+    'is_concyclic': function (...points) {
+        const circleId = generateToolId('circle', ...points);
         const returnStr = createCommandXml('Circle', points.slice(0, 3), circleId, 'circle', [GGB_HIGHLIGHT_RED]);
         markIdUsed(circleId);
         propExplanations.push(`Points ${points.join(', ')} are concyclic`);
@@ -256,6 +266,10 @@ function resetData() {
 // fixes subscript for multi-digit numbers (by putting underscores in front every digit after the first one)
 function cleanId(originalId) {
     return originalId.substr(1).replace(/\d+/g, (match) => match.split('').join('_'));
+}
+
+function generateToolId(toolName, ...inputs) {
+    return `${toolName}(${inputs.join(', ')})`;
 }
 
 function parseCommand(commandStr) {
