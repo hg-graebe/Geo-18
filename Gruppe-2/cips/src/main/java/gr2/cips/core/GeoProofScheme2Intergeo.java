@@ -130,6 +130,9 @@ public class GeoProofScheme2Intergeo {
 						intergeo.getElementByID(((GeoProofSchemeP3Circle) geoProofSchemeElement).getPoint2().getID()),
 						intergeo.getElementByID(((GeoProofSchemeP3Circle) geoProofSchemeElement).getPoint3().getID())));
 				logger.info("p3_circle ID:" + geoProofSchemeElement.getID() + " has been converted");
+			} else {
+				logger.error("Error while converting element ID:" + geoProofSchemeElement.getID());
+				logger.error("Not yet implemented: " + geoProofSchemeElement.getClass().getSimpleName());
 			}
 		}
 		logger.info("Conversion successfully completed");
