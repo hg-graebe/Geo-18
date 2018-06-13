@@ -86,6 +86,7 @@
 
     JXG.GeogebraReader = function (board, str) {
         var tree, content;
+
         content = this.prepareString(str);
         tree = JXG.XML.parse(content);
 
@@ -2379,7 +2380,7 @@
 
                 try {
                     JXG.debug("* Mirror: First: " + input[0].name + ", Second: " + input[1].name);
-                    p = this.board.create(type, [input[1], input[0]], attr);
+                    p = this.board.create(type, [input[0], input[1]], attr);
                     return p;
                 } catch (exc12) {
                     JXG.debug("* Err: Mirror " + attr.name);

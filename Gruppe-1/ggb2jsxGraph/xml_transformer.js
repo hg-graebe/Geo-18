@@ -28,6 +28,8 @@ const GGB_LINE_DASHED = '<lineStyle type="15"/>';
 // so we don't use them multiple times
 let macroIdRepository = {};
 let propExplanations = [];
+// ids of elements that turn out to be part of a prop later on and need to be highlighted accordingly
+let retroactiveHighlights = [];
 let circleSliderCoordGenerator = createCircleSliderCoordGenerator();
 
 // construction tools that are entirely equivalent between Geoproof/GeoGebra, including parameters and their order
@@ -96,6 +98,16 @@ const commandMacroMapping = {
             createCommandXml('Intersect', [alt1Id, alt2Id], finalOutput, 'point');
         markIdUsed(alt1Id, alt2Id);
         return returnStr;
+    },
+    'circumcenter': function (A, B, C, finalOutput) {
+        const perpBisector1Id = generateToolId('perpBisector', A, B);
+        const perpBisector2Id = generateToolId('perpBisector', B, C);
+        const returnStr =
+            createCommandXml('LineBisector', [A, B], perpBisector1Id, 'line') +
+            createCommandXml('LineBisector', [B, C], perpBisector2Id, 'line') +
+            createCommandXml('Intersect', [perpBisector1Id, perpBisector2Id], finalOutput, 'point');
+        markIdUsed(perpBisector1Id, perpBisector2Id);
+        return returnStr;
     }
 };
 
@@ -104,8 +116,8 @@ const propMacroMapping = {
         const firstLineId = generateToolId('dist', A, B);
         const secondLineId = generateToolId('dist', C, D);
         const returnStr =
-            createCommandXml('Segment', [A, B], firstLineId, 'line', [GGB_HIGHLIGHT_RED]) +
-            createCommandXml('Segment', [C, D], secondLineId, 'line', [GGB_HIGHLIGHT_RED]);
+            createCommandXml('Segment', [A, B], firstLineId, 'line', GGB_HIGHLIGHT_RED) +
+            createCommandXml('Segment', [C, D], secondLineId, 'line', GGB_HIGHLIGHT_RED);
         markIdUsed(firstLineId, secondLineId);
         propExplanations.push(`Distance (${A}, ${B}) is equal to distance (${C}, ${D})`)
         return returnStr;
@@ -114,32 +126,40 @@ const propMacroMapping = {
         const firstAngleId = generateToolId('ang', A, B, C);
         const secondAngleId = generateToolId('ang', D, E, F);
         const returnStr =
-            createCommandXml('Angle', [A, B, C], firstAngleId, 'angle', [GGB_HIGHLIGHT_RED]) +
-            createCommandXml('Angle', [D, E, F], secondAngleId, 'angle', [GGB_HIGHLIGHT_RED]);
+            createCommandXml('Angle', [A, B, C], firstAngleId, 'angle', GGB_HIGHLIGHT_RED) +
+            createCommandXml('Angle', [D, E, F], secondAngleId, 'angle', GGB_HIGHLIGHT_RED);
         markIdUsed(firstAngleId, secondAngleId);
         propExplanations.push(`Angle (${A}, ${B}, ${C}) is equal to angle (${D}, ${E}, ${F})`)
         return returnStr;
     },
     'is_concurrent': function (...lines) {
         const intersectionId = generateToolId('inter', ...lines);
-        const returnStr = createCommandXml('Intersect', lines, intersectionId, 'point', [GGB_HIGHLIGHT_RED]);
+        const returnStr = createCommandXml('Intersect', lines, intersectionId, 'point', GGB_HIGHLIGHT_RED);
         markIdUsed(intersectionId);
         propExplanations.push(`Lines ${lines.join(', ')} are concurrent`);
         return returnStr;
     },
     'is_collinear': function (...points) {
         const lineId = generateToolId('line', ...points);
-        const returnStr = createCommandXml('Line', points.slice(0, 2), lineId, 'line', [GGB_HIGHLIGHT_RED]);
+        const returnStr = createCommandXml('Line', points.slice(0, 2), lineId, 'line', GGB_HIGHLIGHT_RED);
         markIdUsed(lineId);
         propExplanations.push(`Points ${points.join(', ')} are collinear`);
         return returnStr;
     },
     'is_concyclic': function (...points) {
         const circleId = generateToolId('circle', ...points);
-        const returnStr = createCommandXml('Circle', points.slice(0, 3), circleId, 'circle', [GGB_HIGHLIGHT_RED]);
+        const returnStr = createCommandXml('Circle', points.slice(0, 3), circleId, 'circle', GGB_HIGHLIGHT_RED);
         markIdUsed(circleId);
         propExplanations.push(`Points ${points.join(', ')} are concyclic`);
         return returnStr;
+    },
+    'is_parallel': function (g, f) {
+        retroactiveHighlights.push(g, f);
+        propExplanations.push(`Lines ${g} and ${f} are parallel`);
+    },
+    'is_orthogonal': function (g, f) {
+        retroactiveHighlights.push(g, f);
+        propExplanations.push(`Lines ${g} and ${f} are orthogonal`);
     }
 };
 
@@ -167,6 +187,13 @@ function transformXml(inputXml) {
     $props.each((i, elem) => {
         $construction.append(transformPropXml(elem));
     });
+
+    for (let i = 0; i < retroactiveHighlights.length; i++) {
+        const $el = $construction.find(`element[label="${retroactiveHighlights[i]}"]`);
+        if (!$el) continue;
+        $el.find('objColor').remove();
+        $el.append(GGB_HIGHLIGHT_RED);
+    }
 
     return new XMLSerializer().serializeToString($resultXml[0]);
 }
@@ -202,7 +229,7 @@ function createCommandXml(commandName, inputIds, outputId, outputType, additiona
         </command>
         ${additionalElementData ?
             `<element type="${outputType}" label="${outputId}">
-                ${additionalElementData.join('\n')}
+                ${typeof additionalElementData === 'Array' ? additionalElementData.join('\n') : additionalElementData}
             </element>` :
             `<element type="${outputType}" label="${outputId}"/>`}
         `
@@ -259,6 +286,7 @@ function fatalError(msg) {
 function resetData() {
     macroIdRepository = {};
     propExplanations = [];
+    retroactiveHighlights = [];
     circleSliderCoordGenerator = createCircleSliderCoordGenerator();
 }
 
