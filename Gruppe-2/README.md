@@ -22,7 +22,7 @@ java -jar cips.jar -vc  <cinderella file> <visualization file>
 java -jar cips.jar -vi  <intergeo file> <visualization file>
 java -jar cips.jar -vg  <geoproofscheme file> <visualization file> -p [default parameter file]
 example:
-java -jar cips.jar -vg Gruppe-2/testdata/Chou.28_1.xml Gruppe-2/jsx_Chou_test.html
+java -jar cips.jar -vg testdata/Chou.28_1.xml jsx_Chou_test.html
 
  -c2i                   cinderella to intergeo
  -g2i                   geoproofscheme to intergeo
