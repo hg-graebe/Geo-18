@@ -1,6 +1,19 @@
 package gr2.cips.intergeo;
 
-import java.io.File;
+import gr2.cips.intergeo.model.IntergeoCircleByCenterAndPoint;
+import gr2.cips.intergeo.model.IntergeoCircleByThreePoints;
+import gr2.cips.intergeo.model.IntergeoElement;
+import gr2.cips.intergeo.model.IntergeoFreePoint;
+import gr2.cips.intergeo.model.IntergeoLineAngularBisectorOfThreePoints;
+import gr2.cips.intergeo.model.IntergeoLineParallelToLineThroughPoint;
+import gr2.cips.intergeo.model.IntergeoLinePerpendicularToLineThroughPoint;
+import gr2.cips.intergeo.model.IntergeoLineThroughTwoPoints;
+import gr2.cips.intergeo.model.IntergeoMidPointOfTwoPoints;
+import gr2.cips.intergeo.model.IntergeoPointIntersectionOfTwoLines;
+import gr2.cips.intergeo.model.IntergeoPointOnCircle;
+import gr2.cips.intergeo.model.IntergeoPointOnLine;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -10,9 +23,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+import java.io.File;
 
 /**
  * @author Duong Trung Duong
@@ -116,7 +127,7 @@ public class IntergeoExportXML {
 	}
 
 	private void appendXMLIntergeoPointIntersectionOfTwoLines(
-			IntergeoPointIntersectionOfTwoLines intergeoPointIntersectionOfTwoLines) {
+		IntergeoPointIntersectionOfTwoLines intergeoPointIntersectionOfTwoLines) {
 		Element xmlPointE = doc.createElement("point");
 		xmlPointE.setAttribute("id", intergeoPointIntersectionOfTwoLines.getID());
 		Element xmlHomogeneousCoordinates = doc.createElement("homogeneous_coordinates");

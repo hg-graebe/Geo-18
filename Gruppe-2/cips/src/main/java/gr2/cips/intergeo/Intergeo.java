@@ -1,21 +1,32 @@
 package gr2.cips.intergeo;
 
+import gr2.cips.intergeo.model.IntergeoCircleByCenterAndPoint;
+import gr2.cips.intergeo.model.IntergeoCircleByThreePoints;
+import gr2.cips.intergeo.model.IntergeoElement;
+import gr2.cips.intergeo.model.IntergeoFreePoint;
+import gr2.cips.intergeo.model.IntergeoLineAngularBisectorOfThreePoints;
+import gr2.cips.intergeo.model.IntergeoLineParallelToLineThroughPoint;
+import gr2.cips.intergeo.model.IntergeoLinePerpendicularToLineThroughPoint;
+import gr2.cips.intergeo.model.IntergeoLineThroughTwoPoints;
+import gr2.cips.intergeo.model.IntergeoMidPointOfTwoPoints;
+import gr2.cips.intergeo.model.IntergeoPointIntersectionOfTwoLines;
+import gr2.cips.intergeo.model.IntergeoPointOnCircle;
+import gr2.cips.intergeo.model.IntergeoPointOnLine;
+import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.log4j.Logger;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.TransformerException;
-
-import org.apache.commons.lang3.math.NumberUtils;
-import org.apache.log4j.Logger;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /**
  * @author Duong Trung Duong

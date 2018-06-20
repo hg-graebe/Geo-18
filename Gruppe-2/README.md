@@ -15,44 +15,52 @@ mvn clean install
 
 # Usage
 ```
-java -jar cips.jar -j c2i -i <cinderella file> -o <intergeo file>
-java -jar cips.jar -j g2i -i <geoproofscheme file> -o <intergeo file> -p [default parameter file]
-java -jar cips.jar -j vc -i <cinderella file> -o <visualization file>
-java -jar cips.jar -j vi -i <intergeo file> -o <visualization file>
-java -jar cips.jar -j vg -i <geoproofscheme file> -o <visualization file> -p [default parameter file]
+java -jar cips.jar <mode (optional)> <input file> <output file (optional)> -p [default parameter file]
+java -jar cips.jar -c2i <cinderella file path> <intergeo file path>
+java -jar cips.jar -g2i <geoproofscheme file> <intergeo file> -p [default parameter file]
+java -jar cips.jar -vc  <cinderella file> <visualization file>
+java -jar cips.jar -vi  <intergeo file> <visualization file>
+java -jar cips.jar -vg  <geoproofscheme file> <visualization file> -p [default parameter file]
+example:
+java -jar cips.jar -vg Gruppe-2/testdata/Chou.28_1.xml Gruppe-2/jsx_Chou_test.html
 
+ -c2i                   cinderella to intergeo
+ -g2i                   geoproofscheme to intergeo
  -h,--help              print this message
  -i,--input <arg>       input file path
- -j,--job-type <arg>    "c2i": cinderella to intergeo,
-                        "g2i": geoproofscheme to intergeo,
-                        "vc":  cinderella visualisation with jsxgraph,
-                        "vi":  intergeo visualisation with jsxgraph,
-                        "vg":  geoproofscheme visualisation with jsxgraph
  -o,--output <arg>      output file path
  -p,--parameter <arg>   default parameter file path
+ -vc                    cinderella visualisation with jsxgraph
+ -vg                    geoproofscheme visualisation with jsxgraph
+ -vi                    intergeo visualisation with jsxgraph
 ```
 
 # Examples
 *Test data found in folder [testdata](https://git.informatik.uni-leipzig.de/graebe/Geo-18/tree/master/Gruppe-2/testdata)*
+* Multimode GeoProofScheme: conversion to Intergeo format & jsxGraph visualisation
+(automatically sets output and parameter file; in the source directory)
+```
+java -jar cips.jar geoproofscheme_test.xml
+```
 * Convert GeoProofScheme format to Intergeo format
 ```
-java -jar cips.jar -j g2i -i geoproofscheme_test.xml -o intergeo_from_geoproofscheme.xml -p defaultparameters.txt
+java -jar cips.jar -g2i geoproofscheme_test.xml intergeo_from_geoproofscheme.xml -p defaultparameters.txt
 ```
 * Convert Cinderella format to Intergeo format
 ```
-java -jar cips.jar -j c2i -i cinderella_test.cdy -o intergeo_from_cinderella.xml
+java -jar cips.jar -c2i cinderella_test.cdy intergeo_from_cinderella.xml
 ```
 * Visualize GeoProofScheme format
 ```
-java -jar cips.jar -j vg -i geoproofscheme_test.xml -o geoproofscheme_test.html -p defaultparameters.txt
+java -jar cips.jar -vg geoproofscheme_test.xml geoproofscheme_test.html -p defaultparameters.txt
 ```
 * Visualize Intergeo format
 ```
-java -jar cips.jar -j vi -i intergeo_from_geoproofscheme.xml -o intergeo_from_geoproofscheme.html
+java -jar cips.jar -vi intergeo_from_geoproofscheme.xml intergeo_from_geoproofscheme.html
 ```
 * Visualize Cinderella format
 ```
-java -jar cips.jar -j vc -i cinderella_test.cdy -o cinderella_test.html
+java -jar cips.jar -vc cinderella_test.cdy cinderella_test.html
 ```
 
 # Team

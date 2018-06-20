@@ -1,9 +1,11 @@
 package gr2.cips.jsxgraph;
 
+import gr2.cips.jsxgraph.model.JSXGraphElement;
+import gr2.cips.jsxgraph.model.JSXGraphParameter;
+import org.apache.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.log4j.Logger;
 
 /**
  * @author Duong Trung Duong

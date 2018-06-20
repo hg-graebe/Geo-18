@@ -1,32 +1,32 @@
 package gr2.cips.core;
 
-import org.apache.log4j.Logger;
-
 import gr2.cips.geoproofscheme.GeoProofScheme;
-import gr2.cips.geoproofscheme.GeoProofSchemeCircleSlider;
-import gr2.cips.geoproofscheme.GeoProofSchemeElement;
-import gr2.cips.geoproofscheme.GeoProofSchemeFreePoint;
-import gr2.cips.geoproofscheme.GeoProofSchemeIntersectionPoint;
-import gr2.cips.geoproofscheme.GeoProofSchemeLineSlider;
-import gr2.cips.geoproofscheme.GeoProofSchemeMidPoint;
-import gr2.cips.geoproofscheme.GeoProofSchemeOrthoLine;
-import gr2.cips.geoproofscheme.GeoProofSchemeP3Bisector;
-import gr2.cips.geoproofscheme.GeoProofSchemeP3Circle;
-import gr2.cips.geoproofscheme.GeoProofSchemePCCircle;
-import gr2.cips.geoproofscheme.GeoProofSchemePPLine;
-import gr2.cips.geoproofscheme.GeoProofSchemeParLine;
+import gr2.cips.geoproofscheme.model.GeoProofSchemeCircleSlider;
+import gr2.cips.geoproofscheme.model.GeoProofSchemeElement;
+import gr2.cips.geoproofscheme.model.GeoProofSchemeFreePoint;
+import gr2.cips.geoproofscheme.model.GeoProofSchemeIntersectionPoint;
+import gr2.cips.geoproofscheme.model.GeoProofSchemeLineSlider;
+import gr2.cips.geoproofscheme.model.GeoProofSchemeMidPoint;
+import gr2.cips.geoproofscheme.model.GeoProofSchemeOrthoLine;
+import gr2.cips.geoproofscheme.model.GeoProofSchemeP3Bisector;
+import gr2.cips.geoproofscheme.model.GeoProofSchemeP3Circle;
+import gr2.cips.geoproofscheme.model.GeoProofSchemePCCircle;
+import gr2.cips.geoproofscheme.model.GeoProofSchemePPLine;
+import gr2.cips.geoproofscheme.model.GeoProofSchemeParLine;
+import gr2.cips.geoproofscheme.model.GeoProofSchemeVarPoint;
 import gr2.cips.intergeo.Intergeo;
-import gr2.cips.intergeo.IntergeoCircleByCenterAndPoint;
-import gr2.cips.intergeo.IntergeoCircleByThreePoints;
-import gr2.cips.intergeo.IntergeoFreePoint;
-import gr2.cips.intergeo.IntergeoLineAngularBisectorOfThreePoints;
-import gr2.cips.intergeo.IntergeoLineParallelToLineThroughPoint;
-import gr2.cips.intergeo.IntergeoLinePerpendicularToLineThroughPoint;
-import gr2.cips.intergeo.IntergeoLineThroughTwoPoints;
-import gr2.cips.intergeo.IntergeoMidPointOfTwoPoints;
-import gr2.cips.intergeo.IntergeoPointIntersectionOfTwoLines;
-import gr2.cips.intergeo.IntergeoPointOnCircle;
-import gr2.cips.intergeo.IntergeoPointOnLine;
+import gr2.cips.intergeo.model.IntergeoCircleByCenterAndPoint;
+import gr2.cips.intergeo.model.IntergeoCircleByThreePoints;
+import gr2.cips.intergeo.model.IntergeoFreePoint;
+import gr2.cips.intergeo.model.IntergeoLineAngularBisectorOfThreePoints;
+import gr2.cips.intergeo.model.IntergeoLineParallelToLineThroughPoint;
+import gr2.cips.intergeo.model.IntergeoLinePerpendicularToLineThroughPoint;
+import gr2.cips.intergeo.model.IntergeoLineThroughTwoPoints;
+import gr2.cips.intergeo.model.IntergeoMidPointOfTwoPoints;
+import gr2.cips.intergeo.model.IntergeoPointIntersectionOfTwoLines;
+import gr2.cips.intergeo.model.IntergeoPointOnCircle;
+import gr2.cips.intergeo.model.IntergeoPointOnLine;
+import org.apache.log4j.Logger;
 
 /**
  * @author Duong Trung Duong
@@ -95,6 +95,11 @@ public class GeoProofScheme2Intergeo {
 						intergeo.getElementByID(((GeoProofSchemeLineSlider) geoProofSchemeElement).getLine().getID()),
 						geoProofSchemeElement.getX(), geoProofSchemeElement.getY(), 1.0));
 				logger.info("line_slider ID:" + geoProofSchemeElement.getID() + " has been converted");
+			} else if (geoProofSchemeElement instanceof GeoProofSchemeVarPoint) {
+				intergeo.addElement(new IntergeoLineThroughTwoPoints(geoProofSchemeElement.getID(),
+						intergeo.getElementByID(((GeoProofSchemeVarPoint) geoProofSchemeElement).getPoint1().getID()),
+						intergeo.getElementByID(((GeoProofSchemeVarPoint) geoProofSchemeElement).getPoint2().getID())));
+				logger.info("varpoint ID:" + geoProofSchemeElement.getID() + " has been converted");
 			} else if (geoProofSchemeElement instanceof GeoProofSchemePPLine) {
 				intergeo.addElement(new IntergeoLineThroughTwoPoints(geoProofSchemeElement.getID(),
 						intergeo.getElementByID(((GeoProofSchemePPLine) geoProofSchemeElement).getPoint1().getID()),

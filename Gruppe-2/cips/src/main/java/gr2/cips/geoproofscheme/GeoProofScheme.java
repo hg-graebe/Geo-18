@@ -1,24 +1,45 @@
 package gr2.cips.geoproofscheme;
 
+import gr2.cips.geoproofscheme.model.GeoProofSchemeAltitude;
+import gr2.cips.geoproofscheme.model.GeoProofSchemeCircleSlider;
+import gr2.cips.geoproofscheme.model.GeoProofSchemeElement;
+import gr2.cips.geoproofscheme.model.GeoProofSchemeFixedPoint;
+import gr2.cips.geoproofscheme.model.GeoProofSchemeFreePoint;
+import gr2.cips.geoproofscheme.model.GeoProofSchemeIntersectionPoint;
+import gr2.cips.geoproofscheme.model.GeoProofSchemeLineSlider;
+import gr2.cips.geoproofscheme.model.GeoProofSchemeMedian;
+import gr2.cips.geoproofscheme.model.GeoProofSchemeMidPoint;
+import gr2.cips.geoproofscheme.model.GeoProofSchemeOrthoLine;
+import gr2.cips.geoproofscheme.model.GeoProofSchemeP3Bisector;
+import gr2.cips.geoproofscheme.model.GeoProofSchemeP3Circle;
+import gr2.cips.geoproofscheme.model.GeoProofSchemePBisector;
+import gr2.cips.geoproofscheme.model.GeoProofSchemePCCircle;
+import gr2.cips.geoproofscheme.model.GeoProofSchemePPLine;
+import gr2.cips.geoproofscheme.model.GeoProofSchemeParLine;
+import gr2.cips.geoproofscheme.model.GeoProofSchemeParameter;
+import gr2.cips.geoproofscheme.model.GeoProofSchemeVarPoint;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.log4j.Logger;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.apache.commons.lang3.math.NumberUtils;
-import org.apache.log4j.Logger;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
+import java.util.Random;
 
 /**
  * @author Duong Trung Duong
@@ -68,17 +89,25 @@ public class GeoProofScheme {
 			}
 
 			if (document.getElementsByTagName("Title").getLength() == 1) {
-				setTitle(document.getElementsByTagName("Title").item(0).getChildNodes().item(0).getNodeValue());
+				final String[] inputPaths = geoProofSchemeFilePath.split("/");
+				final String[] inputFile = inputPaths[inputPaths.length - 1].split("\\.");
+				final String newName = String.join(".", Arrays.copyOf(inputFile, inputFile.length-1));
+				setTitle(newName);
 			}
 
 			if (document.getElementsByTagName("parameters").getLength() == 1) {
 				List<String> parameterIDs = Arrays.asList(document.getElementsByTagName("parameters").item(0)
 						.getChildNodes().item(0).getNodeValue().split(","));
-				if (isParameterMatching(parameterIDs, parameterFilePath) == true) {
-					parseParameters(parameterIDs, parameterFilePath);
+				if (!isParameterMatching(parameterIDs, parameterFilePath)) {
+					generateAndSaveParameters(parameterIDs, parameterFilePath);
+					if (isParameterMatching(parameterIDs, parameterFilePath)) {
+						parseParameters(parameterIDs, parameterFilePath);
+					} else {
+						logger.error("Parameters do not match");
+						return false;
+					}
 				} else {
-					logger.error("Parameters do not match");
-					return false;
+					parseParameters(parameterIDs, parameterFilePath);
 				}
 			}
 
@@ -275,6 +304,21 @@ public class GeoProofScheme {
 			addElement(geoProofSchemeParameter);
 			logger.info("Found parameter: ID:" + geoProofSchemeParameter.getID() + ", Value:"
 					+ geoProofSchemeParameter.getValue());
+		}
+	}
+
+	private void generateAndSaveParameters(final List<String> parameterIDs, final String parameterFilePath) {
+		Random random = new Random();
+		StringBuilder parameters = new StringBuilder();
+		for (String parameterID : parameterIDs) {
+			double RANDOM_VALUE = random.nextDouble()*10;
+			RANDOM_VALUE = BigDecimal.valueOf(RANDOM_VALUE).setScale(2, RoundingMode.HALF_UP).doubleValue();
+			parameters.append(parameterID).append("\t").append(RANDOM_VALUE).append("\n");
+		}
+		try {
+			FileUtils.writeStringToFile(new File(parameterFilePath), parameters.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -579,8 +623,8 @@ public class GeoProofScheme {
 				}
 
 				if (tempGeoProofSchemePPLine == null) {
-					tempGeoProofSchemePPLine = new GeoProofSchemePPLine("pp"+point2.getID() + point3.getID(), point2,
-							point3);
+					tempGeoProofSchemePPLine = new GeoProofSchemePPLine("pp" + point2.getID() + point3.getID(),
+							point2, point3);
 					addElement(tempGeoProofSchemePPLine);
 				}
 				return new GeoProofSchemeAltitude(id, point1, point2, point3);
@@ -783,7 +827,7 @@ public class GeoProofScheme {
 		}
 	}
 
-	public boolean isParameterMatching(List<String> parameterIDs, String parameterFilePath) throws IOException {
+	public boolean isParameterMatching(List<String> parameterIDs, String parameterFilePath) {
 		List<String> parametersFromFile = new ArrayList<String>();
 		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(parameterFilePath))) {
 			String tempString;
@@ -791,7 +835,7 @@ public class GeoProofScheme {
 				parametersFromFile.add(tempString.split("\t")[0]);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Missing parameter file:" + parameterFilePath);
 			return false;
 		}
 		return new HashSet<>(parameterIDs).equals(new HashSet<>(parametersFromFile));

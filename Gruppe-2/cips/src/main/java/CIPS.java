@@ -1,13 +1,3 @@
-import java.util.Arrays;
-
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
-
 import gr2.cips.cinderella.Cinderella;
 import gr2.cips.core.Cinderella2Intergeo;
 import gr2.cips.core.CinderellaVisualization;
@@ -16,6 +6,18 @@ import gr2.cips.core.GeoProofSchemeVisualization;
 import gr2.cips.core.IntergeoVisualization;
 import gr2.cips.geoproofscheme.GeoProofScheme;
 import gr2.cips.intergeo.Intergeo;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * @author Duong Trung Duong
@@ -52,11 +54,15 @@ public class CIPS {
 		HelpFormatter formatter = new HelpFormatter();
 		CommandLine cmd;
 		String helpString =
-				"\njava -jar cips.jar -j c2i -i <cinderella file> -o <intergeo file>\n"
-				+ "java -jar cips.jar -j g2i -i <geoproofscheme file> -o <intergeo file> -p [default parameter file]\n"
-				+ "java -jar cips.jar -j vc -i <cinderella file> -o <visualization file>\n"
-				+ "java -jar cips.jar -j vi -i <intergeo file> -o <visualization file>\n"
-				+ "java -jar cips.jar -j vg -i <geoproofscheme file> -o <visualization file> -p [default parameter file]\n\n";
+				"\njava -jar cips.jar <mode (optional)> <input file> <output file (optional)> -p [default parameter file]\n"
+				+ "java -jar cips.jar -c2i <cinderella file path> <intergeo file path>\n"
+				+ "java -jar cips.jar -g2i <geoproofscheme file> <intergeo file> -p [default parameter file]\n"
+				+ "java -jar cips.jar -vc  <cinderella file> <visualization file>\n"
+				+ "java -jar cips.jar -vi  <intergeo file> <visualization file>\n"
+				+ "java -jar cips.jar -vg  <geoproofscheme file> <visualization file> -p [default parameter file]\n"
+				+ "example:\n"
+				+ "java -jar cips.jar -vg Gruppe-2/testdata/Chou.28_1.xml Gruppe-2/jsx_Chou.html\n\n";
+
 
 		try {
 			cmd = parser.parse(options, argv);
@@ -91,15 +97,15 @@ public class CIPS {
 			}
 
 			if (!hasRun) {
-				final String inputFileExtension = getFileExtension(cmd);
+				final String inputFileExtension = getInputFileExtension(cmd);
 				switch (inputFileExtension) {
 					case "cdy":
-						hasRun = c2iMode(cmd);
-						hasRun |= vcMode(cmd);
+						hasRun = vcMode(cmd);
+						hasRun |= c2iMode(cmd);
 						break;
 					case "xml":
-						hasRun = g2iMode(cmd);
-						hasRun |= vgMode(cmd);
+						hasRun = vgMode(cmd);
+						hasRun |= g2iMode(cmd);
 						break;
 					case "i2g":
 						hasRun = viMode(cmd);
@@ -158,6 +164,8 @@ public class CIPS {
 				visualizationFilePath);
 		cinderellaVisualization.visualize();
 
+		openBrowser(visualizationFilePath);
+
 		return true;
 	}
 	static boolean viMode(CommandLine cmd) throws Exception {
@@ -170,6 +178,8 @@ public class CIPS {
 
 		IntergeoVisualization intergeoVisualization = new IntergeoVisualization(intergeo, visualizationFilePath);
 		intergeoVisualization.visualize();
+
+		openBrowser(visualizationFilePath);
 
 		return true;
 	}
@@ -186,10 +196,21 @@ public class CIPS {
 				visualizationFilePath);
 		geoProofSchemeVisualization.visualize();
 
+		openBrowser(visualizationFilePath);
+
 		return true;
 	}
 
-	private static String getFileExtension(CommandLine cmd) {
+	private static void openBrowser(final String visualizationFilePath) {
+		File htmlFile = new File(visualizationFilePath);
+		try {
+			Desktop.getDesktop().browse(htmlFile.toURI());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static String getInputFileExtension(CommandLine cmd) {
 		final String input = getInput(cmd);
 		final String[] inputFile = input.split("\\.");
 		final String inputFileExtension = inputFile[inputFile.length - 1];
@@ -211,13 +232,19 @@ public class CIPS {
 	}
 
 	private static String getOutput(CommandLine cmd, String extension) {
-		String output = cmd.getOptionValue("output");
+		String output;
+		if (cmd.getArgs().length > 1) {
+			output = cmd.getArgs()[1];
+		} else {
+			output = cmd.getOptionValue("output");
+		}
 		if (output == null || output.isEmpty()) {
-			return generateOutputName(cmd, extension);
+			output = generateOutputFilePath(cmd, extension);
 		}
 		return output;
 	}
-	private static String generateOutputName(CommandLine cmd, String extension) {
+
+	private static String generateOutputFilePath(CommandLine cmd, String extension) {
 		String input = getInput(cmd);
 		final String[] inputPaths = input.split("/");
 		final String[] inputFile = inputPaths[inputPaths.length - 1].split("\\.");
@@ -230,7 +257,7 @@ public class CIPS {
 	private static String getParameterFile(CommandLine cmd) {
 		final String parameter = cmd.getOptionValue("parameter");
 		if (parameter == null || parameter.isEmpty()) {
-			return generateOutputName(cmd, "parameter");
+			return generateOutputFilePath(cmd, "parameter");
 		}
 		return parameter;
 	}

@@ -1,5 +1,25 @@
 package gr2.cips.jsxgraph;
 
+import gr2.cips.jsxgraph.model.JSXGraphCircleGlider;
+import gr2.cips.jsxgraph.model.JSXGraphCircumCircle;
+import gr2.cips.jsxgraph.model.JSXGraphElement;
+import gr2.cips.jsxgraph.model.JSXGraphFixedPoint;
+import gr2.cips.jsxgraph.model.JSXGraphIntersection;
+import gr2.cips.jsxgraph.model.JSXGraphLine;
+import gr2.cips.jsxgraph.model.JSXGraphLineGlider;
+import gr2.cips.jsxgraph.model.JSXGraphMidPoint;
+import gr2.cips.jsxgraph.model.JSXGraphP3Bisector;
+import gr2.cips.jsxgraph.model.JSXGraphPCCircle;
+import gr2.cips.jsxgraph.model.JSXGraphParallel;
+import gr2.cips.jsxgraph.model.JSXGraphParameter;
+import gr2.cips.jsxgraph.model.JSXGraphPerpendicular;
+import gr2.cips.jsxgraph.model.JSXGraphPoint;
+import gr2.cips.jsxgraph.model.JSXGraphVarPoint;
+import net.lingala.zip4j.core.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.log4j.Logger;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -10,12 +30,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.io.FilenameUtils;
-import org.apache.log4j.Logger;
-
-import net.lingala.zip4j.core.ZipFile;
-import net.lingala.zip4j.exception.ZipException;
 
 /**
  * @author Duong Trung Duong
@@ -55,7 +69,7 @@ public class JSXGraphExportVisualization {
 
 	public void visualize() {
 		List<JSXGraphElement> jsxGraphElements = getJSXGraph().getJSXGraphElements();
-		String board = visualizeJSXGraphParameters(getParameters(jsxGraphElements)) + System.lineSeparator();
+		String board = visualizeJSXGraphParameters(getParameters(jsxGraphElements), jsxGraphElements) + System.lineSeparator();
 		board = board + "\t\t\tvar e = [];" + System.lineSeparator();
 		for (JSXGraphElement jsxGraphElement : jsxGraphElements) {
 			if (jsxGraphElement instanceof JSXGraphPoint) {
@@ -124,19 +138,47 @@ public class JSXGraphExportVisualization {
 		}
 	}
 
-	private String visualizeJSXGraphParameters(List<JSXGraphParameter> parameters) {
+	private String visualizeJSXGraphParameters(List<JSXGraphParameter> parameters,
+			List<JSXGraphElement> jsxGraphElements) {
 		String parameterVisualiztion = "";
+		ArrayList<String> allParameters = new ArrayList<>();
 		for (JSXGraphParameter parameter : parameters) {
 			if (!parameter.isConstant()) {
-				int yCoord = 33 - parameters.indexOf(parameter) * 3;
-				parameterVisualiztion += "\t\t\tvar " + parameter.getID() + "= board.create('slider',[[60," + yCoord
-						+ "],[90," + yCoord + "],[-40,0,40]],{name:'" + parameter.getID() + "',snapWidth:-1});"
+				int yCoord = 26 - parameters.indexOf(parameter) * 3;
+				parameterVisualiztion += "\t\t\tvar " + parameter.getID() + "= board.create('slider',[[40," + yCoord
+						+ "],[60," + yCoord + "],[-20,0,20]],{name:'" + parameter.getID() + " ("
+						+ getPointForParameter(parameter, jsxGraphElements) + ")" + "',snapWidth:-1});"
 						+ System.lineSeparator();
 				parameterVisualiztion += "\t\t\t" + parameter.getID() + ".setValue(" + parameter.getValue() + ");"
 						+ System.lineSeparator();
+				allParameters.add(parameter.getID());
 			}
 		}
+		parameterVisualiztion += "\t\t\t" + "var parameters = ["
+				+ String.join(", ", allParameters) + "];" + System.lineSeparator();
 		return parameterVisualiztion;
+	}
+
+	private String getPointForParameter(final JSXGraphParameter parameter, final List<JSXGraphElement> jsxGraphElements) {
+		String name = "";
+		String type = "";
+		for (JSXGraphElement jsxGraphElement : jsxGraphElements) {
+			if (jsxGraphElement instanceof JSXGraphPoint) {
+				if(((JSXGraphPoint) jsxGraphElement).getXElement().equals(parameter)) {
+					name = jsxGraphElement.getID();
+					type = "X";
+				}
+				if(((JSXGraphPoint) jsxGraphElement).getYElement().equals(parameter)) {
+					name = jsxGraphElement.getID();
+					type = "Y";
+				}
+				if(((JSXGraphPoint) jsxGraphElement).getWElement().equals(parameter)) {
+					name = jsxGraphElement.getID();
+					type = "W";
+				}
+			}
+		}
+		return name + ", " + type;
 	}
 
 	private String visualizeJSXGraphRelation(List<JSXGraphParameter> parameters,

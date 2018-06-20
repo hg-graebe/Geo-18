@@ -15,11 +15,20 @@
 		<script type="text/javascript" src="JSXGraphCore/src/loadjsxgraph.js"></script>
 	</head>
 	<body>
-		<h2>TITLE_PATTERN</h2>
+		<table>
+			<tr>
+				<td>
+					<h2>TITLE_PATTERN</h2>
+				</td>
+				<td>
+					<button style="height: 30px; margin-left: 30px; margin-top: -15px" onclick="saveConfiguration(parameters, 'TITLE_PATTERN');">Save configuration</button>
+				</td>
+			</tr>
+		</table>
 		<div id="jxgbox" class="boardPosition" ></div>
 		<script type="text/javascript">
 			var board = JXG.JSXGraph.initBoard('jxgbox', {axis:true,keepAspectRatio:true,boundingbox: [-40,30,30,-30]});
-			board.setZoom(0.9,0.9);
+			board.setZoom(1,1);
 			
 BOARD_PATTERN
 			board.fullUpdate();
@@ -63,7 +72,26 @@ BOARD_PATTERN
 					return a;
 				}
 				return gcd(b, a % b);
-			};					
+			};
+
+			function saveConfiguration(parameters, filename) {
+				filename += ".parameter";
+				console.log("saving parameters to: " + filename);
+				var text = "";
+				parameters.forEach(function(entry) {
+					text += (entry.name.split(" ")[0] + "\t" + entry.Value() + "\n");
+				});
+				var element = document.createElement('a');
+				element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+				element.setAttribute('download', filename);
+
+				element.style.display = 'none';
+				document.body.appendChild(element);
+
+				element.click();
+
+				document.body.removeChild(element);
+			};
 		</script>
 	</body>
 </html>

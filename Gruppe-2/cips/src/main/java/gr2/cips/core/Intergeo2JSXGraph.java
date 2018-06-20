@@ -1,33 +1,32 @@
 package gr2.cips.core;
 
-import org.apache.log4j.Logger;
-
 import gr2.cips.intergeo.Intergeo;
-import gr2.cips.intergeo.IntergeoCircleByCenterAndPoint;
-import gr2.cips.intergeo.IntergeoCircleByThreePoints;
-import gr2.cips.intergeo.IntergeoElement;
-import gr2.cips.intergeo.IntergeoFreePoint;
-import gr2.cips.intergeo.IntergeoLineAngularBisectorOfThreePoints;
-import gr2.cips.intergeo.IntergeoLineParallelToLineThroughPoint;
-import gr2.cips.intergeo.IntergeoLinePerpendicularToLineThroughPoint;
-import gr2.cips.intergeo.IntergeoLineThroughTwoPoints;
-import gr2.cips.intergeo.IntergeoMidPointOfTwoPoints;
-import gr2.cips.intergeo.IntergeoPointIntersectionOfTwoLines;
-import gr2.cips.intergeo.IntergeoPointOnCircle;
-import gr2.cips.intergeo.IntergeoPointOnLine;
+import gr2.cips.intergeo.model.IntergeoCircleByCenterAndPoint;
+import gr2.cips.intergeo.model.IntergeoCircleByThreePoints;
+import gr2.cips.intergeo.model.IntergeoElement;
+import gr2.cips.intergeo.model.IntergeoFreePoint;
+import gr2.cips.intergeo.model.IntergeoLineAngularBisectorOfThreePoints;
+import gr2.cips.intergeo.model.IntergeoLineParallelToLineThroughPoint;
+import gr2.cips.intergeo.model.IntergeoLinePerpendicularToLineThroughPoint;
+import gr2.cips.intergeo.model.IntergeoLineThroughTwoPoints;
+import gr2.cips.intergeo.model.IntergeoMidPointOfTwoPoints;
+import gr2.cips.intergeo.model.IntergeoPointIntersectionOfTwoLines;
+import gr2.cips.intergeo.model.IntergeoPointOnCircle;
+import gr2.cips.intergeo.model.IntergeoPointOnLine;
 import gr2.cips.jsxgraph.JSXGraph;
-import gr2.cips.jsxgraph.JSXGraphCircleGlider;
-import gr2.cips.jsxgraph.JSXGraphCircumCircle;
-import gr2.cips.jsxgraph.JSXGraphLineGlider;
-import gr2.cips.jsxgraph.JSXGraphIntersection;
-import gr2.cips.jsxgraph.JSXGraphLine;
-import gr2.cips.jsxgraph.JSXGraphMidPoint;
-import gr2.cips.jsxgraph.JSXGraphP3Bisector;
-import gr2.cips.jsxgraph.JSXGraphPCCircle;
-import gr2.cips.jsxgraph.JSXGraphParallel;
-import gr2.cips.jsxgraph.JSXGraphParameter;
-import gr2.cips.jsxgraph.JSXGraphPerpendicular;
-import gr2.cips.jsxgraph.JSXGraphPoint;
+import gr2.cips.jsxgraph.model.JSXGraphCircleGlider;
+import gr2.cips.jsxgraph.model.JSXGraphCircumCircle;
+import gr2.cips.jsxgraph.model.JSXGraphIntersection;
+import gr2.cips.jsxgraph.model.JSXGraphLine;
+import gr2.cips.jsxgraph.model.JSXGraphLineGlider;
+import gr2.cips.jsxgraph.model.JSXGraphMidPoint;
+import gr2.cips.jsxgraph.model.JSXGraphP3Bisector;
+import gr2.cips.jsxgraph.model.JSXGraphPCCircle;
+import gr2.cips.jsxgraph.model.JSXGraphParallel;
+import gr2.cips.jsxgraph.model.JSXGraphParameter;
+import gr2.cips.jsxgraph.model.JSXGraphPerpendicular;
+import gr2.cips.jsxgraph.model.JSXGraphPoint;
+import org.apache.log4j.Logger;
 
 /**
  * @author Duong Trung Duong

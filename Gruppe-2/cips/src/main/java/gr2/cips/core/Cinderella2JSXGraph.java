@@ -1,27 +1,26 @@
 package gr2.cips.core;
 
-import org.apache.log4j.Logger;
-
 import gr2.cips.cinderella.Cinderella;
-import gr2.cips.cinderella.CinderellaCircleBy3;
-import gr2.cips.cinderella.CinderellaCircleMP;
-import gr2.cips.cinderella.CinderellaElement;
-import gr2.cips.cinderella.CinderellaFreePoint;
-import gr2.cips.cinderella.CinderellaJoin;
-import gr2.cips.cinderella.CinderellaMeet;
-import gr2.cips.cinderella.CinderellaMid;
-import gr2.cips.cinderella.CinderellaOrthogonal;
-import gr2.cips.cinderella.CinderellaParallel;
+import gr2.cips.cinderella.model.CinderellaCircleBy3;
+import gr2.cips.cinderella.model.CinderellaCircleMP;
+import gr2.cips.cinderella.model.CinderellaElement;
+import gr2.cips.cinderella.model.CinderellaFreePoint;
+import gr2.cips.cinderella.model.CinderellaJoin;
+import gr2.cips.cinderella.model.CinderellaMeet;
+import gr2.cips.cinderella.model.CinderellaMid;
+import gr2.cips.cinderella.model.CinderellaOrthogonal;
+import gr2.cips.cinderella.model.CinderellaParallel;
 import gr2.cips.jsxgraph.JSXGraph;
-import gr2.cips.jsxgraph.JSXGraphCircumCircle;
-import gr2.cips.jsxgraph.JSXGraphIntersection;
-import gr2.cips.jsxgraph.JSXGraphLine;
-import gr2.cips.jsxgraph.JSXGraphMidPoint;
-import gr2.cips.jsxgraph.JSXGraphPCCircle;
-import gr2.cips.jsxgraph.JSXGraphParallel;
-import gr2.cips.jsxgraph.JSXGraphParameter;
-import gr2.cips.jsxgraph.JSXGraphPerpendicular;
-import gr2.cips.jsxgraph.JSXGraphPoint;
+import gr2.cips.jsxgraph.model.JSXGraphCircumCircle;
+import gr2.cips.jsxgraph.model.JSXGraphIntersection;
+import gr2.cips.jsxgraph.model.JSXGraphLine;
+import gr2.cips.jsxgraph.model.JSXGraphMidPoint;
+import gr2.cips.jsxgraph.model.JSXGraphPCCircle;
+import gr2.cips.jsxgraph.model.JSXGraphParallel;
+import gr2.cips.jsxgraph.model.JSXGraphParameter;
+import gr2.cips.jsxgraph.model.JSXGraphPerpendicular;
+import gr2.cips.jsxgraph.model.JSXGraphPoint;
+import org.apache.log4j.Logger;
 
 /**
  * @author Duong Trung Duong

@@ -1,5 +1,21 @@
 package gr2.cips.cinderella;
 
+import gr2.cips.cinderella.model.CinderellaAngularBisector;
+import gr2.cips.cinderella.model.CinderellaCircleBy3;
+import gr2.cips.cinderella.model.CinderellaCircleMP;
+import gr2.cips.cinderella.model.CinderellaElement;
+import gr2.cips.cinderella.model.CinderellaFreePoint;
+import gr2.cips.cinderella.model.CinderellaJoin;
+import gr2.cips.cinderella.model.CinderellaMeet;
+import gr2.cips.cinderella.model.CinderellaMid;
+import gr2.cips.cinderella.model.CinderellaOrthogonal;
+import gr2.cips.cinderella.model.CinderellaParallel;
+import gr2.cips.cinderella.model.CinderellaSegment;
+import gr2.cips.cinderella.model.CinderellaThrough;
+import net.lingala.zip4j.core.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
+import org.apache.log4j.Logger;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -11,11 +27,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.log4j.Logger;
-
-import net.lingala.zip4j.core.ZipFile;
-import net.lingala.zip4j.exception.ZipException;
 
 /**
  * @author Duong Trung Duong

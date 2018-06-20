@@ -1,26 +1,25 @@
 package gr2.cips.core;
 
-import org.apache.log4j.Logger;
-
 import gr2.cips.cinderella.Cinderella;
-import gr2.cips.cinderella.CinderellaCircleBy3;
-import gr2.cips.cinderella.CinderellaCircleMP;
-import gr2.cips.cinderella.CinderellaElement;
-import gr2.cips.cinderella.CinderellaFreePoint;
-import gr2.cips.cinderella.CinderellaJoin;
-import gr2.cips.cinderella.CinderellaMeet;
-import gr2.cips.cinderella.CinderellaMid;
-import gr2.cips.cinderella.CinderellaOrthogonal;
-import gr2.cips.cinderella.CinderellaParallel;
+import gr2.cips.cinderella.model.CinderellaCircleBy3;
+import gr2.cips.cinderella.model.CinderellaCircleMP;
+import gr2.cips.cinderella.model.CinderellaElement;
+import gr2.cips.cinderella.model.CinderellaFreePoint;
+import gr2.cips.cinderella.model.CinderellaJoin;
+import gr2.cips.cinderella.model.CinderellaMeet;
+import gr2.cips.cinderella.model.CinderellaMid;
+import gr2.cips.cinderella.model.CinderellaOrthogonal;
+import gr2.cips.cinderella.model.CinderellaParallel;
 import gr2.cips.intergeo.Intergeo;
-import gr2.cips.intergeo.IntergeoCircleByCenterAndPoint;
-import gr2.cips.intergeo.IntergeoCircleByThreePoints;
-import gr2.cips.intergeo.IntergeoFreePoint;
-import gr2.cips.intergeo.IntergeoLineParallelToLineThroughPoint;
-import gr2.cips.intergeo.IntergeoLinePerpendicularToLineThroughPoint;
-import gr2.cips.intergeo.IntergeoLineThroughTwoPoints;
-import gr2.cips.intergeo.IntergeoMidPointOfTwoPoints;
-import gr2.cips.intergeo.IntergeoPointIntersectionOfTwoLines;
+import gr2.cips.intergeo.model.IntergeoCircleByCenterAndPoint;
+import gr2.cips.intergeo.model.IntergeoCircleByThreePoints;
+import gr2.cips.intergeo.model.IntergeoFreePoint;
+import gr2.cips.intergeo.model.IntergeoLineParallelToLineThroughPoint;
+import gr2.cips.intergeo.model.IntergeoLinePerpendicularToLineThroughPoint;
+import gr2.cips.intergeo.model.IntergeoLineThroughTwoPoints;
+import gr2.cips.intergeo.model.IntergeoMidPointOfTwoPoints;
+import gr2.cips.intergeo.model.IntergeoPointIntersectionOfTwoLines;
+import org.apache.log4j.Logger;
 
 /**
  * @author Duong Trung Duong
