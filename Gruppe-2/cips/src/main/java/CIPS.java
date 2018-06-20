@@ -1,6 +1,4 @@
-import java.io.IOException;
-
-import javax.xml.transform.TransformerException;
+import java.util.Arrays;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -18,7 +16,6 @@ import gr2.cips.core.GeoProofSchemeVisualization;
 import gr2.cips.core.IntergeoVisualization;
 import gr2.cips.geoproofscheme.GeoProofScheme;
 import gr2.cips.intergeo.Intergeo;
-import net.lingala.zip4j.exception.ZipException;
 
 /**
  * @author Duong Trung Duong
@@ -26,18 +23,17 @@ import net.lingala.zip4j.exception.ZipException;
  *         "mailto:bss13ard@studserv.uni-leipzig.de">bss13ard@studserv.uni-leipzig.de</a>
  */
 public class CIPS {
-	public static void main(String argv[]) throws IOException, ParseException, TransformerException, ZipException {
+	public static void main(String argv[]) throws Exception {
 		Options options = new Options();
-		Option oJobType = new Option("j", "job-type", true,
-				"\"c2i\": cinderella to intergeo,\n" + "\"g2i\": geoproofscheme to intergeo,\n"
-						+ "\"vc\":  cinderella visualisation with jsxgraph,\n"
-						+ "\"vi\":  intergeo visualisation with jsxgraph,\n"
-						+ "\"vg\":  geoproofscheme visualisation with jsxgraph");
-		oJobType.setRequired(true);
-		options.addOption(oJobType);
+
+		options.addOption(new Option("c2i", false, "cinderella to intergeo"));
+		options.addOption(new Option("g2i", false, "geoproofscheme to intergeo"));
+		options.addOption(new Option("vc", false, "cinderella visualisation with jsxgraph"));
+		options.addOption(new Option("vi", false, "intergeo visualisation with jsxgraph"));
+		options.addOption(new Option("vg", false, "geoproofscheme visualisation with jsxgraph"));
 
 		Option oInput = new Option("i", "input", true, "input file path");
-		oInput.setRequired(true);
+		oInput.setRequired(false);
 		options.addOption(oInput);
 
 		Option oParameter = new Option("p", "parameter", true, "default parameter file path");
@@ -45,7 +41,7 @@ public class CIPS {
 		options.addOption(oParameter);
 
 		Option oOutput = new Option("o", "output", true, "output file path");
-		oOutput.setRequired(true);
+		oOutput.setRequired(false);
 		options.addOption(oOutput);
 
 		Option oHelp = new Option("h", "help", false, "print this message");
@@ -55,7 +51,8 @@ public class CIPS {
 		CommandLineParser parser = new DefaultParser();
 		HelpFormatter formatter = new HelpFormatter();
 		CommandLine cmd;
-		String helpString = "\njava -jar cips.jar -j c2i -i <cinderella file> -o <intergeo file>\n"
+		String helpString =
+				"\njava -jar cips.jar -j c2i -i <cinderella file> -o <intergeo file>\n"
 				+ "java -jar cips.jar -j g2i -i <geoproofscheme file> -o <intergeo file> -p [default parameter file]\n"
 				+ "java -jar cips.jar -j vc -i <cinderella file> -o <visualization file>\n"
 				+ "java -jar cips.jar -j vi -i <intergeo file> -o <visualization file>\n"
@@ -75,64 +72,166 @@ public class CIPS {
 			return;
 		}
 
-		if (cmd.getOptionValue("job-type").equals("c2i")) {
-			Cinderella cinderella = new Cinderella();
-			String cinderellaFilePath = cmd.getOptionValue("input");
-			String intergeoFilePath = cmd.getOptionValue("output");
+		boolean hasRun = false;
+		try {
+			if( cmd.hasOption("c2i")) {
+				hasRun = c2iMode(cmd);
+			}
+			if (cmd.hasOption("g2i")) {
+				hasRun |= g2iMode(cmd);
+			}
+			if (cmd.hasOption("vc")) {
+				hasRun |= vcMode(cmd);
+			}
+			if (cmd.hasOption("vi")) {
+				hasRun |= viMode(cmd);
+			}
+			if (cmd.hasOption("vg")) {
+				hasRun |= vgMode(cmd);
+			}
 
-			if (!cinderella.loadFromFile(cinderellaFilePath))
-				return;
+			if (!hasRun) {
+				final String inputFileExtension = getFileExtension(cmd);
+				switch (inputFileExtension) {
+					case "cdy":
+						hasRun = c2iMode(cmd);
+						hasRun |= vcMode(cmd);
+						break;
+					case "xml":
+						hasRun = g2iMode(cmd);
+						hasRun |= vgMode(cmd);
+						break;
+					case "i2g":
+						hasRun = viMode(cmd);
+						break;
+					default:
+						break;
+				}
+			}
+		} catch (IllegalArgumentException e) {
 
-			Cinderella2Intergeo cinderella2Intergeo = new Cinderella2Intergeo(cinderella);
-			Intergeo intergeo = cinderella2Intergeo.convert();
-			intergeo.exportXML(intergeoFilePath);
-		} else if (cmd.getOptionValue("job-type").equals("g2i")) {
-			GeoProofScheme geoProofScheme = new GeoProofScheme();
-			String geoProofSchemeFilePath = cmd.getOptionValue("input");
-			String intergeoFilePath = cmd.getOptionValue("output");
-			String parametersFilePath = cmd.getOptionValue("parameter");
+		}
 
-			if (!geoProofScheme.loadFromFile(geoProofSchemeFilePath, parametersFilePath))
-				return;
-
-			GeoProofScheme2Intergeo geoProofScheme2Intergeo = new GeoProofScheme2Intergeo(geoProofScheme);
-			Intergeo intergeo = geoProofScheme2Intergeo.convert();
-			intergeo.exportXML(intergeoFilePath);
-		} else if (cmd.getOptionValue("job-type").equals("vc")) {
-			Cinderella cinderella = new Cinderella();
-			String cinderellaFilePath = cmd.getOptionValue("input");
-			String visualizationFilePath = cmd.getOptionValue("output");
-
-			if (!cinderella.loadFromFile(cinderellaFilePath))
-				return;
-
-			CinderellaVisualization cinderellaVisualization = new CinderellaVisualization(cinderella,
-					visualizationFilePath);
-			cinderellaVisualization.visualize();
-		} else if (cmd.getOptionValue("job-type").equals("vi")) {
-			Intergeo intergeo = new Intergeo();
-			String intergeoFilePath = cmd.getOptionValue("input");
-			String visualizationFilePath = cmd.getOptionValue("output");
-
-			if (!intergeo.loadFromFile(intergeoFilePath))
-				return;
-
-			IntergeoVisualization intergeoVisualization = new IntergeoVisualization(intergeo, visualizationFilePath);
-			intergeoVisualization.visualize();
-		} else if (cmd.getOptionValue("job-type").equals("vg")) {
-			GeoProofScheme geoProofScheme = new GeoProofScheme();
-			String geoProofSchemeFilePath = cmd.getOptionValue("input");
-			String visualizationFilePath = cmd.getOptionValue("output");
-			String parametersFilePath = cmd.getOptionValue("parameter");
-
-			if (!geoProofScheme.loadFromFile(geoProofSchemeFilePath, parametersFilePath))
-				return;
-
-			GeoProofSchemeVisualization geoProofSchemeVisualization = new GeoProofSchemeVisualization(geoProofScheme,
-					visualizationFilePath);
-			geoProofSchemeVisualization.visualize();
-		} else {
+		if (!hasRun) {
 			formatter.printHelp(helpString, options);
 		}
+	}
+
+	static boolean c2iMode(CommandLine cmd) throws Exception {
+		Cinderella cinderella = new Cinderella();
+		String cinderellaFilePath = getInput(cmd);
+		String intergeoFilePath = getOutput(cmd, "i2g");
+
+		if (!cinderella.loadFromFile(cinderellaFilePath))
+			return false;
+
+		Cinderella2Intergeo cinderella2Intergeo = new Cinderella2Intergeo(cinderella);
+		Intergeo intergeo = cinderella2Intergeo.convert();
+		intergeo.exportXML(intergeoFilePath);
+
+		return true;
+	}
+	static boolean g2iMode(CommandLine cmd) throws Exception {
+		GeoProofScheme geoProofScheme = new GeoProofScheme();
+		String geoProofSchemeFilePath = getInput(cmd);
+		String intergeoFilePath = getOutput(cmd, "i2g");
+		String parametersFilePath = getParameterFile(cmd);
+
+		if (parametersFilePath.isEmpty() || !geoProofScheme.loadFromFile(geoProofSchemeFilePath, parametersFilePath))
+			return false;
+
+		GeoProofScheme2Intergeo geoProofScheme2Intergeo = new GeoProofScheme2Intergeo(geoProofScheme);
+		Intergeo intergeo = geoProofScheme2Intergeo.convert();
+		intergeo.exportXML(intergeoFilePath);
+
+		return true;
+	}
+	static boolean vcMode(CommandLine cmd) throws Exception {
+		Cinderella cinderella = new Cinderella();
+		String cinderellaFilePath = getInput(cmd);
+		String visualizationFilePath = getOutput(cmd, "html");
+
+		if (!cinderella.loadFromFile(cinderellaFilePath))
+			return false;
+
+		CinderellaVisualization cinderellaVisualization = new CinderellaVisualization(cinderella,
+				visualizationFilePath);
+		cinderellaVisualization.visualize();
+
+		return true;
+	}
+	static boolean viMode(CommandLine cmd) throws Exception {
+		Intergeo intergeo = new Intergeo();
+		String intergeoFilePath = getInput(cmd);
+		String visualizationFilePath = getOutput(cmd, "html");
+
+		if (!intergeo.loadFromFile(intergeoFilePath))
+			return false;
+
+		IntergeoVisualization intergeoVisualization = new IntergeoVisualization(intergeo, visualizationFilePath);
+		intergeoVisualization.visualize();
+
+		return true;
+	}
+	static boolean vgMode(CommandLine cmd) throws Exception {
+		GeoProofScheme geoProofScheme = new GeoProofScheme();
+		String geoProofSchemeFilePath = getInput(cmd);
+		String visualizationFilePath = getOutput(cmd, "html");
+		String parametersFilePath = getParameterFile(cmd);
+
+		if (parametersFilePath.isEmpty() || !geoProofScheme.loadFromFile(geoProofSchemeFilePath, parametersFilePath))
+			return false;
+
+		GeoProofSchemeVisualization geoProofSchemeVisualization = new GeoProofSchemeVisualization(geoProofScheme,
+				visualizationFilePath);
+		geoProofSchemeVisualization.visualize();
+
+		return true;
+	}
+
+	private static String getFileExtension(CommandLine cmd) {
+		final String input = getInput(cmd);
+		final String[] inputFile = input.split("\\.");
+		final String inputFileExtension = inputFile[inputFile.length - 1];
+
+		return inputFileExtension;
+	}
+	private static String getInput(CommandLine cmd) {
+		String input = cmd.getOptionValue("input");
+
+		if (input == null || input.isEmpty()) {
+			if (cmd.getArgs().length > 0) {
+				return cmd.getArgs()[0];
+			} else {
+				throw new IllegalArgumentException();
+			}
+		}
+
+		return input;
+	}
+
+	private static String getOutput(CommandLine cmd, String extension) {
+		String output = cmd.getOptionValue("output");
+		if (output == null || output.isEmpty()) {
+			return generateOutputName(cmd, extension);
+		}
+		return output;
+	}
+	private static String generateOutputName(CommandLine cmd, String extension) {
+		String input = getInput(cmd);
+		final String[] inputPaths = input.split("/");
+		final String[] inputFile = inputPaths[inputPaths.length - 1].split("\\.");
+		final String newName = String.join(".", Arrays.copyOf(inputFile, inputFile.length-1));
+		final String newPath = String.join("/", Arrays.copyOf(inputPaths, inputPaths.length-1));
+
+		return newPath + "/" + newName + "." + extension;
+	}
+
+	private static String getParameterFile(CommandLine cmd) {
+		final String parameter = cmd.getOptionValue("parameter");
+		if (parameter == null || parameter.isEmpty()) {
+			return generateOutputName(cmd, "parameter");
+		}
+		return parameter;
 	}
 }

@@ -50,7 +50,7 @@ public class GeoProofScheme {
 		return this.title;
 	}
 
-	public boolean loadFromFile(String geoProofSchemeFilePath, String parameterFilePath) throws IOException {
+	public boolean loadFromFile(String geoProofSchemeFilePath, String parameterFilePath) {
 		try {
 			File geoProofSchemeFile = new File(geoProofSchemeFilePath);
 			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
