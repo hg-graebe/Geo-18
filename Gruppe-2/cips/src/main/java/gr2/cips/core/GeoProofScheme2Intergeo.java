@@ -13,6 +13,7 @@ import gr2.cips.geoproofscheme.model.GeoProofSchemeP3Circle;
 import gr2.cips.geoproofscheme.model.GeoProofSchemePCCircle;
 import gr2.cips.geoproofscheme.model.GeoProofSchemePPLine;
 import gr2.cips.geoproofscheme.model.GeoProofSchemeParLine;
+import gr2.cips.geoproofscheme.model.GeoProofSchemeParameter;
 import gr2.cips.geoproofscheme.model.GeoProofSchemeVarPoint;
 import gr2.cips.intergeo.Intergeo;
 import gr2.cips.intergeo.model.IntergeoCircleByCenterAndPoint;
@@ -135,9 +136,10 @@ public class GeoProofScheme2Intergeo {
 						intergeo.getElementByID(((GeoProofSchemeP3Circle) geoProofSchemeElement).getPoint2().getID()),
 						intergeo.getElementByID(((GeoProofSchemeP3Circle) geoProofSchemeElement).getPoint3().getID())));
 				logger.info("p3_circle ID:" + geoProofSchemeElement.getID() + " has been converted");
-			} else {
+			} else if (!(geoProofSchemeElement instanceof GeoProofSchemeParameter)) {
 				logger.error("Error while converting element ID:" + geoProofSchemeElement.getID());
 				logger.error("Not yet implemented: " + geoProofSchemeElement.getClass().getSimpleName());
+				return null;
 			}
 		}
 		logger.info("Conversion successfully completed");
