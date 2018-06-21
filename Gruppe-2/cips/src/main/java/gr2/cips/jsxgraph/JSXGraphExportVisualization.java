@@ -30,6 +30,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Duong Trung Duong
@@ -161,24 +163,15 @@ public class JSXGraphExportVisualization {
 
 	private String getPointForParameter(final JSXGraphParameter parameter, final List<JSXGraphElement> jsxGraphElements) {
 		String name = "";
-		String type = "";
 		for (JSXGraphElement jsxGraphElement : jsxGraphElements) {
-			if (jsxGraphElement instanceof JSXGraphPoint) {
-				if(((JSXGraphPoint) jsxGraphElement).getXElement().equals(parameter)) {
-					name = jsxGraphElement.getID();
-					type = "X";
-				}
-				if(((JSXGraphPoint) jsxGraphElement).getYElement().equals(parameter)) {
-					name = jsxGraphElement.getID();
-					type = "Y";
-				}
-				if(((JSXGraphPoint) jsxGraphElement).getWElement().equals(parameter)) {
-					name = jsxGraphElement.getID();
-					type = "W";
-				}
+			if (jsxGraphElement instanceof JSXGraphPoint &&
+					(((JSXGraphPoint) jsxGraphElement).getXElement().equals(parameter)
+					|| (((JSXGraphPoint) jsxGraphElement).getYElement().equals(parameter)
+					|| ((JSXGraphPoint) jsxGraphElement).getWElement().equals(parameter)))) {
+				name = jsxGraphElement.getID();
 			}
 		}
-		return name + ", " + type;
+		return name;
 	}
 
 	private String visualizeJSXGraphRelation(List<JSXGraphParameter> parameters,
@@ -187,21 +180,30 @@ public class JSXGraphExportVisualization {
 		for (JSXGraphParameter parameter : parameters) {
 			if (!parameter.isConstant()) {
 				String parameterID = parameter.getID();
+				String name = "";
 				relation = relation + "\t\t\t" + parameterID + ".on('drag', function(){" + System.lineSeparator();
 				for (JSXGraphElement jsxGraphElement : jsxGraphElements) {
+					String newRelation = "";
 					if (jsxGraphElement instanceof JSXGraphPoint) {
-						relation += visualizeJSXGraphPointRelation(parameterID, (JSXGraphPoint) jsxGraphElement);
+						newRelation = visualizeJSXGraphPointRelation(parameterID, (JSXGraphPoint) jsxGraphElement);
 					} else if (jsxGraphElement instanceof JSXGraphVarPoint) {
-						relation += visualizeJSXGraphVarPointRelation(parameterID, (JSXGraphVarPoint) jsxGraphElement);
+						newRelation = visualizeJSXGraphVarPointRelation(parameterID, (JSXGraphVarPoint) jsxGraphElement);
 					} else if (jsxGraphElement instanceof JSXGraphLineGlider) {
-						relation += visualizeJSXGraphLineGliderRelation(parameterID,
+						newRelation = visualizeJSXGraphLineGliderRelation(parameterID,
 								(JSXGraphLineGlider) jsxGraphElement);
 					} else if (jsxGraphElement instanceof JSXGraphCircleGlider) {
-						relation += visualizeJSXGraphCircleGliderRelation(parameterID,
+						newRelation = visualizeJSXGraphCircleGliderRelation(parameterID,
 								(JSXGraphCircleGlider) jsxGraphElement);
 					}
+					Matcher matcher = Pattern.compile("//name:(.*)").matcher(newRelation);
+					if (matcher.find())
+						name += matcher.group(1);
+					relation += newRelation;
 				}
 				relation += "\t\t\t});" + System.lineSeparator();
+
+				relation += "\t\t\t" + parameterID + ".setName('" + parameterID + " (" + name + ")')"
+						+ System.lineSeparator();
 			}
 		}
 		return relation;
@@ -219,7 +221,7 @@ public class JSXGraphExportVisualization {
 					? yElementID.replace(JSXGraphParameter.CONST_IDENTITY, "")
 					: yElementID + ".Value()");
 			pointRelation = "\t\t\t\te[" + getIndexByElement(jsxGraphPoint) + "].setPosition(JXG.COORDS_BY_USER,["
-					+ xElementID + "," + yElementID + "]);" + System.lineSeparator();
+					+ xElementID + "," + yElementID + "]); //name:" + jsxGraphPoint.getID() + System.lineSeparator();
 		}
 		return pointRelation;
 	}
@@ -233,7 +235,7 @@ public class JSXGraphExportVisualization {
 			varpointRelation = "\t\t\t\te[" + getIndexByElement(jsxGraphVarPoint) + "].setPosition(JXG.COORDS_BY_USER,["
 					+ "getLineSliderX(e[" + point1Index + "].X(),e[" + point2Index + "].X()," + varPointParameterID
 					+ ".Value()),getLineSliderY(e[" + point1Index + "].Y(),e[" + point2Index + "].Y(),"
-					+ varPointParameterID + ".Value())]);" + System.lineSeparator();
+					+ varPointParameterID + ".Value())]); //name:" + jsxGraphVarPoint.getID() + System.lineSeparator();
 		}
 		return varpointRelation;
 	}
@@ -250,7 +252,8 @@ public class JSXGraphExportVisualization {
 					+ "].point1.Y(),e[" + lineIndex + "].point2.Y(),";
 			lineGliderRelation = "\t\t\t\te[" + getIndexByElement(jsxGraphLineGlider)
 					+ "].setPosition(JXG.COORDS_BY_USER,[" + "getLineSliderX(" + tempString + lineGliderParameterID
-					+ "),getLineSliderY(" + tempString + lineGliderParameterID + ")]);" + System.lineSeparator();
+					+ "),getLineSliderY(" + tempString + lineGliderParameterID + ")]); //name:"
+					+ jsxGraphLineGlider.getID() + System.lineSeparator();
 		}
 		return lineGliderRelation;
 	}
@@ -267,8 +270,8 @@ public class JSXGraphExportVisualization {
 			circleGliderRelation = "\t\t\t\te[" + getIndexByElement(jsxGraphCircleGlider)
 					+ "].setPosition(JXG.COORDS_BY_USER,[" + "getCircleSliderX(e[" + circleIndex + "].center.X(),e["
 					+ circleIndex + "].radius," + circleGliderParameterID + "),getCircleSliderY(e[" + circleIndex
-					+ "].center.Y(),e[" + circleIndex + "].radius," + circleGliderParameterID + ")]);"
-					+ System.lineSeparator();
+					+ "].center.Y(),e[" + circleIndex + "].radius," + circleGliderParameterID + ")]) //name:"
+					+ jsxGraphCircleGlider.getID() + System.lineSeparator();
 		}
 		return circleGliderRelation;
 	}
