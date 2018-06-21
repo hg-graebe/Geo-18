@@ -1,0 +1,97 @@
+<?xml version="1.0" ?>
+<!--
+    Satz von Mittelsenkrechten
+
+    Proof Scheme with Intergeo
+
+    by `Gruppe 4` 2018-06-21
+-->
+
+<construction>
+    <elements>
+        <point id="A">
+            <homogeneous_coordinates>
+                <double>2</double>
+                <double>2</double>
+                <double>1</double>
+            </homogeneous_coordinates>
+        </point>
+        <point id="B">
+            <homogeneous_coordinates>
+                <double>0</double>
+                <double>0</double>
+                <double>1</double>
+            </homogeneous_coordinates>
+        </point>
+        <point id="C">
+            <homogeneous_coordinates>
+                <double>0</double>
+                <double>3</double>
+                <double>1</double>
+            </homogeneous_coordinates>
+        </point>
+    </elements>
+
+    <constraints>
+        <free_point>
+            <point out="true">A</point>
+        </free_point>
+        <free_point>
+            <point out="true">B</point>
+        </free_point>
+        <free_point>
+            <point out="true">C</point>
+        </free_point>
+
+        <line_through_two_points>
+            <line out="true">a</line>
+            <point>B</point>
+            <point>C</point>
+        </line_through_two_points>
+        <line_through_two_points>
+            <line out="true">b</line>
+            <point>A</point>
+            <point>C</point>
+        </line_through_two_points>
+        <line_through_two_points>
+            <line out="true">c</line>
+            <point>A</point>
+            <point>B</point>
+        </line_through_two_points>
+
+
+        <!-- Slider Punkt s auf c -->
+        <point_on_line>
+            <point out="true">slider</point>
+            <line>c</line>
+        </point_on_line>
+
+        <!-- Senkrechte auf c durch Slider Punkt s -->
+        <line_perpendicular_to_line_through_point>
+            <line out="true">senkrechte</line>
+            <point>s</point>
+            <line>c</sline>
+        </line_perpendicular_to_line_through_point>
+        <!-- HINWEIS:
+            Senkrechte erzeugen funktioniert hier nicht,
+            aber in examples/Intergeo/parallel_perpendicular_through.xml
+        -->
+
+        <!-- Parallele zu c durch C -->
+        <line_parallel_to_line_through_point>
+            <line out="true">pc</line>
+            <point>C</point>
+            <line>c</line>
+        </line_parallel_to_line_through_point>
+        <!-- HINWEIS:
+            Parallele erzeugen funktioniert hier nicht,
+            aber in examples/Intergeo/parallel_perpendicular_through.xml
+        -->
+
+
+    </constraints>
+
+
+    <display>
+    </display>
+</construction>

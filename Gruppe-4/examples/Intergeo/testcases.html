@@ -11,7 +11,7 @@
 </head>
 <body>
   <h2>Intergeo test cases in JSXGraph</h2>
-  <div><select id="selection" onchange='loadJSXG();'>
+  <div><select id="selection" onchange='loadJSXG("examples/Intergeo/");'>
     <option value='all.xml'>all</option>
     <option value='center_of_three_points.xml'>center_of_three_points</option>
     <option value='circle.xml'>circle</option>
@@ -56,7 +56,7 @@
   <div id="jxgbox" class="jxgbox" style="width:800px; height:500px;"></div>
   <div id="debug" style="display:block; margin-top:20px"></div>
    <script type="text/javascript">
-      loadJSXG();
+      loadJSXG("examples/Intergeo/");
     /* <![CDATA[ */
         //fname = 'linesegment.xml';
 //-------- good ----------
@@ -84,7 +84,7 @@
 
 //-------  open ---------
 
-//fname = 'conic.xml'; 
+//fname = 'conic.xml';
 
 //fname = 'locus_pacman.xml';
 //fname = 'line.xml';

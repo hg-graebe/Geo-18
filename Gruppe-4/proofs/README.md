@@ -48,7 +48,6 @@ Vergleich mit [iG2 Common File Format Specification](https://git.informatik.uni-
 
 * free_point
 * free_line
-
 * point_on_line
 * point_on_line_segment
 * point_on_circle
@@ -57,7 +56,6 @@ Vergleich mit [iG2 Common File Format Specification](https://git.informatik.uni-
 * line_angular_bisector_of_three_points
 * line_angular_bisector_of_two_points
 * line_segment_by_points
-
 * directed_line_segment_by_points
 * ray_from_point_and_vector
 * ray_from_point_through_point
@@ -68,7 +66,6 @@ Vergleich mit [iG2 Common File Format Specification](https://git.informatik.uni-
 * midpoint_of_line_segment
 * endpoints_of_line_segment
 * carry_line_of_line_segment
-
 * starting_point_of_directed_line_segment
 * end_point_of_directed_line_segment
 * line_segment_of_directed_line_segment
@@ -79,7 +76,6 @@ Vergleich mit [iG2 Common File Format Specification](https://git.informatik.uni-
 * circle_by_center_and_point
 * circle_by_three_points
 * intersection_points_of_two_circles
-
 * other_intersection_point_of_two_circles
 * intersectrions_points_of_circle_and_line
 * other_intersection_points_of_circle_and_line
@@ -87,7 +83,6 @@ Vergleich mit [iG2 Common File Format Specification](https://git.informatik.uni-
 * intersection_points_of_conic_and_line
 * other_intersection_points_of_conic_and_line
 * circle_tangent_lines_by_point
-
 * foci_of_conic
 * center_of_circle
 * locus_defined_by_point_on_line
@@ -97,7 +92,6 @@ Vergleich mit [iG2 Common File Format Specification](https://git.informatik.uni-
 * locus_defined_by_line_through_point
 * symmetry_by_point
 * symmetry_by_line
-
 * symmetry_by_circle
 * translate
 
